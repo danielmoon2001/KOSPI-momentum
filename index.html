@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOSPI Momentum Screener (by MQ)</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Clean Apple Frosted Sub-Nav -->
+  <nav class="sub-nav">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="#overview" class="brand-link">KOSPI Momentum</a>
+      </div>
+      <p id="asof">Loading…</p>
+    </div>
+  </nav>
+
+  <!-- ================= SUBPAGE 1: OVERVIEW (Clean & Simple) ================= -->
+  <div id="view-overview" class="page-view">
+    <header class="tile tile-light hero-tile">
+      <div class="content-bound hero-layout">
+        
+        <div class="hero-text">
+          <h1 class="hero-title">Momentum.</h1>
+          <p class="hero-lead">KOSPI breakout screener.<br>Engineered by Moon Quixote.</p>
+          
+          <div class="hero-desc">
+            <p><strong>How it works</strong><br>Designed to catch stocks before they enter the Pre-Flight Breakout (PFB) phase. The screener compares a rolling 7-day evaluation window against the previous 7 days. It strictly isolates assets where average trading volume and price surge past configured multipliers, combined with a continuous 3-day rising price action.</p>
+          </div>
+
+          <div class="hero-actions" id="hero-actions" style="display: none;">
+            <a href="#matches" class="btn btn-primary" id="btn-show-matches">View Today's Matches →</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img src="hero_image.png" alt="Momentum Visualization" class="hero-img">
+        </div>
+
+      </div>
+    </header>
+
+    <footer class="tile tile-parchment footer-tile">
+      <div class="content-bound">
+        <p>Data provided by KRX. Verify market prices before execution.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================= SUBPAGE 2: MATCHES (Specifics & Data) ================= -->
+  <div id="view-matches" class="page-view" style="display: none;">
+    <!-- Matches Tile (Dark) -->
+    <section class="tile tile-dark" id="summary-section">
+      <div class="content-bound">
+        
+        <!-- Navigation breadcrumb -->
+        <div class="matches-nav-bar">
+          <a href="#overview" class="back-link">← Back to Overview</a>
+        </div>
+
+        <div class="matches-header">
+          <h2 class="tile-title">Matches.</h2>
+          <p class="tile-subtitle">Stocks crossing the volume and price thresholds.</p>
+        </div>
+
+        <!-- Apple-style Minimal Spec Callout Strip (Clean typography, no nested box clutter) -->
+        <div class="specs-strip">
+          <div class="spec-item">
+            <span class="spec-num" id="match-vol-metric">2.0×</span>
+            <span class="spec-title">Volume surge</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-num" id="match-price-metric">1.2×</span>
+            <span class="spec-title">Price surge</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-num">3 Days</span>
+            <span class="spec-title">Continuous rise</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-num">7 Days</span>
+            <span class="spec-title">Rolling window</span>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table id="summary-table">
+            <thead>
+              <tr>
+                <th>Ticker</th>
+                <th>Name</th>
+                <th>Volume Ratio</th>
+                <th>Price Ratio</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Raw Prices Tile (Light) -->
+    <section class="tile tile-light" id="prices-section">
+      <div class="content-bound">
+        <h2 class="tile-title">Raw History.</h2>
+        <p class="tile-subtitle">Daily closing prices over the evaluation window.</p>
+        <div class="table-container">
+          <table id="prices-table">
+            <thead id="prices-head"></thead>
+            <tbody id="prices-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Normalized Prices Tile (Parchment) -->
+    <section class="tile tile-parchment" id="normalized-section">
+      <div class="content-bound">
+        <h2 class="tile-title">Normalized.</h2>
+        <p class="tile-subtitle">First close of the base week indexed to 100.</p>
+        <div class="table-container">
+          <table id="normalized-table">
+            <thead id="normalized-head"></thead>
+            <tbody id="normalized-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer class="tile tile-parchment footer-tile">
+      <div class="content-bound">
+        <p>Data provided by KRX. Verify market prices before execution.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
