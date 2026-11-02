@@ -1,0 +1,16 @@
+# The website contains only public assets, documentation, and generated results.
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.log
+*.lock
+*.tmp
+__pycache__/
+*.py[cod]
+*.pkl
+.venv/
+node_modules/
+Thumbs.db
+.DS_Store

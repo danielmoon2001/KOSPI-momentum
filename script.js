@@ -1,3 +1,4 @@
+// Route configuration and independently loaded market state.
 const markets = {
   kospi: { name: "KOSPI", route: "#KOSPImatches", file: "data/results.json", currency: "KRW", symbol: "₩", source: "KRX" },
   us: { name: "US", route: "#USmatches", file: "data/results-us.json", currency: "USD", symbol: "$", source: "Yahoo Finance" },
@@ -6,6 +7,7 @@ const state = { kospi: { loading: true }, us: { loading: true } };
 const $ = (selector) => document.querySelector(selector);
 const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 
+// Display formatting does not alter the generated result data.
 function formatDate(value) {
   const [year, month, day] = value.split("-").map(Number);
   return new Date(year, month - 1, day).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
@@ -47,6 +49,7 @@ function formatCap(stock, market) {
   return `${stock.marketCapMethod === "estimated" ? "≈ " : ""}${market.symbol}${amount}${unit}`;
 }
 
+// Both market routes share one set of tables; clear them before each render.
 function activeMarket() {
   if (window.location.hash === "#USmatches") return "us";
   if (["#KOSPImatches", "#matches"].includes(window.location.hash)) return "kospi";
@@ -116,6 +119,7 @@ function renderMarket(key) {
   }).join("")}</tr>`).join("");
 }
 
+// Route updates and asynchronous loads always render the currently selected market.
 function syncView(scroll = false) {
   const key = activeMarket();
   $("#view-overview").style.display = key ? "none" : "block";

@@ -1,5 +1,5 @@
 :root {
-  /* Sophisticated Graphite/Ink Tones (Monochromatic Palette) */
+  /* Monochrome palette */
   --primary: #1d1d1f;          /* Ink */
   --primary-on-dark: #ffffff;  /* Pure white on dark */
   --primary-active: #333336;   /* Slight lift on click */
@@ -42,7 +42,7 @@ body {
   font-family: var(--font-text);
   font-size: 17px;
   line-height: 1.47;
-  letter-spacing: -0.022em; /* Apple body tight */
+  letter-spacing: -0.022em; /* Body text tracking */
   -webkit-font-smoothing: antialiased;
 }
 
@@ -133,7 +133,7 @@ h1, h2, h3, p {
   color: var(--on-dark);
 }
 
-/* Hero Layout (Clean & Simple Overview) */
+/* Overview hero */
 .hero-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -230,7 +230,7 @@ h1, h2, h3, p {
   color: #ffffff;
 }
 
-/* ================= SUBPAGE 2: MATCHES STYLES ================= */
+/* Shared market-page layout */
 .matches-nav-bar {
   margin-bottom: 28px;
   display: flex;
@@ -291,7 +291,7 @@ h1, h2, h3, p {
   color: var(--body-muted);
 }
 
-/* Apple Minimal Spec Callout Strip (Smooth, Clean, Unboxed) */
+/* Criteria: equal desktop gaps, two columns on narrow screens. */
 .specs-strip {
   display: grid;
   grid-template-columns: repeat(4, max-content);

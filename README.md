@@ -1,73 +1,96 @@
-# KOSPI & US Momentum
+# Korea & US Equity Momentum
 
-Minimal static dashboard designed by Moon Quixote. Vanilla HTML/CSS/JavaScript;
-no framework or build step.
+A static dashboard designed by Moon Quixote.
+[Open the live site](https://danielmoon2001.github.io/KOSPI-momentum/).
 
-## Pages and independent results
+Vanilla HTML, CSS, and JavaScript; no frontend framework, build step, or browser
+API credentials. This repository contains the **public website and generated
+results**. The private local screeners and Windows task installation live outside
+this Git repository and are not included in a clone.
 
-- `#overview`: two market buttons, match counts, and separate session dates.
-- `#KOSPImatches`: KOSPI matches, KRW prices (₩), market caps, raw and normalized history.
-- `#USmatches`: Nasdaq-100 or S&P 500 matches, USD prices ($), market caps, raw and normalized history.
-- Legacy `#matches` links still open the KOSPI view.
+## Repository layout
 
-KOSPI reads `data/results.json`; US reads `data/results-us.json`. Each file has
-the same `snapshotAt` cutoff (most recent 21:00 KST), plus its own `asOf` session
-date and `generatedAt` fetch timestamp. Switching markets also
-switches every table, currency, source, and timestamp. A failed or empty US
-response does not prevent KOSPI from displaying (and vice versa).
+```text
+index.html                  Overview and shared market-page markup
+style.css                   Layout, typography, tables, responsive criteria
+script.js                   Routing, result loading, formatting, rendering
+hero_image.png              Hero illustration
+data/results.json           Generated Korean results
+data/results-us.json        Generated US results
+docs/DATA.md                JSON contract and data semantics
+docs/DESIGN.md              Current design conventions
+docs/archive/               Historical design reference; not an active specification
+```
 
-## Rules
+## Views
 
-Both screeners default to volume > 1.5× (+50%), price > 1.1× (+10%), two rolling
-5-calendar-day windows, and three strictly rising closes. Volume averages are
-per trading session, so windows with different session counts remain comparable.
-The JSON thresholds and `windowDays` drive the displayed metrics.
+| Route | Content |
+| --- | --- |
+| `#overview` | Introduction, market links, counts, and compact snapshot notes |
+| `#KOSPImatches` | KOSPI 200 matches, raw prices, and normalized history |
+| `#USmatches` | Nasdaq-100 / S&P 500 matches, raw prices, and normalized history |
+| `#matches` | Compatibility alias for the Korean view |
 
-Korean candidates are restricted to KOSPI 200 (index `1028`), using pykrx
-constituents on the screening anchor date. `results.json` records this membership
-date and constituent count under `universe`. The KOSPI route and labels remain
-unchanged.
+The top-right date is the result fetch date in Korea time. Footer notes show the
+snapshot cutoff and actual closing-data dates, which can differ between markets.
+Each market loads independently: a failed or empty response does not prevent
+the other market from displaying.
 
-Market caps appear in the summary and beneath stock headings in both history
-tables. KOSPI caps are from KRX on the anchor date. US caps are Yahoo-reported
-when the quote date matches the anchor; historical estimates are explicitly
-marked `≈`, and unavailable values are `—`. Normalized prices remain unitless.
-US constituent membership is refreshed from Wikipedia's Nasdaq-100 and S&P 500
-lists using the latest revisions at or before the cutoff; it is not a broad
-Nasdaq-market screen.
+## Screening contract
 
-## Updates
+- Two consecutive **5-calendar-day** windows, ending on the latest eligible session.
+- Evaluation average daily volume / base average daily volume **> 1.5**.
+- Final evaluation close / base average close **> 1.1**.
+- Last three trading-session closes strictly increase.
+- Korea: **KOSPI 200**, pykrx index `1028`, with membership on the anchor date.
+- US: **Nasdaq-100 ∪ S&P 500**, using index-list revisions at or before the cutoff.
 
-One Windows task, `Momentum_Daily_Snapshot`, runs `../auto_run.py` at sign-in,
-resume, and 21:00 while awake. There are no hourly triggers or allowed-hour rules.
-It runs while this computer is available and the user is signed in. The task
-does not wake the laptop; missed runs catch up when available.
+The local screeners apply these rules; the website only renders generated data.
+Daily volume averages use actual trading sessions. Weekends and holidays still
+count toward the calendar windows. Current thresholds are read from each JSON.
 
-Both markets use the most recent 21:00 KST cutoff. At noon this is yesterday
-evening; at 02:00 it is five hours earlier. KOSPI may use the cutoff's calendar
-date; US may use dates through the preceding calendar day. Actual price history
-selects the latest available trading session, including weekends and holidays.
-The website displays the shared snapshot and each market's closing-data date.
+## Snapshot and display semantics
 
-The root `last_snapshot.txt` skips a successfully published cycle. A process lock
-prevents overlapping triggers. Both screeners must succeed before either output
-is replaced. Both JSON files are committed together and completion is recorded
-only after push succeeds. Failures remain eligible for retry; a failed push
-reuses the completed outputs. Task Scheduler retries failures up to three times
-at five-minute intervals. Frontend edits require a separate commit and are never
-swept into automatic data commits. `../install_task.ps1` installs/updates this
-task and removes the two former schedules.
+Both markets use the most recent **21:00 Asia/Seoul**. The Korean session on that
+date is eligible; the same-date US regular session has not opened, so US prices
+come from a prior trading date. Weekends and holidays use available sessions.
 
-## Local development
+Market caps remain full numeric amounts in JSON and display as `₩675.22억`,
+`₩2.59조`, `$10.58bn`, or `$2.5tn`. KRX caps use the anchor date. US estimates
+are marked `≈`; unavailable caps show `—`. Currency symbols remain in market
+caps and section descriptions, but **Raw History price cells omit them**.
+US prices retain two decimal places; Korean prices use whole won. Normalized
+prices are unitless, with each stock's first available close indexed to 100.
 
-From this `website` directory:
+See [DATA.md](docs/DATA.md) for required fields, optional metadata, and limitations.
+
+## Publication
+
+The local Windows task `Momentum_Daily_Snapshot` runs at sign-in, resume, and
+21:00 while the laptop is available. It publishes both result files together
+after both screeners succeed, and skips a successfully published cutoff.
+The laptop must be online with the user signed in; this is not a hosted data job.
+
+GitHub Pages serves this repository's root from `main`. Data commits and frontend
+commits deploy through Pages. Do not hand-edit generated result values. The
+local project root README and operations guide document the private runner.
+
+## Development
+
+From this repository directory:
 
 ```powershell
 python -m http.server 8000 --bind 127.0.0.1
+git diff --check
+node --check script.js
 ```
 
-Open http://127.0.0.1:8000. Do not open index.html through file://, which blocks
-JSON fetching. Serve only this directory, not the parent containing credentials.
+Open <http://127.0.0.1:8000>. `file://` does not support normal JSON fetching.
+In the full local project, run `node --test test_frontend.cjs` from the parent
+directory for route, failure, empty-state, and formatting regression checks.
 
-Regression tests for routing, independent load failures, empty results, and
-currency formatting live at `../test_frontend.cjs`.
+Preserve the route names, result filenames, and DOM IDs used by `script.js`.
+When changing CSS or JS behavior, update its asset query version in `index.html`.
+Keep credentials, logs, local environments, research files, and private scripts
+outside this public directory. See [DESIGN.md](docs/DESIGN.md) for presentation
+conventions. The archived Apple analysis is historical inspiration only.
