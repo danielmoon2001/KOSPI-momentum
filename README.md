@@ -11,7 +11,8 @@ no framework or build step.
 - Legacy `#matches` links still open the KOSPI view.
 
 KOSPI reads `data/results.json`; US reads `data/results-us.json`. Each file has
-its own `asOf` session date and `generatedAt` timestamp. Switching markets also
+the same `snapshotAt` cutoff (most recent 21:00 KST), plus its own `asOf` session
+date and `generatedAt` fetch timestamp. Switching markets also
 switches every table, currency, source, and timestamp. A failed or empty US
 response does not prevent KOSPI from displaying (and vice versa).
 
@@ -27,20 +28,30 @@ tables. KOSPI caps are from KRX on the anchor date. US caps are Yahoo-reported
 when the quote date matches the anchor; historical estimates are explicitly
 marked `≈`, and unavailable values are `—`. Normalized prices remain unitless.
 US constituent membership is refreshed from Wikipedia's Nasdaq-100 and S&P 500
-lists by the US screener; it is not a broad Nasdaq-market screen.
+lists using the latest revisions at or before the cutoff; it is not a broad
+Nasdaq-market screen.
 
 ## Updates
 
-| Market | Korea-time run window | Local runner | Published file |
-| --- | --- | --- | --- |
-| KOSPI | 21:00-07:00 | `../KOSPI Momentum/auto_run.py` | `data/results.json` |
-| US | 07:00-17:00 | `../US Momentum/auto_run.py` | `data/results-us.json` |
+One Windows task, `Momentum_Daily_Snapshot`, runs `../auto_run.py` at sign-in,
+resume, and 21:00 while awake. There are no hourly triggers or allowed-hour rules.
+It runs while this computer is available and the user is signed in. The task
+does not wake the laptop; missed runs catch up when available.
 
-Both schedules try hourly during their windows and skip an already completed
-cycle. They run while this Windows computer is available and the user logged in.
-The shared `../automation_publish.py` serializes publication and commits only
-the corresponding market's JSON. Frontend changes require a separate Git commit
-and push; they are never swept into an automatic data commit.
+Both markets use the most recent 21:00 KST cutoff. At noon this is yesterday
+evening; at 02:00 it is five hours earlier. KOSPI may use the cutoff's calendar
+date; US may use dates through the preceding calendar day. Actual price history
+selects the latest available trading session, including weekends and holidays.
+The website displays the shared snapshot and each market's closing-data date.
+
+The root `last_snapshot.txt` skips a successfully published cycle. A process lock
+prevents overlapping triggers. Both screeners must succeed before either output
+is replaced. Both JSON files are committed together and completion is recorded
+only after push succeeds. Failures remain eligible for retry; a failed push
+reuses the completed outputs. Task Scheduler retries failures up to three times
+at five-minute intervals. Frontend edits require a separate commit and are never
+swept into automatic data commits. `../install_task.ps1` installs/updates this
+task and removes the two former schedules.
 
 ## Local development
 

@@ -19,6 +19,10 @@ function formatUpdated(value) {
   }) + " KST";
 }
 
+function formatSnapshot(value) {
+  return `${formatDate(value.slice(0, 10))} · 9 PM KST`;
+}
+
 function formatMoney(value, market, isCap = false) {
   if (typeof value !== "number" || !Number.isFinite(value)) return "—";
   return new Intl.NumberFormat(market.currency === "KRW" ? "ko-KR" : "en-US", {
@@ -70,8 +74,10 @@ function renderMarket(key) {
     setMessage(loading ? `Loading ${market.name} results…` : `Couldn't load ${market.name} results. Please try again later.`);
     return;
   }
-  $("#asof").textContent = `${market.name} · As of ${formatDate(data.asOf)}`;
-  $("#matches-updated").textContent = `Updated ${formatUpdated(data.generatedAt)}`;
+  $("#asof").textContent = data.snapshotAt
+    ? `${market.name} · ${formatSnapshot(data.snapshotAt)} snapshot`
+    : `${market.name} · As of ${formatDate(data.asOf)}`;
+  $("#matches-updated").textContent = `Closing data through ${formatDate(data.asOf)} · Fetched ${formatUpdated(data.generatedAt)}`;
   if (data.stocks.length === 0) {
     setMessage(`No ${market.name} stocks matched the criteria for ${formatDate(data.asOf)}.`);
     return;
@@ -105,6 +111,10 @@ function syncView(scroll = false) {
   $("#view-matches").style.display = key ? "block" : "none";
   if (key) renderMarket(key);
   else $("#asof").textContent = "KOSPI & US";
+  const snapshots = Object.values(state).map((entry) => entry.data?.snapshotAt);
+  $("#snapshot-status").textContent = snapshots.every(Boolean) && snapshots[0] === snapshots[1]
+    ? `Both markets: ${formatSnapshot(snapshots[0])} snapshot. Completed sessions only.`
+    : "Daily 9 PM KST snapshots. Each market shows its snapshot and closing-data date.";
   if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -117,7 +127,7 @@ async function loadMarket(key) {
     if (!Array.isArray(data.stocks) || !Array.isArray(data.dates) || !data.asOf || !data.generatedAt) throw new Error("Invalid results payload");
     state[key] = { data, loading: false };
     $(`#btn-${key}`).textContent = `${market.name} Matches (${data.stocks.length}) →`;
-    $(`#${key}-date`).textContent = `As of ${formatDate(data.asOf)}`;
+    $(`#${key}-date`).textContent = `Closing data: ${formatDate(data.asOf)}`;
   } catch (error) {
     console.error(`${market.name} results:`, error);
     state[key] = { error: true, loading: false };
