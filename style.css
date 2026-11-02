@@ -414,13 +414,19 @@ tr:last-child td {
 
 /* Footer Tile */
 .footer-tile {
-  padding: 48px 24px;
+  padding: 20px 24px;
   font-size: 12px;
+  line-height: 1.7;
   color: var(--ink-muted);
 }
 
-.footer-tile p + p {
-  margin-top: 6px;
+.footer-tile p {
+  display: inline;
+}
+
+.footer-tile p:not(:empty) ~ p:not(:empty)::before {
+  content: " · ";
+  margin: 0 6px;
 }
 
 .footer-tile p:empty {
