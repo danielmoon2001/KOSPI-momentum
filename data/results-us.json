@@ -2,9 +2,9 @@
   "market": "US",
   "currency": "USD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-02T19:15:24+09:00",
+  "generatedAt": "2026-11-02T21:01:20+09:00",
   "asOf": "2026-10-30",
-  "snapshotAt": "2026-11-01T21:00:00+09:00",
+  "snapshotAt": "2026-11-02T21:00:00+09:00",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
@@ -94,6 +94,6 @@
       "https://en.wikipedia.org/w/index.php?oldid=1381716526",
       "https://en.wikipedia.org/w/index.php?oldid=1382178819"
     ],
-    "retrievedAt": "2026-11-02T19:15:24+09:00"
+    "retrievedAt": "2026-11-02T21:01:20+09:00"
   }
 }
