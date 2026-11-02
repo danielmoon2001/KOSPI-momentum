@@ -33,7 +33,16 @@ function formatMoney(value, market, isCap = false) {
 }
 
 function formatCap(stock, market) {
-  return (stock.marketCapMethod === "estimated" ? "≈ " : "") + formatMoney(stock.marketCap, market, true);
+  const value = stock.marketCap;
+  if (typeof value !== "number" || !Number.isFinite(value)) return "—";
+  const korean = market.currency === "KRW";
+  const trillion = value >= 1e12;
+  const divisor = trillion ? 1e12 : korean ? 1e8 : 1e9;
+  const unit = korean ? (trillion ? "조" : "억") : (trillion ? "tn" : "bn");
+  const amount = new Intl.NumberFormat(korean ? "ko-KR" : "en-US", {
+    maximumFractionDigits: 2,
+  }).format(value / divisor);
+  return `${stock.marketCapMethod === "estimated" ? "≈ " : ""}${market.symbol}${amount}${unit}`;
 }
 
 function activeMarket() {
