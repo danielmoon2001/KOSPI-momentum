@@ -245,16 +245,6 @@ h1, h2, h3, p {
   gap: 20px;
 }
 
-.market-date {
-  margin-top: 10px;
-  font-size: 12px;
-  color: var(--ink-muted);
-}
-
-.tile-dark .market-date {
-  color: var(--body-muted);
-}
-
 .empty-state {
   text-align: center;
   padding: 48px 0;
@@ -361,6 +351,11 @@ h1, h2, h3, p {
   overflow-x: auto;
 }
 
+#prices-section .table-container,
+#normalized-section .table-container {
+  margin-top: 32px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -422,4 +417,12 @@ tr:last-child td {
   padding: 48px 24px;
   font-size: 12px;
   color: var(--ink-muted);
+}
+
+.footer-tile p + p {
+  margin-top: 6px;
+}
+
+.footer-tile p:empty {
+  display: none;
 }

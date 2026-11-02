@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KOSPI &amp; US Momentum Screener (by MQ)</title>
-  <link rel="stylesheet" href="style.css?v=20261102-snapshot">
-  <script src="script.js?v=20261102-compact-caps" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261103-layout">
+  <script src="script.js?v=20261103-layout" defer></script>
 </head>
 <body>
   <!-- Clean Apple Frosted Sub-Nav -->
@@ -25,7 +25,7 @@
         
         <div class="hero-text">
           <h1 class="hero-title">Momentum.</h1>
-          <p class="hero-lead">KOSPI &amp; US breakout screeners.<br>Designed by Moon Quixote.</p>
+          <p class="hero-lead">KOSPI 200 &amp; US breakout screeners.<br>Designed by Moon Quixote.</p>
           
           <div class="hero-desc">
             <p><strong>How it works</strong><br>Designed to catch stocks before they enter the Pre-Flight Breakout (PFB) phase. The screener compares a rolling <span data-window-days>5</span>-calendar-day evaluation window against the previous <span data-window-days>5</span> calendar days. It strictly isolates assets where average trading volume and price surge past configured multipliers, combined with a continuous 3-day rising price action.</p>
@@ -34,15 +34,11 @@
           <div class="hero-actions" id="hero-actions">
             <div>
               <a href="#KOSPImatches" class="btn btn-primary" id="btn-kospi">KOSPI Matches →</a>
-              <p class="market-date" id="kospi-date">Loading KOSPI results…</p>
             </div>
             <div>
               <a href="#USmatches" class="btn btn-primary" id="btn-us">US Matches →</a>
-              <p class="market-date" id="us-date">Loading US results…</p>
             </div>
           </div>
-          <p class="market-date">US universe: Nasdaq-100 or S&amp;P 500.</p>
-          <p class="market-date" id="snapshot-status">Daily 9 PM KST snapshot · completed sessions only.</p>
         </div>
 
         <div class="hero-visual">
@@ -54,6 +50,9 @@
 
     <footer class="tile tile-parchment footer-tile">
       <div class="content-bound">
+        <p>Universe: KOSPI 200 in Korea; Nasdaq-100 or S&amp;P 500 in the US.</p>
+        <p><span id="kospi-date">Loading KOSPI results…</span> · <span id="us-date">Loading US results…</span></p>
+        <p id="snapshot-status">Daily 9 PM KST snapshot · completed sessions only.</p>
         <p>KOSPI data: KRX. US data: Yahoo Finance. Verify market prices before execution.</p>
       </div>
     </footer>
@@ -73,8 +72,7 @@
 
         <div class="matches-header">
           <h2 class="tile-title" id="matches-title">KOSPI Matches.</h2>
-          <p class="tile-subtitle" id="matches-subtitle">Stocks crossing the volume and price thresholds.</p>
-          <p class="market-date" id="matches-updated"></p>
+          <p class="tile-subtitle" id="matches-subtitle">KOSPI 200 stocks crossing the volume and price thresholds.</p>
         </div>
 
         <!-- Apple-style Minimal Spec Callout Strip (Clean typography, no nested box clutter) -->
@@ -103,7 +101,7 @@
               <tr>
                 <th>Ticker</th>
                 <th>Name</th>
-                <th id="market-cap-heading">시가총액 (₩)</th>
+                <th id="market-cap-heading">Market cap</th>
                 <th>Volume Ratio</th>
                 <th>Price Ratio</th>
               </tr>
@@ -111,7 +109,6 @@
             <tbody id="rows"></tbody>
           </table>
         </div>
-        <p class="market-date" id="market-cap-note"></p>
       </div>
     </section>
 
@@ -145,6 +142,8 @@
 
     <footer class="tile tile-parchment footer-tile">
       <div class="content-bound">
+        <p id="matches-updated"></p>
+        <p id="market-cap-note"></p>
         <p id="matches-source">Data provided by KRX. Verify market prices before execution.</p>
       </div>
     </footer>
