@@ -1,0 +1,98 @@
+{
+  "market": "US",
+  "currency": "USD",
+  "source": "Yahoo Finance",
+  "generatedAt": "2026-11-02T11:29:11+09:00",
+  "asOf": "2026-10-30",
+  "volumeMultiplier": 1.5,
+  "priceMultiplier": 1.1,
+  "windowDays": 5,
+  "dates": [
+    "2026-10-21",
+    "2026-10-22",
+    "2026-10-23",
+    "2026-10-26",
+    "2026-10-27",
+    "2026-10-28",
+    "2026-10-29",
+    "2026-10-30"
+  ],
+  "stocks": [
+    {
+      "ticker": "PNR",
+      "name": "Pentair plc",
+      "indices": [
+        "S&P 500"
+      ],
+      "marketCap": 10578719744,
+      "marketCapAsOf": "2026-10-30",
+      "marketCapMethod": "reported",
+      "volumeRatio": 2.18,
+      "priceRatio": 1.22,
+      "closes": [
+        52.86,
+        55.44,
+        55.3,
+        55.22,
+        62.29,
+        64.37,
+        65.84,
+        66.26
+      ]
+    },
+    {
+      "ticker": "GPN",
+      "name": "Global Payments Inc.",
+      "indices": [
+        "S&P 500"
+      ],
+      "marketCap": 25625643008,
+      "marketCapAsOf": "2026-10-30",
+      "marketCapMethod": "reported",
+      "volumeRatio": 2.43,
+      "priceRatio": 1.15,
+      "closes": [
+        83.53,
+        85.88,
+        82.82,
+        81.86,
+        81.43,
+        83.55,
+        85.72,
+        96.84
+      ]
+    },
+    {
+      "ticker": "REGN",
+      "name": "Regeneron Pharmaceuticals, Inc.",
+      "indices": [
+        "S&P 500",
+        "Nasdaq-100"
+      ],
+      "marketCap": 95988236288,
+      "marketCapAsOf": "2026-10-30",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.64,
+      "priceRatio": 1.15,
+      "closes": [
+        805.67,
+        819.09,
+        805.02,
+        807.67,
+        816.1,
+        813.27,
+        818.77,
+        927.89
+      ]
+    }
+  ],
+  "universe": {
+    "name": "Nasdaq-100 ∪ S&P 500",
+    "count": 518,
+    "sources": [
+      "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
+      "https://en.wikipedia.org/wiki/List_of_NASDAQ-100_companies"
+    ],
+    "retrievedAt": "2026-11-02T11:29:11+09:00"
+  }
+}

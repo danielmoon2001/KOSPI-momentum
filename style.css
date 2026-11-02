@@ -231,6 +231,32 @@ h1, h2, h3, p {
 /* ================= SUBPAGE 2: MATCHES STYLES ================= */
 .matches-nav-bar {
   margin-bottom: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.market-date {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.tile-dark .market-date {
+  color: var(--body-muted);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 0;
+  color: var(--body-muted);
 }
 
 .back-link {
@@ -316,6 +342,19 @@ h1, h2, h3, p {
 }
 
 /* Tables */
+.stock-market-cap {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.market-cap,
+#prices-table td:first-child,
+#normalized-table td:first-child {
+  white-space: nowrap;
+}
+
 .table-container {
   overflow-x: auto;
 }
