@@ -26,12 +26,11 @@ function formatSnapshot(value) {
   return `${formatDate(value.slice(0, 10))} · 9 PM KST`;
 }
 
-function formatMoney(value, market, isCap = false) {
+function formatPrice(value, market) {
   if (typeof value !== "number" || !Number.isFinite(value)) return "—";
   return new Intl.NumberFormat(market.currency === "KRW" ? "ko-KR" : "en-US", {
-    style: "currency", currency: market.currency,
-    minimumFractionDigits: market.currency === "USD" && !isCap ? 2 : 0,
-    maximumFractionDigits: market.currency === "USD" && !isCap ? 2 : 0,
+    minimumFractionDigits: market.currency === "USD" ? 2 : 0,
+    maximumFractionDigits: market.currency === "USD" ? 2 : 0,
   }).format(value);
 }
 
@@ -70,7 +69,7 @@ function renderMarket(key) {
   $("#other-market-link").textContent = `${other.name} Matches →`;
   $("#market-cap-heading").textContent = "Market cap";
   $("#prices-subtitle").textContent = `Daily closing prices (${market.symbol}) over the base and evaluation windows.`;
-  $("#matches-source").textContent = `Data provided by ${market.source}. Verify market prices before execution.`;
+  $("#matches-source").textContent = `${market.source}. Verify prices before trading.`;
   $("#matches-updated").textContent = "";
   $("#market-cap-note").textContent = "";
   for (const selector of ["#prices-head", "#prices-body", "#normalized-head", "#normalized-body"]) $(selector).replaceChildren();
@@ -87,17 +86,19 @@ function renderMarket(key) {
     return;
   }
   $("#asof").textContent = `Updated ${formatUpdated(data.generatedAt, true)}`;
-  $("#matches-updated").textContent = `${market.name} closing data through ${formatDate(data.asOf)} · Fetched ${formatUpdated(data.generatedAt)}${data.snapshotAt ? ` · Snapshot: ${formatSnapshot(data.snapshotAt)}` : ""}`;
+  const snapshotNote = !data.snapshotAt ? "" : data.snapshotAt.slice(0, 10) === data.asOf
+    ? " · 9 PM KST snapshot" : ` · Snapshot: ${formatSnapshot(data.snapshotAt)}`;
+  $("#matches-updated").textContent = `Prices & caps: ${formatDate(data.asOf)}${snapshotNote}.`;
   if (data.stocks.length === 0) {
     setMessage(`No ${market.name} stocks matched the criteria for ${formatDate(data.asOf)}.`);
     return;
   }
   $("#prices-section").style.display = "flex";
   $("#normalized-section").style.display = "flex";
-  let capNote = `Market caps as of ${formatDate(data.asOf)}, shown below stock names in the history tables.`;
-  if (data.stocks.some((stock) => stock.marketCapMethod === "estimated")) capNote += " ≈ Estimated from the session close and previously reported shares.";
-  if (data.stocks.some((stock) => stock.marketCap == null)) capNote += " — Unavailable for that session.";
-  $("#market-cap-note").textContent = capNote;
+  const capNotes = [];
+  if (data.stocks.some((stock) => stock.marketCapMethod === "estimated")) capNotes.push("≈ Estimated cap (close × reported shares).");
+  if (data.stocks.some((stock) => stock.marketCap == null)) capNotes.push("— Cap unavailable.");
+  $("#market-cap-note").textContent = capNotes.join(" ");
   $("#rows").innerHTML = data.stocks.map((stock) => `<tr>
     <td class="highlight">${escapeHTML(stock.ticker)}</td>
     <td><strong>${escapeHTML(stock.name)}</strong></td>
@@ -108,7 +109,7 @@ function renderMarket(key) {
   $("#prices-head").innerHTML = headers;
   $("#normalized-head").innerHTML = headers;
   const bases = data.stocks.map((stock) => stock.closes.find((value) => value !== null && value !== undefined));
-  $("#prices-body").innerHTML = data.dates.map((day, i) => `<tr><td>${escapeHTML(day)}</td>${data.stocks.map((stock) => `<td>${formatMoney(stock.closes[i], market)}</td>`).join("")}</tr>`).join("");
+  $("#prices-body").innerHTML = data.dates.map((day, i) => `<tr><td>${escapeHTML(day)}</td>${data.stocks.map((stock) => `<td>${formatPrice(stock.closes[i], market)}</td>`).join("")}</tr>`).join("");
   $("#normalized-body").innerHTML = data.dates.map((day, i) => `<tr><td>${escapeHTML(day)}</td>${data.stocks.map((stock, j) => {
     const value = stock.closes[i];
     return `<td>${value == null || !bases[j] ? "—" : Math.round(value / bases[j] * 100)}</td>`;
@@ -127,8 +128,8 @@ function syncView(scroll = false) {
   }
   const snapshots = Object.values(state).map((entry) => entry.data?.snapshotAt);
   $("#snapshot-status").textContent = snapshots.every(Boolean) && snapshots[0] === snapshots[1]
-    ? `Both markets: ${formatSnapshot(snapshots[0])} snapshot. Completed sessions only.`
-    : "Daily 9 PM KST snapshots. Each market shows its snapshot and closing-data date.";
+    ? `Snapshot: ${formatSnapshot(snapshots[0])}. Completed sessions only.`
+    : "Daily 9 PM KST snapshots; see each market for its cutoff.";
   if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -141,7 +142,7 @@ async function loadMarket(key) {
     if (!Array.isArray(data.stocks) || !Array.isArray(data.dates) || !data.asOf || !data.generatedAt) throw new Error("Invalid results payload");
     state[key] = { data, loading: false };
     $(`#btn-${key}`).textContent = `${market.name} Matches (${data.stocks.length}) →`;
-    $(`#${key}-date`).textContent = `${market.name} closing data: ${formatDate(data.asOf)}`;
+    $(`#${key}-date`).textContent = `${market.name} close: ${formatDate(data.asOf)}`;
   } catch (error) {
     console.error(`${market.name} results:`, error);
     state[key] = { error: true, loading: false };

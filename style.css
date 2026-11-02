@@ -294,7 +294,8 @@ h1, h2, h3, p {
 /* Apple Minimal Spec Callout Strip (Smooth, Clean, Unboxed) */
 .specs-strip {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, max-content);
+  justify-content: space-between;
   gap: 32px;
   border-top: 1px solid var(--hairline-dark);
   border-bottom: 1px solid var(--hairline-dark);
@@ -307,6 +308,9 @@ h1, h2, h3, p {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
+  .spec-item:nth-child(even) {
+    text-align: right;
+  }
 }
 
 .spec-item {
@@ -314,7 +318,12 @@ h1, h2, h3, p {
   flex-direction: column;
 }
 
+.spec-item:last-child {
+  text-align: right;
+}
+
 .spec-num {
+  white-space: nowrap;
   font-family: var(--font-display);
   font-size: 34px;
   font-weight: 600;

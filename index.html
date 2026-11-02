@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KOSPI &amp; US Momentum Screener (by MQ)</title>
-  <link rel="stylesheet" href="style.css?v=20261103-compact-footer">
-  <script src="script.js?v=20261103-layout" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261103-criteria">
+  <script src="script.js?v=20261103-criteria" defer></script>
 </head>
 <body>
   <!-- Clean Apple Frosted Sub-Nav -->
@@ -25,10 +25,10 @@
         
         <div class="hero-text">
           <h1 class="hero-title">Momentum.</h1>
-          <p class="hero-lead">KOSPI 200 &amp; US breakout screeners.<br>Designed by Moon Quixote.</p>
+          <p class="hero-lead">Korea &amp; US Equity breakout screeners.<br>Designed by Moon Quixote.</p>
           
           <div class="hero-desc">
-            <p><strong>How it works</strong><br>Find stocks with price and volume above the set thresholds, plus three consecutively higher closes. Each screen compares two consecutive <span data-window-days>5</span>-calendar-day windows.</p>
+            <p><strong>How it works</strong><br>Find stocks gaining momentum across two consecutive <span data-window-days>5</span>-calendar-day windows. The screener compares average trading volume and the latest close with the previous window’s averages, then keeps stocks above the set thresholds whose last three closes rise consecutively.</p>
           </div>
 
           <div class="hero-actions" id="hero-actions">
@@ -50,10 +50,10 @@
 
     <footer class="tile tile-parchment footer-tile">
       <div class="content-bound">
-        <p>Universe: KOSPI 200 in Korea; Nasdaq-100 or S&amp;P 500 in the US.</p>
+        <p>Universe: KOSPI 200 · Nasdaq-100 or S&amp;P 500.</p>
         <p><span id="kospi-date">Loading KOSPI results…</span> · <span id="us-date">Loading US results…</span></p>
         <p id="snapshot-status">Daily 9 PM KST snapshot · completed sessions only.</p>
-        <p>KOSPI data: KRX. US data: Yahoo Finance. Verify market prices before execution.</p>
+        <p>Sources: KRX / Yahoo Finance. Verify prices before trading.</p>
       </div>
     </footer>
   </div>
@@ -144,7 +144,7 @@
       <div class="content-bound">
         <p id="matches-updated"></p>
         <p id="market-cap-note"></p>
-        <p id="matches-source">Data provided by KRX. Verify market prices before execution.</p>
+        <p id="matches-source">KRX. Verify prices before trading.</p>
       </div>
     </footer>
   </div>
