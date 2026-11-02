@@ -23,6 +23,11 @@ Both screeners default to volume > 1.5× (+50%), price > 1.1× (+10%), two rolli
 per trading session, so windows with different session counts remain comparable.
 The JSON thresholds and `windowDays` drive the displayed metrics.
 
+Korean candidates are restricted to KOSPI 200 (index `1028`), using pykrx
+constituents on the screening anchor date. `results.json` records this membership
+date and constituent count under `universe`. The KOSPI route and labels remain
+unchanged.
+
 Market caps appear in the summary and beneath stock headings in both history
 tables. KOSPI caps are from KRX on the anchor date. US caps are Yahoo-reported
 when the quote date matches the anchor; historical estimates are explicitly
