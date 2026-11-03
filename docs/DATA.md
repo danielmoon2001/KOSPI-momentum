@@ -40,7 +40,11 @@ matches and use the anchor date. Currency is implied by the Korean route.
 
 US additionally supplies top-level `market`, `currency`, and `source`.
 `universe` includes name, count, historical Wikipedia revision URLs under
-`sources`, and `retrievedAt`. Stocks carry `indices`, `marketCapAsOf`, and
+`sources`, and `retrievedAt`. `screenedCount` counts tradable candidates;
+`excludedSecurities` records confirmed trading cessations with ticker,
+`firstNonTradingDate`, reason, and authoritative source URL. A security may stop
+trading before its index removal; earlier anchors remain eligible. Unexplained
+missing data still fails the run. Stocks carry `indices`, `marketCapAsOf`, and
 `marketCapMethod` (`reported`, `estimated`, or `unavailable`). Estimates also
 record `sharesAsOf`. Quote dates or historical share observations constrain caps;
 they do not make vendor data an immutable historical archive.
