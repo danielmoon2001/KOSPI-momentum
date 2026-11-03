@@ -2,43 +2,59 @@
   "market": "US",
   "currency": "USD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-02T21:01:20+09:00",
-  "asOf": "2026-10-30",
-  "snapshotAt": "2026-11-02T21:00:00+09:00",
+  "generatedAt": "2026-11-03T21:20:29+09:00",
+  "asOf": "2026-11-02",
+  "snapshotAt": "2026-11-03T21:00:00+09:00",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
   "dates": [
-    "2026-10-21",
-    "2026-10-22",
-    "2026-10-23",
     "2026-10-26",
     "2026-10-27",
     "2026-10-28",
     "2026-10-29",
-    "2026-10-30"
+    "2026-10-30",
+    "2026-11-02"
   ],
   "stocks": [
     {
-      "ticker": "PNR",
-      "name": "Pentair plc",
+      "ticker": "GEN",
+      "name": "Gen Digital Inc.",
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 10578719744,
-      "marketCapAsOf": "2026-10-30",
+      "marketCap": 17733021696,
+      "marketCapAsOf": "2026-11-02",
       "marketCapMethod": "reported",
-      "volumeRatio": 2.18,
-      "priceRatio": 1.22,
+      "volumeRatio": 1.56,
+      "priceRatio": 1.23,
       "closes": [
-        52.86,
-        55.44,
-        55.3,
-        55.22,
-        62.29,
-        64.37,
-        65.84,
-        66.26
+        24.41,
+        24.25,
+        24.35,
+        28.2,
+        29.13,
+        29.89
+      ]
+    },
+    {
+      "ticker": "FDXF",
+      "name": "FedEx Freight Holding Company, Inc.",
+      "indices": [
+        "S&P 500"
+      ],
+      "marketCap": 19714379776,
+      "marketCapAsOf": "2026-11-02",
+      "marketCapMethod": "reported",
+      "volumeRatio": 2.22,
+      "priceRatio": 1.21,
+      "closes": [
+        109.45,
+        108.5,
+        108.33,
+        109.69,
+        126.04,
+        131.85
       ]
     },
     {
@@ -47,20 +63,18 @@
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 25625643008,
-      "marketCapAsOf": "2026-10-30",
+      "marketCap": 26363928576,
+      "marketCapAsOf": "2026-11-02",
       "marketCapMethod": "reported",
-      "volumeRatio": 2.43,
-      "priceRatio": 1.15,
+      "volumeRatio": 4.35,
+      "priceRatio": 1.21,
       "closes": [
-        83.53,
-        85.88,
-        82.82,
         81.86,
         81.43,
         83.55,
         85.72,
-        96.84
+        96.84,
+        99.63
       ]
     },
     {
@@ -70,30 +84,157 @@
         "S&P 500",
         "Nasdaq-100"
       ],
-      "marketCap": 95988236288,
-      "marketCapAsOf": "2026-10-30",
+      "marketCap": 99440287744,
+      "marketCapAsOf": "2026-11-02",
       "marketCapMethod": "reported",
-      "volumeRatio": 1.64,
-      "priceRatio": 1.15,
+      "volumeRatio": 3.15,
+      "priceRatio": 1.18,
       "closes": [
-        805.67,
-        819.09,
-        805.02,
         807.67,
         816.1,
         813.27,
         818.77,
-        927.89
+        927.89,
+        961.26
+      ]
+    },
+    {
+      "ticker": "VLTO",
+      "name": "Veralto Corporation",
+      "indices": [
+        "S&P 500"
+      ],
+      "marketCap": 28131508224,
+      "marketCapAsOf": "2026-11-02",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.71,
+      "priceRatio": 1.12,
+      "closes": [
+        103.35,
+        103.19,
+        102.8,
+        104.06,
+        111.1,
+        115.7
+      ]
+    },
+    {
+      "ticker": "CRH",
+      "name": "CRH plc",
+      "indices": [
+        "S&P 500"
+      ],
+      "marketCap": 64254631936,
+      "marketCapAsOf": "2026-11-02",
+      "marketCapMethod": "reported",
+      "volumeRatio": 2.19,
+      "priceRatio": 1.12,
+      "closes": [
+        85.43,
+        85.77,
+        86.54,
+        90.62,
+        90.81,
+        96.59
+      ]
+    },
+    {
+      "ticker": "FIS",
+      "name": "Fidelity National Information Services, Inc.",
+      "indices": [
+        "S&P 500"
+      ],
+      "marketCap": 20705593344,
+      "marketCapAsOf": "2026-11-02",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.68,
+      "priceRatio": 1.11,
+      "closes": [
+        36.87,
+        35.61,
+        36.48,
+        37.28,
+        38.55,
+        40.15
+      ]
+    },
+    {
+      "ticker": "ERIE",
+      "name": "Erie Indemnity Company",
+      "indices": [
+        "S&P 500"
+      ],
+      "marketCap": 14323763200,
+      "marketCapAsOf": "2026-11-02",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.97,
+      "priceRatio": 1.1,
+      "closes": [
+        251.3,
+        246.88,
+        246.39,
+        250.79,
+        261.39,
+        273.93
+      ]
+    },
+    {
+      "ticker": "LOW",
+      "name": "Lowe's Companies, Inc.",
+      "indices": [
+        "S&P 500"
+      ],
+      "marketCap": 122393927680,
+      "marketCapAsOf": "2026-11-02",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.51,
+      "priceRatio": 1.1,
+      "closes": [
+        198.22,
+        198.18,
+        198.4,
+        207.28,
+        209.07,
+        218.15
+      ]
+    },
+    {
+      "ticker": "IR",
+      "name": "Ingersoll Rand Inc.",
+      "indices": [
+        "S&P 500"
+      ],
+      "marketCap": 31769956352,
+      "marketCapAsOf": "2026-11-02",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.84,
+      "priceRatio": 1.1,
+      "closes": [
+        74.52,
+        75.53,
+        75.45,
+        80.01,
+        80.05,
+        82.73
       ]
     }
   ],
   "universe": {
     "name": "Nasdaq-100 ∪ S&P 500",
     "count": 518,
+    "screenedCount": 517,
+    "excludedSecurities": [
+      {
+        "ticker": "KVUE",
+        "firstNonTradingDate": "2026-11-02",
+        "reason": "Kenvue common shares ceased trading after the Kimberly-Clark acquisition.",
+        "source": "https://www.sec.gov/Archives/edgar/data/55785/000110465926120990/tm2628636d1_ex99-1.htm"
+      }
+    ],
     "sources": [
       "https://en.wikipedia.org/w/index.php?oldid=1381716526",
       "https://en.wikipedia.org/w/index.php?oldid=1382178819"
     ],
-    "retrievedAt": "2026-11-02T21:01:20+09:00"
+    "retrievedAt": "2026-11-03T21:20:29+09:00"
   }
 }
