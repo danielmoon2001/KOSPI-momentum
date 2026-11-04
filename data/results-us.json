@@ -2,9 +2,9 @@
   "market": "US",
   "currency": "USD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-03T21:20:29+09:00",
-  "asOf": "2026-11-02",
-  "snapshotAt": "2026-11-03T21:00:00+09:00",
+  "generatedAt": "2026-11-04T21:19:01+09:00",
+  "asOf": "2026-11-03",
+  "snapshotAt": "2026-11-04T21:00:00+09:00",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
@@ -14,67 +14,29 @@
     "2026-10-28",
     "2026-10-29",
     "2026-10-30",
-    "2026-11-02"
+    "2026-11-02",
+    "2026-11-03"
   ],
   "stocks": [
     {
-      "ticker": "GEN",
-      "name": "Gen Digital Inc.",
+      "ticker": "FISV",
+      "name": "Fiserv, Inc.",
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 17733021696,
-      "marketCapAsOf": "2026-11-02",
+      "marketCap": 31055177728,
+      "marketCapAsOf": "2026-11-03",
       "marketCapMethod": "reported",
-      "volumeRatio": 1.56,
-      "priceRatio": 1.23,
+      "volumeRatio": 2.61,
+      "priceRatio": 1.22,
       "closes": [
-        24.41,
-        24.25,
-        24.35,
-        28.2,
-        29.13,
-        29.89
-      ]
-    },
-    {
-      "ticker": "FDXF",
-      "name": "FedEx Freight Holding Company, Inc.",
-      "indices": [
-        "S&P 500"
-      ],
-      "marketCap": 19714379776,
-      "marketCapAsOf": "2026-11-02",
-      "marketCapMethod": "reported",
-      "volumeRatio": 2.22,
-      "priceRatio": 1.21,
-      "closes": [
-        109.45,
-        108.5,
-        108.33,
-        109.69,
-        126.04,
-        131.85
-      ]
-    },
-    {
-      "ticker": "GPN",
-      "name": "Global Payments Inc.",
-      "indices": [
-        "S&P 500"
-      ],
-      "marketCap": 26363928576,
-      "marketCapAsOf": "2026-11-02",
-      "marketCapMethod": "reported",
-      "volumeRatio": 4.35,
-      "priceRatio": 1.21,
-      "closes": [
-        81.86,
-        81.43,
-        83.55,
-        85.72,
-        96.84,
-        99.63
+        48.33,
+        47.4,
+        47.86,
+        48.48,
+        50.02,
+        51.93,
+        58.4
       ]
     },
     {
@@ -84,18 +46,41 @@
         "S&P 500",
         "Nasdaq-100"
       ],
-      "marketCap": 99440287744,
-      "marketCapAsOf": "2026-11-02",
+      "marketCap": 100692000768,
+      "marketCapAsOf": "2026-11-03",
       "marketCapMethod": "reported",
-      "volumeRatio": 3.15,
-      "priceRatio": 1.18,
+      "volumeRatio": 3.09,
+      "priceRatio": 1.2,
       "closes": [
         807.67,
         816.1,
         813.27,
         818.77,
         927.89,
-        961.26
+        961.26,
+        973.36
+      ]
+    },
+    {
+      "ticker": "IDXX",
+      "name": "IDEXX Laboratories, Inc.",
+      "indices": [
+        "S&P 500",
+        "Nasdaq-100"
+      ],
+      "marketCap": 52944060416,
+      "marketCapAsOf": "2026-11-03",
+      "marketCapMethod": "reported",
+      "volumeRatio": 3.11,
+      "priceRatio": 1.18,
+      "closes": [
+        570.21,
+        561.25,
+        562.91,
+        575.98,
+        551.21,
+        671.64,
+        672.04
       ]
     },
     {
@@ -104,118 +89,62 @@
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 28131508224,
-      "marketCapAsOf": "2026-11-02",
+      "marketCap": 28282257408,
+      "marketCapAsOf": "2026-11-03",
       "marketCapMethod": "reported",
-      "volumeRatio": 1.71,
-      "priceRatio": 1.12,
+      "volumeRatio": 1.8,
+      "priceRatio": 1.13,
       "closes": [
         103.35,
         103.19,
         102.8,
         104.06,
         111.1,
-        115.7
+        115.7,
+        116.32
       ]
     },
     {
-      "ticker": "CRH",
-      "name": "CRH plc",
+      "ticker": "DD",
+      "name": "DuPont de Nemours, Inc.",
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 64254631936,
-      "marketCapAsOf": "2026-11-02",
+      "marketCap": 20723695616,
+      "marketCapAsOf": "2026-11-03",
       "marketCapMethod": "reported",
-      "volumeRatio": 2.19,
-      "priceRatio": 1.12,
-      "closes": [
-        85.43,
-        85.77,
-        86.54,
-        90.62,
-        90.81,
-        96.59
-      ]
-    },
-    {
-      "ticker": "FIS",
-      "name": "Fidelity National Information Services, Inc.",
-      "indices": [
-        "S&P 500"
-      ],
-      "marketCap": 20705593344,
-      "marketCapAsOf": "2026-11-02",
-      "marketCapMethod": "reported",
-      "volumeRatio": 1.68,
+      "volumeRatio": 2.51,
       "priceRatio": 1.11,
       "closes": [
-        36.87,
-        35.61,
-        36.48,
-        37.28,
-        38.55,
-        40.15
+        136.25,
+        137.67,
+        138.68,
+        140.58,
+        140.05,
+        141.3,
+        153.46
       ]
     },
     {
-      "ticker": "ERIE",
-      "name": "Erie Indemnity Company",
+      "ticker": "MPWR",
+      "name": "Monolithic Power Systems, Inc.",
       "indices": [
-        "S&P 500"
+        "S&P 500",
+        "Nasdaq-100"
       ],
-      "marketCap": 14323763200,
-      "marketCapAsOf": "2026-11-02",
+      "marketCap": 64810414080,
+      "marketCapAsOf": "2026-11-03",
       "marketCapMethod": "reported",
-      "volumeRatio": 1.97,
-      "priceRatio": 1.1,
+      "volumeRatio": 1.98,
+      "priceRatio": 1.11,
       "closes": [
-        251.3,
-        246.88,
-        246.39,
-        250.79,
-        261.39,
-        273.93
-      ]
-    },
-    {
-      "ticker": "LOW",
-      "name": "Lowe's Companies, Inc.",
-      "indices": [
-        "S&P 500"
-      ],
-      "marketCap": 122393927680,
-      "marketCapAsOf": "2026-11-02",
-      "marketCapMethod": "reported",
-      "volumeRatio": 1.51,
-      "priceRatio": 1.1,
-      "closes": [
-        198.22,
-        198.18,
-        198.4,
-        207.28,
-        209.07,
-        218.15
-      ]
-    },
-    {
-      "ticker": "IR",
-      "name": "Ingersoll Rand Inc.",
-      "indices": [
-        "S&P 500"
-      ],
-      "marketCap": 31769956352,
-      "marketCapAsOf": "2026-11-02",
-      "marketCapMethod": "reported",
-      "volumeRatio": 1.84,
-      "priceRatio": 1.1,
-      "closes": [
-        74.52,
-        75.53,
-        75.45,
-        80.01,
-        80.05,
-        82.73
+        1167.27,
+        1211.89,
+        1211.22,
+        1198.8101,
+        1211.63,
+        1243.95,
+        1328.3
       ]
     }
   ],
@@ -235,6 +164,6 @@
       "https://en.wikipedia.org/w/index.php?oldid=1381716526",
       "https://en.wikipedia.org/w/index.php?oldid=1382178819"
     ],
-    "retrievedAt": "2026-11-03T21:20:29+09:00"
+    "retrievedAt": "2026-11-04T21:19:01+09:00"
   }
 }
