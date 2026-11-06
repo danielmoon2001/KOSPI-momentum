@@ -2,9 +2,9 @@
   "market": "US",
   "currency": "USD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-04T21:19:01+09:00",
-  "asOf": "2026-11-03",
-  "snapshotAt": "2026-11-04T21:00:00+09:00",
+  "generatedAt": "2026-11-06T11:09:30+09:00",
+  "asOf": "2026-11-04",
+  "snapshotAt": "2026-11-05T21:00:00+09:00",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
@@ -15,7 +15,8 @@
     "2026-10-29",
     "2026-10-30",
     "2026-11-02",
-    "2026-11-03"
+    "2026-11-03",
+    "2026-11-04"
   ],
   "stocks": [
     {
@@ -24,11 +25,12 @@
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 31055177728,
-      "marketCapAsOf": "2026-11-03",
-      "marketCapMethod": "reported",
-      "volumeRatio": 2.61,
-      "priceRatio": 1.22,
+      "marketCap": 32996124632,
+      "marketCapAsOf": "2026-11-04",
+      "marketCapMethod": "estimated",
+      "sharesAsOf": "2026-08-08",
+      "volumeRatio": 2.42,
+      "priceRatio": 1.28,
       "closes": [
         48.33,
         47.4,
@@ -36,29 +38,8 @@
         48.48,
         50.02,
         51.93,
-        58.4
-      ]
-    },
-    {
-      "ticker": "REGN",
-      "name": "Regeneron Pharmaceuticals, Inc.",
-      "indices": [
-        "S&P 500",
-        "Nasdaq-100"
-      ],
-      "marketCap": 100692000768,
-      "marketCapAsOf": "2026-11-03",
-      "marketCapMethod": "reported",
-      "volumeRatio": 3.09,
-      "priceRatio": 1.2,
-      "closes": [
-        807.67,
-        816.1,
-        813.27,
-        818.77,
-        927.89,
-        961.26,
-        973.36
+        58.4,
+        62.05
       ]
     },
     {
@@ -68,11 +49,12 @@
         "S&P 500",
         "Nasdaq-100"
       ],
-      "marketCap": 52944060416,
-      "marketCapAsOf": "2026-11-03",
-      "marketCapMethod": "reported",
-      "volumeRatio": 3.11,
-      "priceRatio": 1.18,
+      "marketCap": 55036144454,
+      "marketCapAsOf": "2026-11-04",
+      "marketCapMethod": "estimated",
+      "sharesAsOf": "2026-11-04",
+      "volumeRatio": 2.52,
+      "priceRatio": 1.24,
       "closes": [
         570.21,
         561.25,
@@ -80,90 +62,66 @@
         575.98,
         551.21,
         671.64,
-        672.04
+        672.04,
+        698.55
       ]
     },
     {
-      "ticker": "VLTO",
-      "name": "Veralto Corporation",
-      "indices": [
-        "S&P 500"
-      ],
-      "marketCap": 28282257408,
-      "marketCapAsOf": "2026-11-03",
-      "marketCapMethod": "reported",
-      "volumeRatio": 1.8,
-      "priceRatio": 1.13,
-      "closes": [
-        103.35,
-        103.19,
-        102.8,
-        104.06,
-        111.1,
-        115.7,
-        116.32
-      ]
-    },
-    {
-      "ticker": "DD",
-      "name": "DuPont de Nemours, Inc.",
-      "indices": [
-        "S&P 500"
-      ],
-      "marketCap": 20723695616,
-      "marketCapAsOf": "2026-11-03",
-      "marketCapMethod": "reported",
-      "volumeRatio": 2.51,
-      "priceRatio": 1.11,
-      "closes": [
-        136.25,
-        137.67,
-        138.68,
-        140.58,
-        140.05,
-        141.3,
-        153.46
-      ]
-    },
-    {
-      "ticker": "MPWR",
-      "name": "Monolithic Power Systems, Inc.",
+      "ticker": "BKNG",
+      "name": "Booking Holdings Inc.",
       "indices": [
         "S&P 500",
         "Nasdaq-100"
       ],
-      "marketCap": 64810414080,
-      "marketCapAsOf": "2026-11-03",
-      "marketCapMethod": "reported",
-      "volumeRatio": 1.98,
-      "priceRatio": 1.11,
+      "marketCap": null,
+      "marketCapAsOf": null,
+      "marketCapMethod": "unavailable",
+      "volumeRatio": 1.76,
+      "priceRatio": 1.14,
       "closes": [
-        1167.27,
-        1211.89,
-        1211.22,
-        1198.8101,
-        1211.63,
-        1243.95,
-        1328.3
+        153.14,
+        150.14,
+        147.94,
+        150.43,
+        148.13,
+        153.75,
+        155.67,
+        170.97
+      ]
+    },
+    {
+      "ticker": "FSLR",
+      "name": "First Solar, Inc.",
+      "indices": [
+        "S&P 500"
+      ],
+      "marketCap": 20906158091,
+      "marketCapAsOf": "2026-11-04",
+      "marketCapMethod": "estimated",
+      "sharesAsOf": "2026-11-04",
+      "volumeRatio": 2.13,
+      "priceRatio": 1.12,
+      "closes": [
+        168.15,
+        175.85,
+        176.3,
+        176.89,
+        174.4,
+        182.05,
+        185.9,
+        194.51
       ]
     }
   ],
   "universe": {
     "name": "Nasdaq-100 ∪ S&P 500",
     "count": 518,
-    "screenedCount": 517,
-    "excludedSecurities": [
-      {
-        "ticker": "KVUE",
-        "firstNonTradingDate": "2026-11-02",
-        "reason": "Kenvue common shares ceased trading after the Kimberly-Clark acquisition.",
-        "source": "https://www.sec.gov/Archives/edgar/data/55785/000110465926120990/tm2628636d1_ex99-1.htm"
-      }
-    ],
+    "screenedCount": 518,
+    "excludedSecurities": [],
     "sources": [
       "https://en.wikipedia.org/w/index.php?oldid=1381716526",
-      "https://en.wikipedia.org/w/index.php?oldid=1382178819"
+      "https://en.wikipedia.org/w/index.php?oldid=1383776342"
     ],
-    "retrievedAt": "2026-11-04T21:19:01+09:00"
+    "retrievedAt": "2026-11-06T11:09:30+09:00"
   }
 }
