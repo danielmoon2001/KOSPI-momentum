@@ -2,21 +2,21 @@
   "market": "US",
   "currency": "USD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-07T20:48:41+09:00",
-  "asOf": "2026-11-05",
-  "snapshotAt": "2026-11-06T21:00:00+09:00",
+  "generatedAt": "2026-11-07T21:02:26+09:00",
+  "asOf": "2026-11-06",
+  "snapshotAt": "2026-11-07T21:00:00+09:00",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
   "dates": [
-    "2026-10-27",
     "2026-10-28",
     "2026-10-29",
     "2026-10-30",
     "2026-11-02",
     "2026-11-03",
     "2026-11-04",
-    "2026-11-05"
+    "2026-11-05",
+    "2026-11-06"
   ],
   "stocks": [
     {
@@ -26,20 +26,20 @@
         "S&P 500",
         "Nasdaq-100"
       ],
-      "marketCap": null,
-      "marketCapAsOf": null,
-      "marketCapMethod": "unavailable",
-      "volumeRatio": 2.66,
-      "priceRatio": 1.42,
+      "marketCap": 129619787776,
+      "marketCapAsOf": "2026-11-06",
+      "marketCapMethod": "reported",
+      "volumeRatio": 2.29,
+      "priceRatio": 1.58,
       "closes": [
-        262.82,
         259.97,
         254.91,
         228.5,
         228.85,
         245.51,
         271.75,
-        356.1
+        356.1,
+        391.22
       ]
     },
     {
@@ -48,21 +48,20 @@
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 33380674846,
-      "marketCapAsOf": "2026-11-05",
-      "marketCapMethod": "estimated",
-      "sharesAsOf": "2026-11-05",
-      "volumeRatio": 2.18,
-      "priceRatio": 1.3,
+      "marketCap": 33455161344,
+      "marketCapAsOf": "2026-11-06",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.85,
+      "priceRatio": 1.29,
       "closes": [
-        47.4,
         47.86,
         48.48,
         50.02,
         51.93,
         58.4,
         62.05,
-        62.74
+        62.74,
+        62.88
       ]
     },
     {
@@ -71,43 +70,20 @@
       "indices": [
         "S&P 500"
       ],
-      "marketCap": null,
-      "marketCapAsOf": null,
-      "marketCapMethod": "unavailable",
-      "volumeRatio": 1.66,
-      "priceRatio": 1.21,
+      "marketCap": 7108325888,
+      "marketCapAsOf": "2026-11-06",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.86,
+      "priceRatio": 1.22,
       "closes": [
-        18.79,
         18.33,
         18.23,
         18.39,
         19.03,
         18.42,
         21.62,
-        22.33
-      ]
-    },
-    {
-      "ticker": "JKHY",
-      "name": "Jack Henry & Associates, Inc.",
-      "indices": [
-        "S&P 500"
-      ],
-      "marketCap": 12638388555,
-      "marketCapAsOf": "2026-11-05",
-      "marketCapMethod": "estimated",
-      "sharesAsOf": "2026-11-05",
-      "volumeRatio": 1.56,
-      "priceRatio": 1.13,
-      "closes": [
-        158.25,
-        158.11,
-        159.62,
-        161.34,
-        163.42,
-        161.66,
-        179.16,
-        180.26
+        22.33,
+        22.36
       ]
     },
     {
@@ -116,21 +92,20 @@
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 29349840753,
-      "marketCapAsOf": "2026-11-05",
-      "marketCapMethod": "estimated",
-      "sharesAsOf": "2026-08-11",
-      "volumeRatio": 1.71,
-      "priceRatio": 1.12,
+      "marketCap": 29885624320,
+      "marketCapAsOf": "2026-11-06",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.62,
+      "priceRatio": 1.14,
       "closes": [
-        397.02,
         395.86,
         397.97,
         400.94,
         409.29,
         406.58,
         418.6,
-        447.0
+        447.0,
+        455.16
       ]
     },
     {
@@ -139,44 +114,42 @@
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 21040509529,
-      "marketCapAsOf": "2026-11-05",
-      "marketCapMethod": "estimated",
-      "sharesAsOf": "2026-11-05",
-      "volumeRatio": 2.24,
-      "priceRatio": 1.11,
+      "marketCap": 21618759680,
+      "marketCapAsOf": "2026-11-06",
+      "marketCapMethod": "reported",
+      "volumeRatio": 2.09,
+      "priceRatio": 1.14,
       "closes": [
-        175.85,
         176.3,
         176.89,
         174.4,
         182.05,
         185.9,
         194.51,
-        195.76
+        195.76,
+        201.14
       ]
     },
     {
-      "ticker": "STE",
-      "name": "STERIS plc",
+      "ticker": "EW",
+      "name": "Edwards Lifesciences Corporation",
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 24776727477,
-      "marketCapAsOf": "2026-11-05",
-      "marketCapMethod": "estimated",
-      "sharesAsOf": "2026-08-11",
-      "volumeRatio": 1.85,
-      "priceRatio": 1.11,
+      "marketCap": 58730500096,
+      "marketCapAsOf": "2026-11-06",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.89,
+      "priceRatio": 1.1,
       "closes": [
-        228.49,
-        228.78,
-        232.14,
-        227.12,
-        233.35,
-        231.35,
-        247.91,
-        254.12
+        91.78,
+        94.44,
+        92.01,
+        93.26,
+        95.19,
+        99.37,
+        100.82,
+        102.14
       ]
     }
   ],
@@ -189,6 +162,6 @@
       "https://en.wikipedia.org/w/index.php?oldid=1381716526",
       "https://en.wikipedia.org/w/index.php?oldid=1383776342"
     ],
-    "retrievedAt": "2026-11-07T20:48:41+09:00"
+    "retrievedAt": "2026-11-07T21:02:26+09:00"
   }
 }
