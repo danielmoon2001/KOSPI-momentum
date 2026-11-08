@@ -2,9 +2,9 @@
   "market": "US",
   "currency": "USD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-07T21:02:26+09:00",
+  "generatedAt": "2026-11-08T21:03:36+09:00",
   "asOf": "2026-11-06",
-  "snapshotAt": "2026-11-07T21:00:00+09:00",
+  "snapshotAt": "2026-11-08T21:00:00+09:00",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
@@ -92,7 +92,7 @@
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 29885624320,
+      "marketCap": 29117417472,
       "marketCapAsOf": "2026-11-06",
       "marketCapMethod": "reported",
       "volumeRatio": 1.62,
@@ -162,6 +162,6 @@
       "https://en.wikipedia.org/w/index.php?oldid=1381716526",
       "https://en.wikipedia.org/w/index.php?oldid=1383776342"
     ],
-    "retrievedAt": "2026-11-07T21:02:26+09:00"
+    "retrievedAt": "2026-11-08T21:03:36+09:00"
   }
 }
