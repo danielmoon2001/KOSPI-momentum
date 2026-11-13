@@ -2,68 +2,43 @@
   "market": "US",
   "currency": "USD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-13T00:44:59+09:00",
-  "asOf": "2026-11-11",
-  "snapshotAt": "2026-11-12T21:00:00+09:00",
+  "generatedAt": "2026-11-13T21:02:09+09:00",
+  "asOf": "2026-11-12",
+  "snapshotAt": "2026-11-13T21:00:00+09:00",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
   "dates": [
-    "2026-11-02",
     "2026-11-03",
     "2026-11-04",
     "2026-11-05",
     "2026-11-06",
     "2026-11-09",
     "2026-11-10",
-    "2026-11-11"
+    "2026-11-11",
+    "2026-11-12"
   ],
   "stocks": [
-    {
-      "ticker": "TTWO",
-      "name": "Take-Two Interactive Software, Inc.",
-      "indices": [
-        "S&P 500",
-        "Nasdaq-100"
-      ],
-      "marketCap": 43304351452,
-      "marketCapAsOf": "2026-11-11",
-      "marketCapMethod": "estimated",
-      "sharesAsOf": "2026-11-11",
-      "volumeRatio": 1.76,
-      "priceRatio": 1.13,
-      "closes": [
-        192.1,
-        194.99,
-        208.9,
-        213.36,
-        214.87,
-        207.4,
-        224.64,
-        231.31
-      ]
-    },
     {
       "ticker": "CLX",
       "name": "The Clorox Company",
       "indices": [
         "S&P 500"
       ],
-      "marketCap": 12923454416,
-      "marketCapAsOf": "2026-11-11",
-      "marketCapMethod": "estimated",
-      "sharesAsOf": "2026-11-11",
-      "volumeRatio": 2.11,
-      "priceRatio": 1.11,
+      "marketCap": 13085510656,
+      "marketCapAsOf": "2026-11-12",
+      "marketCapMethod": "reported",
+      "volumeRatio": 1.92,
+      "priceRatio": 1.1,
       "closes": [
-        89.9,
         93.8,
         99.16,
         99.7,
         99.96,
         105.53,
         106.6,
-        106.86
+        106.86,
+        108.2
       ]
     }
   ],
@@ -76,6 +51,6 @@
       "https://en.wikipedia.org/w/index.php?oldid=1381716526",
       "https://en.wikipedia.org/w/index.php?oldid=1384572480"
     ],
-    "retrievedAt": "2026-11-13T00:44:59+09:00"
+    "retrievedAt": "2026-11-13T21:02:09+09:00"
   }
 }
