@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-15T10:04:55+09:00",
+  "markets": {
+    "kospi": {
+      "asOf": "2026-11-13"
+    },
+    "us": {
+      "asOf": "2026-11-13"
+    }
+  },
+  "episodes": [
+    {
+      "id": "kospi:007660:2026-11-13",
+      "market": "kospi",
+      "ticker": "007660",
+      "name": "이수페타시스",
+      "foundDate": "2026-11-13",
+      "status": "active",
+      "survivedSessions": 0,
+      "history": [
+        {
+          "date": "2026-11-13",
+          "close": 88500
+        }
+      ]
+    }
+  ],
+  "snapshotAt": "2026-11-14T21:00:00+09:00",
+  "generatedAt": "2026-11-15T10:04:55+09:00"
+}

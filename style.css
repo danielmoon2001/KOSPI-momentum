@@ -441,3 +441,38 @@ tr:last-child td {
 .footer-tile p:empty {
   display: none;
 }
+
+/* Price-only tracking follows the existing dark market-page layout. */
+.tracking-intro {
+  max-width: 760px;
+  color: var(--body-muted);
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+.tracking-card {
+  border-top: 1px solid var(--hairline-dark);
+  padding: 28px 0 36px;
+}
+.tracking-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.tracking-card h3 { font-size: 21px; font-weight: 600; }
+.tracking-ticker { font-size: 13px; font-weight: 400; color: var(--body-muted); white-space: nowrap; }
+.tracking-meta { color: var(--body-muted); font-size: 13px; margin-top: 6px; }
+.tracking-result { text-align: right; }
+.tracking-status { font-size: 16px; font-weight: 500; }
+.tracking-ended .tracking-status { color: #f2b4ad; }
+.tracking-chart { display: block; width: 100%; height: 120px; margin: 20px 0; }
+.tracking-card .table-container { margin-top: 24px; }
+.tracking-history caption { text-align: left; font-size: 12px; color: var(--body-muted); margin-bottom: 12px; }
+.tracking-history th, .tracking-history td { text-align: left; white-space: nowrap; }
+.history-marker { display: block; font-size: 11px; font-weight: 400; margin-top: 4px; }
+@media (max-width: 600px) {
+  .tracking-result { text-align: left; }
+  .tracking-card-header { flex-direction: column; }
+  .tracking-ticker { display: block; margin-top: 4px; }
+}

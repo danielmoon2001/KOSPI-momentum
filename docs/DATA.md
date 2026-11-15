@@ -65,3 +65,36 @@ they do not make vendor data an immutable historical archive.
 The files are outputs, not configuration. Do not hand-edit prices or inferred
 membership. An empty valid `stocks` array means no matches; a fetch or validation
 failure is a separate UI state.
+
+## Tracking state (`data/tracking.json`)
+
+This file is both a public dashboard payload and the next run's persistent
+state. Preserve it when deploying or restoring the project; never replace it
+with an empty sample. `schemaVersion` is 1. `snapshotAt` is the shared cutoff,
+`generatedAt` is the write time, and `startedAt` is the feature's initialization
+time. `markets.kospi.asOf` and `markets.us.asOf` record independent session dates.
+
+Each entry in `episodes` contains:
+
+| Field | Meaning |
+| --- | --- |
+| `id` | Market, ticker, and discovery date joined with colons |
+| `market`, `ticker`, `name` | Security identity; market is `kospi` or `us` |
+| `foundDate` | Trading date of the match that started this episode |
+| `status` | `active` or `ended` |
+| `survivedSessions` | Non-declining sessions after discovery, excluding the ending session |
+| `history` | Ordered `{date, close}` entries from discovery through the first decline |
+| `endedDate` | First session with a close below the preceding recorded close |
+| `completedAsOf` | Market anchor at which that ending was first processed |
+
+The frontend shows active episodes and ended episodes whose `completedAsOf`
+equals their market's current `asOf`. Weekends do not remove a record. If the
+laptop misses sessions, the updater checks all intervening closes and stops at
+the first decline; the completed record is displayed at least on that catch-up
+snapshot, then hidden on the next market session. Hidden episodes remain in the
+file as an archive. A later match can create a new episode for the same ticker.
+
+Tracking uses the same price providers as screening, with four-decimal storage
+precision to avoid false declines from binary floating-point noise. Missing or
+invalid prices fail publication rather than ending an episode. The daily match
+payloads remain independent and are not altered to hide tracked stocks.

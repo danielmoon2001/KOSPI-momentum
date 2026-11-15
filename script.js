@@ -4,6 +4,7 @@ const markets = {
   us: { name: "US", route: "#USmatches", file: "data/results-us.json", currency: "USD", symbol: "$", source: "Yahoo Finance" },
 };
 const state = { kospi: { loading: true }, us: { loading: true } };
+let trackingState = { loading: true };
 const $ = (selector) => document.querySelector(selector);
 const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 
@@ -119,12 +120,101 @@ function renderMarket(key) {
   }).join("")}</tr>`).join("");
 }
 
-// Route updates and asynchronous loads always render the currently selected market.
+function visibleEpisodes(data) {
+  return data.episodes.filter((episode) => episode.status === "active"
+    || episode.completedAsOf === data.markets[episode.market]?.asOf)
+    .sort((a, b) => (a.status === "ended") - (b.status === "ended")
+      || a.foundDate.localeCompare(b.foundDate) || a.id.localeCompare(b.id));
+}
+
+function trackingChart(episode) {
+  const values = episode.history.map((point) => point.close);
+  if (values.length < 2) return ""; // A discovery close has no movement yet.
+  const low = Math.min(...values), high = Math.max(...values);
+  const points = values.map((value, index) => [
+    values.length === 1 ? 300 : 10 + index / (values.length - 1) * 580,
+    high === low ? 55 : 95 - (value - low) / (high - low) * 80,
+  ]);
+  const last = points.at(-1);
+  return `<svg class="tracking-chart" viewBox="0 0 600 110" role="img" aria-label="Closing-price movement for ${escapeHTML(episode.name)}; exact values follow in the table">
+    <polyline points="${points.map((point) => point.join(",")).join(" ")}" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" />
+    <circle cx="${last[0]}" cy="${last[1]}" r="4" fill="currentColor" />
+  </svg>`;
+}
+
+function renderTracking() {
+  const { data, loading, error } = trackingState;
+  $("#tracking-updated").textContent = "";
+  $("#tracking-started").textContent = "";
+  if (loading || error) {
+    $("#asof").textContent = loading ? "Loading…" : "Tracking unavailable";
+    $("#tracking-cards").innerHTML = `<p class="empty-state">${loading ? "Loading tracking…" : "Couldn't load tracking. Please try again later."}</p>`;
+    return;
+  }
+  $("#asof").textContent = `Updated ${formatUpdated(data.generatedAt, true)}`;
+  $("#tracking-updated").textContent = `KOSPI close: ${formatDate(data.markets.kospi.asOf)} · US close: ${formatDate(data.markets.us.asOf)} · Snapshot: ${formatSnapshot(data.snapshotAt)}.`;
+  $("#tracking-started").textContent = `Tracking started ${formatUpdated(data.startedAt, true)}, seeded from that snapshot’s matches.`;
+  const episodes = visibleEpisodes(data);
+  if (!episodes.length) {
+    $("#tracking-cards").innerHTML = '<p class="empty-state">No stocks are being tracked yet. New screener matches will appear here automatically.</p>';
+    return;
+  }
+  $("#tracking-cards").innerHTML = episodes.map((episode) => {
+    const market = markets[episode.market];
+    const count = episode.survivedSessions;
+    const unit = count === 1 ? "session" : "sessions";
+    const ended = episode.status === "ended";
+    const status = ended ? `Price fell after ${count} ${unit}`
+      : count === 0 ? "Found · tracking begins" : `Tracking · ${count} ${unit} survived`;
+    const first = episode.history[0], last = episode.history.at(-1);
+    const change = (last.close / first.close - 1) * 100;
+    return `<article class="tracking-card${ended ? " tracking-ended" : ""}">
+      <div class="tracking-card-header">
+        <div><h3>${escapeHTML(episode.name)} <span class="tracking-ticker">${escapeHTML(episode.ticker)} · ${market.name}</span></h3>
+        <p class="tracking-meta">Found ${formatDate(episode.foundDate)}${ended ? ` · First drop ${formatDate(episode.endedDate)}` : ""}</p></div>
+        <div class="tracking-result"><p class="tracking-status">${status}</p>
+        <p class="tracking-meta">${change >= 0 ? "+" : ""}${change.toFixed(2)}% since found · ${market.symbol}${formatPrice(last.close, market)}</p></div>
+      </div>
+      ${trackingChart(episode)}
+      <div class="table-container"><table class="tracking-history">
+        <caption>Closing prices (${market.symbol}) · entire tracking period</caption>
+        <thead><tr>${episode.history.map((point) => `<th scope="col">${escapeHTML(point.date)}${point.date === episode.foundDate ? '<span class="history-marker">Found</span>' : ended && point.date === episode.endedDate ? '<span class="history-marker">First drop</span>' : ""}</th>`).join("")}</tr></thead>
+        <tbody><tr>${episode.history.map((point) => `<td>${formatPrice(point.close, market)}</td>`).join("")}</tr></tbody>
+      </table></div>
+    </article>`;
+  }).join("");
+}
+
+async function loadTracking() {
+  try {
+    const response = await fetch(`data/tracking.json?t=${Date.now()}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    if (data.schemaVersion !== 1 || !Array.isArray(data.episodes) || !data.markets?.kospi?.asOf
+        || !data.markets?.us?.asOf || !data.generatedAt || !data.startedAt || !data.snapshotAt
+        || data.episodes.some((episode) => !markets[episode.market] || !episode.history?.length
+          || !["active", "ended"].includes(episode.status)
+          || episode.history.some((point) => !Number.isFinite(point.close) || point.close <= 0))) {
+      throw new Error("Invalid tracking payload");
+    }
+    trackingState = { data, loading: false };
+    $("#btn-tracking").textContent = `Tracking (${visibleEpisodes(data).length}) →`;
+  } catch (error) {
+    console.error("Tracking:", error);
+    trackingState = { error: true, loading: false };
+  }
+  syncView();
+}
+
+// Late data responses must always render the currently selected route.
 function syncView(scroll = false) {
   const key = activeMarket();
-  $("#view-overview").style.display = key ? "none" : "block";
+  const tracking = window.location.hash === "#tracking";
+  $("#view-overview").style.display = key || tracking ? "none" : "block";
   $("#view-matches").style.display = key ? "block" : "none";
-  if (key) renderMarket(key);
+  $("#view-tracking").style.display = tracking ? "block" : "none";
+  if (tracking) renderTracking();
+  else if (key) renderMarket(key);
   else {
     const latest = Object.values(state).map((entry) => entry.data?.generatedAt).filter(Boolean).sort().at(-1);
     $("#asof").textContent = latest ? `Updated ${formatUpdated(latest, true)}`
@@ -159,3 +249,4 @@ async function loadMarket(key) {
 window.addEventListener("hashchange", () => syncView(true));
 syncView();
 Promise.allSettled(Object.keys(markets).map(loadMarket));
+loadTracking();

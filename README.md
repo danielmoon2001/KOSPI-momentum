@@ -17,6 +17,7 @@ script.js                   Routing, result loading, formatting, rendering
 hero_image.png              Hero illustration
 data/results.json           Generated Korean results
 data/results-us.json        Generated US results
+data/tracking.json          Persistent tracking episodes and full price histories
 docs/DATA.md                JSON contract and data semantics
 docs/DESIGN.md              Current design conventions
 docs/archive/               Historical design reference; not an active specification
@@ -29,12 +30,26 @@ docs/archive/               Historical design reference; not an active specifica
 | `#overview` | Introduction, market links, counts, and compact snapshot notes |
 | `#KOSPImatches` | KOSPI 200 matches, raw prices, and normalized history |
 | `#USmatches` | Nasdaq-100 / S&P 500 matches, raw prices, and normalized history |
+| `#tracking` | Korean and US discoveries followed through their first lower close |
 | `#matches` | Compatibility alias for the Korean view |
 
 The top-right date is the result fetch date in Korea time. Footer notes show the
 snapshot cutoff and actual closing-data dates, which can differ between markets.
 Each market loads independently: a failed or empty response does not prevent
 the other market from displaying.
+
+Tracking starts with each stock's discovery close and counts subsequent trading
+sessions with equal or higher closes. The first lower close is included in the
+history but is not counted as survived. Completed episodes stay visible through
+that market session, then leave the view on the next session. Volume and window
+ratios are not retested. Repeated matches do not reset active episodes; a new
+match after completion can begin a new episode. Histories show every session
+from discovery to the first drop, with a chart once two closes are available.
+
+Tracking launched November 15, 2026, seeded from the latest published matches;
+it does not claim to reconstruct older discoveries. Match pages continue to
+show the current screen independently. Completed episodes remain in JSON for
+audit even after leaving the tracking view.
 
 ## Screening contract
 
@@ -67,8 +82,8 @@ See [DATA.md](docs/DATA.md) for required fields, optional metadata, and limitati
 ## Publication
 
 The local Windows task `Momentum_Daily_Snapshot` runs at sign-in, resume, and
-21:00 while the laptop is available. It publishes both result files together
-after both screeners succeed, and skips a successfully published cutoff.
+21:00 while the laptop is available. It publishes both results and tracking
+together after all three updates succeed, and skips a completed cutoff.
 The laptop must be online with the user signed in; this is not a hosted data job.
 
 GitHub Pages serves this repository's root from `main`. Data commits and frontend

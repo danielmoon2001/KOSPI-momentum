@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KOSPI &amp; US Momentum Screener (by MQ)</title>
-  <link rel="stylesheet" href="style.css?v=20261103-criteria">
-  <script src="script.js?v=20261103-criteria" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261115-tracking">
+  <script src="script.js?v=20261115-tracking" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
@@ -38,6 +38,9 @@
             <div>
               <a href="#USmatches" class="btn btn-primary" id="btn-us">US Matches →</a>
             </div>
+            <div>
+              <a href="#tracking" class="btn btn-primary" id="btn-tracking">Tracking →</a>
+            </div>
           </div>
         </div>
 
@@ -67,6 +70,7 @@
         <!-- Market navigation -->
         <div class="matches-nav-bar">
           <a href="#overview" class="back-link">← Back to Overview</a>
+          <a href="#tracking" class="back-link">Tracking →</a>
           <a href="#USmatches" class="back-link" id="other-market-link">US Matches →</a>
         </div>
 
@@ -145,6 +149,32 @@
         <p id="matches-updated"></p>
         <p id="market-cap-note"></p>
         <p id="matches-source">KRX. Verify prices before trading.</p>
+      </div>
+    </footer>
+  </div>
+  <!-- Persistent price-only tracking, independent of the daily match lists. -->
+  <div id="view-tracking" class="page-view" style="display: none;">
+    <section class="tile tile-dark">
+      <div class="content-bound">
+        <div class="matches-nav-bar">
+          <a href="#overview" class="back-link">← Back to Overview</a>
+          <a href="#KOSPImatches" class="back-link">KOSPI Matches →</a>
+          <a href="#USmatches" class="back-link">US Matches →</a>
+        </div>
+        <div class="matches-header">
+          <h2 class="tile-title">Tracking.</h2>
+          <p class="tile-subtitle">Found once. Followed until the first lower close.</p>
+        </div>
+        <p class="tracking-intro">Korean and US matches stay here while their closing price holds or rises, regardless of volume or screening ratios. The first down day completes the record and remains visible through that market session.</p>
+        <div id="tracking-cards" aria-live="polite"><p class="empty-state">Loading tracking…</p></div>
+      </div>
+    </section>
+    <footer class="tile tile-parchment footer-tile">
+      <div class="content-bound">
+        <p id="tracking-updated"></p>
+        <p id="tracking-started"></p>
+        <p>Counts are trading sessions after discovery; the first down day is shown but not counted as survived. Flat closes continue tracking.</p>
+        <p>Closing prices only · KRX / Yahoo Finance. Verify prices before trading.</p>
       </div>
     </footer>
   </div>
