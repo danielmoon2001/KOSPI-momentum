@@ -70,8 +70,8 @@ Both markets use the most recent **21:00 Asia/Seoul**. The Korean session on tha
 date is eligible; the same-date US regular session has not opened, so US prices
 come from a prior trading date. Weekends and holidays use available sessions.
 
-Market caps remain full numeric amounts in JSON and display as `₩675.22억`,
-`₩2.59조`, `$10.58bn`, or `$2.5tn`. KRX caps use the anchor date. US estimates
+Market caps remain full numeric amounts in JSON and display as `₩675.2억`,
+`₩2.6조`, `$10.6bn`, or `$2.5tn`. KRX caps use the anchor date. US estimates
 are marked `≈`; unavailable caps show `—`. Currency symbols remain in market
 caps and section descriptions, but **Raw History price cells omit them**.
 US prices retain two decimal places; Korean prices use whole won. Normalized

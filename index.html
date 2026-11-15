@@ -4,15 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KOSPI &amp; US Momentum Screener (by MQ)</title>
-  <link rel="stylesheet" href="style.css?v=20261115-tracking">
-  <script src="script.js?v=20261115-tracking" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261115-navigation">
+  <script src="script.js?v=20261115-navigation" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
   <nav class="sub-nav">
     <div class="nav-content">
-      <div class="nav-brand">
-        <a href="#overview" class="brand-link">Momentum</a>
+      <div class="nav-left">
+        <div class="nav-brand"><a href="#overview" class="brand-link">Momentum</a></div>
+        <div class="nav-links" aria-label="Pages">
+          <a href="#overview" id="nav-overview">Overview</a>
+          <a href="#KOSPImatches" id="nav-kospi">KOSPI Matches</a>
+          <a href="#USmatches" id="nav-us">US Matches</a>
+          <a href="#tracking" id="nav-tracking">Tracking</a>
+        </div>
       </div>
       <p id="asof">Loading…</p>
     </div>
@@ -32,15 +38,9 @@
           </div>
 
           <div class="hero-actions" id="hero-actions">
-            <div>
-              <a href="#KOSPImatches" class="btn btn-primary" id="btn-kospi">KOSPI Matches →</a>
-            </div>
-            <div>
-              <a href="#USmatches" class="btn btn-primary" id="btn-us">US Matches →</a>
-            </div>
-            <div>
-              <a href="#tracking" class="btn btn-primary" id="btn-tracking">Tracking →</a>
-            </div>
+            <a href="#KOSPImatches" class="hero-link" id="btn-kospi"><span>KOSPI</span><span aria-hidden="true">↗</span><span class="hero-link-detail" id="count-kospi">View matches</span></a>
+            <a href="#USmatches" class="hero-link" id="btn-us"><span>US</span><span aria-hidden="true">↗</span><span class="hero-link-detail" id="count-us">View matches</span></a>
+            <a href="#tracking" class="hero-link" id="btn-tracking"><span>Tracking</span><span aria-hidden="true">↗</span><span class="hero-link-detail" id="count-tracking">Follow discoveries</span></a>
           </div>
         </div>
 
@@ -55,8 +55,8 @@
       <div class="content-bound">
         <p>Universe: KOSPI 200 · Nasdaq-100 or S&amp;P 500.</p>
         <p><span id="kospi-date">Loading KOSPI results…</span> · <span id="us-date">Loading US results…</span></p>
-        <p id="snapshot-status">Daily 9 PM KST snapshot · completed sessions only.</p>
-        <p>Sources: KRX / Yahoo Finance. Verify prices before trading.</p>
+        <p id="snapshot-status">Daily 9 PM KST snapshot.</p>
+        <p>Sources: KRX / Yahoo Finance.</p>
       </div>
     </footer>
   </div>
@@ -67,13 +67,6 @@
     <section class="tile tile-dark" id="summary-section">
       <div class="content-bound">
         
-        <!-- Market navigation -->
-        <div class="matches-nav-bar">
-          <a href="#overview" class="back-link">← Back to Overview</a>
-          <a href="#tracking" class="back-link">Tracking →</a>
-          <a href="#USmatches" class="back-link" id="other-market-link">US Matches →</a>
-        </div>
-
         <div class="matches-header">
           <h2 class="tile-title" id="matches-title">KOSPI Matches.</h2>
           <p class="tile-subtitle" id="matches-subtitle">KOSPI 200 stocks crossing the volume and price thresholds.</p>
@@ -148,7 +141,7 @@
       <div class="content-bound">
         <p id="matches-updated"></p>
         <p id="market-cap-note"></p>
-        <p id="matches-source">KRX. Verify prices before trading.</p>
+        <p id="matches-source">KRX.</p>
       </div>
     </footer>
   </div>
@@ -156,11 +149,6 @@
   <div id="view-tracking" class="page-view" style="display: none;">
     <section class="tile tile-dark">
       <div class="content-bound">
-        <div class="matches-nav-bar">
-          <a href="#overview" class="back-link">← Back to Overview</a>
-          <a href="#KOSPImatches" class="back-link">KOSPI Matches →</a>
-          <a href="#USmatches" class="back-link">US Matches →</a>
-        </div>
         <div class="matches-header">
           <h2 class="tile-title">Tracking.</h2>
           <p class="tile-subtitle">Found once. Followed until the first lower close.</p>
@@ -173,8 +161,7 @@
       <div class="content-bound">
         <p id="tracking-updated"></p>
         <p id="tracking-started"></p>
-        <p>Counts are trading sessions after discovery; the first down day is shown but not counted as survived. Flat closes continue tracking.</p>
-        <p>Closing prices only · KRX / Yahoo Finance. Verify prices before trading.</p>
+        <p>Closing prices only · KRX / Yahoo Finance.</p>
       </div>
     </footer>
   </div>

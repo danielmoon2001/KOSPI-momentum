@@ -51,7 +51,7 @@ they do not make vendor data an immutable historical archive.
 
 ## Rendering and compatibility
 
-- Caps abbreviate to 억/조 or bn/tn, with up to two decimals and currency symbols.
+- Caps abbreviate to 억/조 or bn/tn, with up to one decimal and currency symbols.
 - `≈` identifies an estimated cap; `—` indicates missing data.
 - Raw price cells have no currency symbol; the section subtitle specifies units.
   US prices keep cents and Korean prices use whole won.

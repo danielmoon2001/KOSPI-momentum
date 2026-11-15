@@ -45,7 +45,7 @@ function formatCap(stock, market) {
   const divisor = trillion ? 1e12 : korean ? 1e8 : 1e9;
   const unit = korean ? (trillion ? "조" : "억") : (trillion ? "tn" : "bn");
   const amount = new Intl.NumberFormat(korean ? "ko-KR" : "en-US", {
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 1,
   }).format(value / divisor);
   return `${stock.marketCapMethod === "estimated" ? "≈ " : ""}${market.symbol}${amount}${unit}`;
 }
@@ -63,17 +63,14 @@ function setMessage(message) {
 
 function renderMarket(key) {
   const market = markets[key];
-  const other = markets[key === "kospi" ? "us" : "kospi"];
   const { data, error, loading } = state[key];
   $("#matches-title").textContent = `${market.name} Matches.`;
   $("#matches-subtitle").textContent = key === "us"
     ? "Nasdaq-100 or S&P 500 stocks crossing the volume and price thresholds."
     : "KOSPI 200 stocks crossing the volume and price thresholds.";
-  $("#other-market-link").href = other.route;
-  $("#other-market-link").textContent = `${other.name} Matches →`;
   $("#market-cap-heading").textContent = "Market cap";
   $("#prices-subtitle").textContent = `Daily closing prices (${market.symbol}) over the base and evaluation windows.`;
-  $("#matches-source").textContent = `${market.source}. Verify prices before trading.`;
+  $("#matches-source").textContent = `${market.source}.`;
   $("#matches-updated").textContent = "";
   $("#market-cap-note").textContent = "";
   for (const selector of ["#prices-head", "#prices-body", "#normalized-head", "#normalized-body"]) $(selector).replaceChildren();
@@ -198,7 +195,8 @@ async function loadTracking() {
       throw new Error("Invalid tracking payload");
     }
     trackingState = { data, loading: false };
-    $("#btn-tracking").textContent = `Tracking (${visibleEpisodes(data).length}) →`;
+    const count = visibleEpisodes(data).length;
+    $("#count-tracking").textContent = `${count} ${count === 1 ? "stock" : "stocks"} followed`;
   } catch (error) {
     console.error("Tracking:", error);
     trackingState = { error: true, loading: false };
@@ -210,6 +208,10 @@ async function loadTracking() {
 function syncView(scroll = false) {
   const key = activeMarket();
   const tracking = window.location.hash === "#tracking";
+  const current = tracking ? "tracking" : key || "overview";
+  for (const page of ["overview", "kospi", "us", "tracking"]) {
+    $(`#nav-${page}`).setAttribute("aria-current", page === current ? "page" : "false");
+  }
   $("#view-overview").style.display = key || tracking ? "none" : "block";
   $("#view-matches").style.display = key ? "block" : "none";
   $("#view-tracking").style.display = tracking ? "block" : "none";
@@ -222,7 +224,7 @@ function syncView(scroll = false) {
   }
   const snapshots = Object.values(state).map((entry) => entry.data?.snapshotAt);
   $("#snapshot-status").textContent = snapshots.every(Boolean) && snapshots[0] === snapshots[1]
-    ? `Snapshot: ${formatSnapshot(snapshots[0])}. Completed sessions only.`
+    ? `Snapshot: ${formatSnapshot(snapshots[0])}.`
     : "Daily 9 PM KST snapshots; see each market for its cutoff.";
   if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -235,7 +237,7 @@ async function loadMarket(key) {
     const data = await response.json();
     if (!Array.isArray(data.stocks) || !Array.isArray(data.dates) || !data.asOf || !data.generatedAt) throw new Error("Invalid results payload");
     state[key] = { data, loading: false };
-    $(`#btn-${key}`).textContent = `${market.name} Matches (${data.stocks.length}) →`;
+    $(`#count-${key}`).textContent = `${data.stocks.length} ${data.stocks.length === 1 ? "match" : "matches"}`;
     $(`#${key}-date`).textContent = `${market.name} close: ${formatDate(data.asOf)}`;
   } catch (error) {
     console.error(`${market.name} results:`, error);
