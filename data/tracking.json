@@ -3,7 +3,7 @@
   "startedAt": "2026-11-15T10:04:55+09:00",
   "markets": {
     "kospi": {
-      "asOf": "2026-11-13"
+      "asOf": "2026-11-16"
     },
     "us": {
       "asOf": "2026-11-13"
@@ -16,16 +16,22 @@
       "ticker": "007660",
       "name": "이수페타시스",
       "foundDate": "2026-11-13",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-13",
           "close": 88500
+        },
+        {
+          "date": "2026-11-16",
+          "close": 81500.0
         }
-      ]
+      ],
+      "endedDate": "2026-11-16",
+      "completedAsOf": "2026-11-16"
     }
   ],
-  "snapshotAt": "2026-11-15T21:00:00+09:00",
-  "generatedAt": "2026-11-16T08:58:18+09:00"
+  "snapshotAt": "2026-11-16T21:00:00+09:00",
+  "generatedAt": "2026-11-17T08:33:28+09:00"
 }
