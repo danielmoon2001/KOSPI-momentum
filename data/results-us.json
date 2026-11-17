@@ -2,21 +2,21 @@
   "market": "US",
   "currency": "USD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-17T08:33:22+09:00",
-  "asOf": "2026-11-13",
-  "snapshotAt": "2026-11-16T21:00:00+09:00",
+  "generatedAt": "2026-11-17T21:01:34+09:00",
+  "asOf": "2026-11-16",
+  "snapshotAt": "2026-11-17T21:00:00+09:00",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
+  "baseCalendarDays": 5,
+  "evalTradingDays": 3,
   "dates": [
-    "2026-11-04",
-    "2026-11-05",
-    "2026-11-06",
     "2026-11-09",
     "2026-11-10",
     "2026-11-11",
     "2026-11-12",
-    "2026-11-13"
+    "2026-11-13",
+    "2026-11-16"
   ],
   "stocks": [],
   "universe": {
@@ -28,6 +28,6 @@
       "https://en.wikipedia.org/w/index.php?oldid=1381716526",
       "https://en.wikipedia.org/w/index.php?oldid=1384572480"
     ],
-    "retrievedAt": "2026-11-17T08:33:22+09:00"
+    "retrievedAt": "2026-11-17T21:01:34+09:00"
   }
 }

@@ -3,10 +3,10 @@
   "startedAt": "2026-11-15T10:04:55+09:00",
   "markets": {
     "kospi": {
-      "asOf": "2026-11-16"
+      "asOf": "2026-11-17"
     },
     "us": {
-      "asOf": "2026-11-13"
+      "asOf": "2026-11-16"
     }
   },
   "episodes": [
@@ -30,8 +30,23 @@
       ],
       "endedDate": "2026-11-16",
       "completedAsOf": "2026-11-16"
+    },
+    {
+      "id": "kospi:069960:2026-11-17",
+      "market": "kospi",
+      "ticker": "069960",
+      "name": "현대백화점",
+      "foundDate": "2026-11-17",
+      "status": "active",
+      "survivedSessions": 0,
+      "history": [
+        {
+          "date": "2026-11-17",
+          "close": 96400.0
+        }
+      ]
     }
   ],
-  "snapshotAt": "2026-11-16T21:00:00+09:00",
-  "generatedAt": "2026-11-17T08:33:28+09:00"
+  "snapshotAt": "2026-11-17T21:00:00+09:00",
+  "generatedAt": "2026-11-17T21:01:35+09:00"
 }
