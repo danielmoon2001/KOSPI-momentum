@@ -13,7 +13,9 @@ describe the same daily cutoff, with potentially different trading anchors.
 | `asOf` | Final evaluation trading date, `YYYY-MM-DD` |
 | `volumeMultiplier` | Strict volume-ratio threshold; default 1.5 |
 | `priceMultiplier` | Strict price-ratio threshold; default 1.1 |
-| `windowDays` | Calendar days in each window; currently 5 |
+| `windowDays` | Compatibility field: 5; now the base's calendar length |
+| `baseCalendarDays` | 5 calendar days immediately before the first evaluation date |
+| `evalTradingDays` | Latest 3 trading dates, including `asOf` |
 | `dates` | Ascending trading dates in the base and evaluation windows |
 | `stocks` | Matches ordered by descending rounded price ratio; may be empty |
 | `universe` | Market-specific membership metadata |
@@ -21,6 +23,13 @@ describe the same daily cutoff, with potentially different trading anchors.
 `asOf` equals the last entry of `dates`. Each stock's `closes` array aligns
 one-to-one with `dates`. Calendar gaps are expected. Current outputs reject
 non-finite JSON values; missing history entries are null.
+
+Runs from November 17, 2026 use a three-session evaluation window. Its first
+date is the third-last entry in `dates`; the base is the five calendar dates
+immediately before that date, retaining only actual available trading sessions.
+Earlier payloads lack `baseCalendarDays`/`evalTradingDays` and used two adjacent
+five-calendar-day windows. Displayed ratios still use the same averaging and
+threshold rules. The update does not rewrite previously completed snapshots.
 
 ## Stock entries
 

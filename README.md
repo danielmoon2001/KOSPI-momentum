@@ -53,7 +53,8 @@ audit even after leaving the tracking view.
 
 ## Screening contract
 
-- Two consecutive **5-calendar-day** windows, ending on the latest eligible session.
+- Evaluation: **3 trading dates**, ending on the latest eligible session.
+- Base: **5 calendar days** immediately before the first evaluation date.
 - Evaluation average daily volume / base average daily volume **> 1.5**.
 - Final evaluation close / base average close **> 1.1**.
 - Last three trading-session closes strictly increase.
@@ -61,8 +62,12 @@ audit even after leaving the tracking view.
 - US: **Nasdaq-100 ∪ S&P 500**, using index-list revisions at or before the cutoff.
 
 The local screeners apply these rules; the website only renders generated data.
-Daily volume averages use actual trading sessions. Weekends and holidays still
-count toward the calendar windows. Current thresholds are read from each JSON.
+Daily volume averages use actual trading sessions. Weekends and holidays count
+toward the base's calendar span but not toward the three evaluation sessions.
+Current thresholds are read from each JSON. This window definition applies to
+new runs from November 17, 2026; earlier saved snapshots use the former two
+five-calendar-day windows. Frontend files were deliberately left unchanged for
+this backend-only update, so the overview's original window description remains.
 
 ## Snapshot and display semantics
 
