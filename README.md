@@ -20,7 +20,6 @@ data/results-us.json        Generated US results
 data/tracking.json          Persistent tracking episodes and full price histories
 docs/DATA.md                JSON contract and data semantics
 docs/DESIGN.md              Current design conventions
-docs/archive/               Historical design reference; not an active specification
 ```
 
 ## Views
@@ -37,6 +36,10 @@ The top-right date is the result fetch date in Korea time. Footer notes show the
 snapshot cutoff and actual closing-data dates, which can differ between markets.
 Each market loads independently: a failed or empty response does not prevent
 the other market from displaying.
+
+The sticky grey bar contains all four page links beside Momentum. Overview
+links use compact text, arrows, and counts. The active navigation link is
+underlined. Tracking retains the same dark-page typography and table style.
 
 Tracking starts with each stock's discovery close and counts subsequent trading
 sessions with equal or higher closes. The first lower close is included in the
@@ -66,8 +69,9 @@ Daily volume averages use actual trading sessions. Weekends and holidays count
 toward the base's calendar span but not toward the three evaluation sessions.
 Current thresholds are read from each JSON. This window definition applies to
 new runs from November 17, 2026; earlier saved snapshots use the former two
-five-calendar-day windows. Frontend files were deliberately left unchanged for
-this backend-only update, so the overview's original window description remains.
+five-calendar-day windows. The overview describes the current rule; each match
+page labels the windows used by its actual payload. Earlier snapshots show a
+brief historical-rule note until a new update replaces them.
 
 ## Snapshot and display semantics
 
@@ -113,4 +117,4 @@ Preserve the route names, result filenames, and DOM IDs used by `script.js`.
 When changing CSS or JS behavior, update its asset query version in `index.html`.
 Keep credentials, logs, local environments, research files, and private scripts
 outside this public directory. See [DESIGN.md](docs/DESIGN.md) for presentation
-conventions. The archived Apple analysis is historical inspiration only.
+conventions.

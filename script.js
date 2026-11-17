@@ -78,9 +78,11 @@ function renderMarket(key) {
   $("#normalized-section").style.display = "none";
   $("#match-vol-metric").textContent = `${Number(data?.volumeMultiplier ?? 1.5).toFixed(1)}×`;
   $("#match-price-metric").textContent = `${Number(data?.priceMultiplier ?? 1.1).toFixed(1)}×`;
-  document.querySelectorAll("#view-matches [data-window-days]").forEach((element) => {
-    element.textContent = data?.windowDays ?? 5;
-  });
+  // Earlier saved snapshots used calendar days for both windows.
+  const tradingEvaluation = !data || data.evalTradingDays != null;
+  $("#match-eval-metric").textContent = `${tradingEvaluation ? data?.evalTradingDays ?? 3 : data.windowDays ?? 5} Days`;
+  $("#match-eval-label").textContent = `Evaluation · ${tradingEvaluation ? "trading" : "calendar"} days`;
+  $("#match-base-metric").textContent = `${data?.baseCalendarDays ?? data?.windowDays ?? 5} Days`;
   if (loading || error) {
     $("#asof").textContent = `${market.name} · ${loading ? "Loading…" : "Unavailable"}`;
     setMessage(loading ? `Loading ${market.name} results…` : `Couldn't load ${market.name} results. Please try again later.`);
@@ -90,6 +92,7 @@ function renderMarket(key) {
   const snapshotNote = !data.snapshotAt ? "" : data.snapshotAt.slice(0, 10) === data.asOf
     ? " · 9 PM KST snapshot" : ` · Snapshot: ${formatSnapshot(data.snapshotAt)}`;
   $("#matches-updated").textContent = `Prices & caps: ${formatDate(data.asOf)}${snapshotNote}.`;
+  if (!tradingEvaluation) $("#matches-updated").textContent += " Earlier snapshot: 5-calendar-day evaluation.";
   if (data.stocks.length === 0) {
     setMessage(`No ${market.name} stocks matched the criteria for ${formatDate(data.asOf)}.`);
     return;

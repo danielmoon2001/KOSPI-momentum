@@ -70,6 +70,9 @@ they do not make vendor data an immutable historical archive.
   the cap date. Estimate/unavailable notes appear only when relevant.
 - The frontend tolerates older files without `snapshotAt`, and older Korean
   `generatedAt` values without an offset (interpreted as Korea time).
+- Evaluation metrics use `evalTradingDays` when present; otherwise they use
+  the legacy `windowDays` calendar length and identify the earlier snapshot.
+  Base metrics prefer `baseCalendarDays`, falling back to `windowDays`.
 
 The files are outputs, not configuration. Do not hand-edit prices or inferred
 membership. An empty valid `stocks` array means no matches; a fetch or validation

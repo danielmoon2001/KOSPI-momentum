@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KOSPI &amp; US Momentum Screener (by MQ)</title>
-  <link rel="stylesheet" href="style.css?v=20261115-navigation">
-  <script src="script.js?v=20261115-navigation" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261117-windows">
+  <script src="script.js?v=20261117-windows" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
@@ -34,7 +34,7 @@
           <p class="hero-lead">Korea &amp; US Equity breakout screeners.<br>Designed by Moon Quixote.</p>
           
           <div class="hero-desc">
-            <p><strong>How it works</strong><br>Find stocks gaining momentum across two consecutive <span data-window-days>5</span>-calendar-day windows. The screener compares average trading volume and the latest close with the previous window’s averages, then keeps stocks above the set thresholds whose last three closes rise consecutively.</p>
+            <p><strong>How it works</strong><br>Find stocks whose last three trading closes rise consecutively. Compare those three sessions’ average volume and latest close with the averages from the five calendar days immediately before them, keeping stocks above both thresholds.</p>
           </div>
 
           <div class="hero-actions" id="hero-actions">
@@ -83,12 +83,12 @@
             <span class="spec-title">Price surge</span>
           </div>
           <div class="spec-item">
-            <span class="spec-num">3 Days</span>
-            <span class="spec-title">Continuous rise</span>
+            <span class="spec-num" id="match-eval-metric">3 Days</span>
+            <span class="spec-title" id="match-eval-label">Evaluation · trading days</span>
           </div>
           <div class="spec-item">
-            <span class="spec-num"><span data-window-days>5</span> Days</span>
-            <span class="spec-title">Calendar-day window</span>
+            <span class="spec-num" id="match-base-metric">5 Days</span>
+            <span class="spec-title">Base · calendar days</span>
           </div>
         </div>
 
@@ -127,7 +127,7 @@
     <section class="tile tile-parchment" id="normalized-section">
       <div class="content-bound">
         <h2 class="tile-title">Normalized.</h2>
-        <p class="tile-subtitle">First close of the base week indexed to 100.</p>
+        <p class="tile-subtitle">First available base-window close indexed to 100.</p>
         <div class="table-container">
           <table id="normalized-table">
             <thead id="normalized-head"></thead>
