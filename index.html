@@ -3,26 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KOSPI &amp; US Momentum Screener (by MQ)</title>
-  <link rel="stylesheet" href="style.css?v=20261118-tracking">
-  <script src="script.js?v=20261118-tracking" defer></script>
+  <title>Moon Quixote · Asset Dashboard</title>
+  <link rel="stylesheet" href="style.css?v=20261119-dashboard">
+  <script src="fx.js?v=20261119-dashboard" defer></script>
+  <script src="script.js?v=20261119-dashboard" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
   <nav class="sub-nav">
     <div class="nav-content">
       <div class="nav-left">
-        <div class="nav-brand"><a href="#overview" class="brand-link">Momentum</a></div>
-        <div class="nav-links" aria-label="Pages">
-          <a href="#overview" id="nav-overview">Overview</a>
-          <a href="#KOSPImatches" id="nav-kospi">KOSPI Matches</a>
-          <a href="#USmatches" id="nav-us">US Matches</a>
-          <a href="#tracking" id="nav-tracking">Tracking</a>
+        <div class="nav-brand"><a href="#home" class="brand-link">Moon Quixote</a></div>
+        <div class="nav-links" aria-label="Dashboard sections">
+          <a href="#home" id="nav-home">Dashboard</a>
+          <a href="#overview" id="nav-equities">Equities</a>
+          <a href="#fx" id="nav-fx">FX</a>
         </div>
       </div>
       <p id="asof">Loading…</p>
     </div>
   </nav>
+  <nav id="equity-navigation" class="equity-navigation" aria-label="Equity pages" style="display:none">
+    <div class="content-bound">
+        <span class="section-label">Equities</span>
+        <div class="nav-links">
+          <a href="#overview" id="nav-overview">Overview</a>
+          <a href="#KOSPImatches" id="nav-kospi">KOSPI Matches</a>
+          <a href="#USmatches" id="nav-us">US Matches</a>
+          <a href="#tracking" id="nav-tracking">Tracking</a>
+        </div>
+    </div>
+  </nav>
+
+  <main id="view-home" class="page-view">
+    <section class="tile tile-light dashboard-intro"><div class="content-bound">
+      <p class="eyebrow">PERSONAL ASSET DASHBOARD</p>
+      <h1 class="tile-title">Markets, in perspective.</h1>
+      <p class="dashboard-description">A daily view across equities and currencies. Monitor momentum, follow discoveries, and compare the movements that matter.</p>
+      <div class="dashboard-sections">
+        <a href="#overview" class="dashboard-card"><span class="eyebrow">01 / EQUITIES</span><h2>Momentum <span aria-hidden="true">↗</span></h2><p>KOSPI 200 and US large-cap screening, with price tracking after discovery.</p><span id="home-equities-status" class="dashboard-status">Loading equity snapshots…</span></a>
+        <a href="#fx" class="dashboard-card"><span class="eyebrow">02 / FOREIGN EXCHANGE</span><h2>The won &amp; the world <span aria-hidden="true">↗</span></h2><p>Eight major currencies against KRW. Daily rate charts, momentum, and relative movement.</p><span id="home-fx-status" class="dashboard-status">Loading FX snapshot…</span></a>
+      </div>
+    </div></section>
+    <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p>Designed by Moon Quixote.</p><p>Daily snapshots · 9 PM KST cutoff.</p><p>Each section shows its own observation dates.</p></div></footer>
+  </main>
+
+  <main id="view-fx" class="page-view" style="display:none">
+    <section class="tile tile-light fx-section"><div class="content-bound">
+      <p class="eyebrow">FOREIGN EXCHANGE</p><h1 class="tile-title">KRW pairs.</h1>
+      <p class="dashboard-description">Daily reference rates for eight major currencies. A rising line means the foreign currency is strengthening against the won.</p>
+      <div class="fx-toolbar"><label for="fx-range">Chart range</label><select id="fx-range"><option>1D</option><option>1W</option><option>2W</option><option>1M</option><option selected>3M</option><option>6M</option><option>1Y</option></select><span>Daily observations · 1D compares the latest two</span></div>
+      <div id="fx-content" aria-live="polite"><p class="empty-state">Loading daily FX rates…</p></div>
+    </div></section>
+    <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p id="fx-updated"></p><p>KRW per 1 foreign unit · JPY per 100 yen.</p><p>Reference rates, excluding conversion fees/spreads. The unfinished cutoff-day bar is excluded. CNY uses a USD cross-rate.</p></div></footer>
+  </main>
 
   <!-- Overview -->
   <div id="view-overview" class="page-view">

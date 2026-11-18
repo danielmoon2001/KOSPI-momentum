@@ -1,23 +1,25 @@
-# Korea & US Equity Momentum
+# Moon Quixote · Asset Dashboard
 
 A static dashboard designed by Moon Quixote.
 [Open the live site](https://danielmoon2001.github.io/KOSPI-momentum/).
 
 Vanilla HTML, CSS, and JavaScript; no frontend framework, build step, or browser
 API credentials. This repository contains the **public website and generated
-results**. The private local screeners and Windows task installation live outside
+results**. The private local screeners, FX fetcher, and Windows task installation live outside
 this Git repository and are not included in a clone.
 
 ## Repository layout
 
 ```text
-index.html                  Overview and shared market-page markup
+index.html                  Dashboard home, equity views, and FX section
 style.css                   Layout, typography, tables, responsive criteria
 script.js                   Routing, result loading, formatting, rendering
+fx.js                       FX charts, daily tables, relative comparisons
 hero_image.png              Hero illustration
 data/results.json           Generated Korean results
 data/results-us.json        Generated US results
 data/tracking.json          Persistent tracking episodes and full price histories
+data/fx.json                Daily KRW histories for eight major currencies
 docs/DATA.md                JSON contract and data semantics
 docs/DESIGN.md              Current design conventions
 ```
@@ -26,7 +28,9 @@ docs/DESIGN.md              Current design conventions
 
 | Route | Content |
 | --- | --- |
-| `#overview` | Introduction, market links, counts, and compact snapshot notes |
+| `#home` (also default URL) | Dashboard entry point: Equities and FX |
+| `#fx` | Major currencies against KRW: charts, comparisons, daily observations |
+| `#overview`, `#equities` | Equity introduction, market links, counts, and snapshot notes |
 | `#KOSPImatches` | KOSPI 200 matches, raw prices, and normalized history |
 | `#USmatches` | Nasdaq-100 / S&P 500 matches, raw prices, and normalized history |
 | `#tracking` | Korean and US discoveries followed through their first lower close |
@@ -37,7 +41,8 @@ snapshot cutoff and actual closing-data dates, which can differ between markets.
 Each market loads independently: a failed or empty response does not prevent
 the other market from displaying.
 
-The sticky grey bar contains all four page links beside Momentum. Overview
+The sticky grey bar contains Dashboard, Equities, and FX beside Moon Quixote.
+Within Equities, a second navigation row exposes the four existing equity views. Overview
 links use compact text, arrows, and counts. The active navigation link is
 underlined. Tracking retains the same dark-page typography and table style.
 
@@ -88,11 +93,23 @@ prices are unitless, with each stock's first available close indexed to 100.
 
 See [DATA.md](docs/DATA.md) for required fields, optional metadata, and limitations.
 
+## FX monitoring
+
+FX uses the same snapshot cutoff and excludes that day's unfinished daily bar.
+USD, EUR, JPY, GBP, CNY, CHF, AUD, and CAD are shown in KRW (JPY per 100 yen).
+Yahoo Finance supplies daily history; CNY uses matching USD/KRW and USD/CNY
+observations. Charts cover 1D/1W/2W/1M/3M/6M/1Y, with 3M selected initially.
+The comparison rebases currencies on shared dates; expandable tables show
+daily rates and momentum relative to the eight-currency median. See
+[FX data semantics](docs/DATA.md#fx-history-datafxjson) for calculation details.
+
+Reference rates omit conversion fees/spreads and are not executable bank quotes.
+
 ## Publication
 
 The local Windows task `Momentum_Daily_Snapshot` runs at sign-in, resume, and
-21:00 while the laptop is available. It publishes both results and tracking
-together after all three updates succeed, and skips a completed cutoff.
+21:00 while the laptop is available. It publishes both equity results, tracking,
+and FX together after all four updates succeed, and skips a completed cutoff.
 The laptop must be online with the user signed in; this is not a hosted data job.
 
 GitHub Pages serves this repository's root from `main`. Data commits and frontend
@@ -107,6 +124,7 @@ From this repository directory:
 python -m http.server 8000 --bind 127.0.0.1
 git diff --check
 node --check script.js
+node --check fx.js
 ```
 
 Open <http://127.0.0.1:8000>. `file://` does not support normal JSON fetching.

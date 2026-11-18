@@ -210,17 +210,27 @@ async function loadTracking() {
 function syncView(scroll = false) {
   const key = activeMarket();
   const tracking = window.location.hash === "#tracking";
+  const fx = window.location.hash === "#fx";
+  const equities = !!key || tracking || ["#overview", "#equities"].includes(window.location.hash);
+  const home = !equities && !fx;
   const current = tracking ? "tracking" : key || "overview";
   for (const page of ["overview", "kospi", "us", "tracking"]) {
     $(`#nav-${page}`).setAttribute("aria-current", page === current ? "page" : "false");
   }
-  $("#view-overview").style.display = key || tracking ? "none" : "block";
+  $("#nav-home").setAttribute("aria-current", home ? "page" : "false");
+  $("#nav-equities").setAttribute("aria-current", equities ? "page" : "false");
+  $("#nav-fx").setAttribute("aria-current", fx ? "page" : "false");
+  $("#equity-navigation").style.display = equities ? "flex" : "none";
+  $("#view-home").style.display = home ? "block" : "none";
+  $("#view-fx").style.display = fx ? "block" : "none";
+  $("#view-overview").style.display = equities && !key && !tracking ? "block" : "none";
   $("#view-matches").style.display = key ? "block" : "none";
   $("#view-tracking").style.display = tracking ? "block" : "none";
-  if (tracking) renderTracking();
+  if (fx) renderFX();
+  else if (tracking) renderTracking();
   else if (key) renderMarket(key);
   else {
-    const latest = Object.values(state).map((entry) => entry.data?.generatedAt).filter(Boolean).sort().at(-1);
+    const latest = [...Object.values(state), ...(home ? [fxState] : [])].map((entry) => entry.data?.generatedAt).filter(Boolean).sort().at(-1);
     $("#asof").textContent = latest ? `Updated ${formatUpdated(latest, true)}`
       : Object.values(state).some((entry) => entry.loading) ? "Loading…" : "Update unavailable";
   }
@@ -228,6 +238,10 @@ function syncView(scroll = false) {
   $("#snapshot-status").textContent = snapshots.every(Boolean) && snapshots[0] === snapshots[1]
     ? `Snapshot: ${formatSnapshot(snapshots[0])}.`
     : "Daily 9 PM KST snapshots; see each market for its cutoff.";
+  $("#home-equities-status").textContent = Object.entries(state).map(([key, value]) => value.data
+    ? `${markets[key].name}: ${formatDate(value.data.asOf)}` : `${markets[key].name}: ${value.loading ? "loading" : "unavailable"}`).join(" · ");
+  $("#home-fx-status").textContent = fxState.data ? `8 currencies · Coverage through ${formatDate(fxState.data.asOf)}`
+    : fxState.loading ? "Loading FX snapshot…" : "FX snapshot unavailable";
   if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -254,3 +268,4 @@ window.addEventListener("hashchange", () => syncView(true));
 syncView();
 Promise.allSettled(Object.keys(markets).map(loadMarket));
 loadTracking();
+initFX();
