@@ -23,8 +23,9 @@ conventions describe the current four-route dashboard.
   hover title rather than repeating a visible label in every column. Values
   use at most one decimal place and KRW 억/조 or USD bn/tn units.
 - Raw price cells omit currency symbols; descriptions and caps retain units.
-- Footers use 12 px text, 20 px vertical padding, inline wrapping notes, and subtle
-  separators. Empty notes are hidden.
+- Footers use 12 px text and 20 px vertical padding. Note groups spread across
+  the content width with space between them and wrap with 8 px row gaps on
+  smaller screens. Empty notes are hidden.
 - The current title line is “Korea & US Equity breakout screeners.” The Korean
   universe remains explicitly identified as KOSPI 200 in its subtitle/footer.
 - Tracking has a spacious title, subtitle, introduction, and separated stock

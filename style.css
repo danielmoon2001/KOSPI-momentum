@@ -422,13 +422,11 @@ tr:last-child td {
   color: var(--ink-muted);
 }
 
-.footer-tile p {
-  display: inline;
-}
-
-.footer-tile p:not(:empty) ~ p:not(:empty)::before {
-  content: " · ";
-  margin: 0 6px;
+.footer-tile .content-bound {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
 }
 
 .footer-tile p:empty {
