@@ -3,10 +3,10 @@
   "startedAt": "2026-11-15T10:04:55+09:00",
   "markets": {
     "kospi": {
-      "asOf": "2026-11-17"
+      "asOf": "2026-11-18"
     },
     "us": {
-      "asOf": "2026-11-16"
+      "asOf": "2026-11-17"
     }
   },
   "episodes": [
@@ -37,16 +37,22 @@
       "ticker": "069960",
       "name": "현대백화점",
       "foundDate": "2026-11-17",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-17",
           "close": 96400.0
+        },
+        {
+          "date": "2026-11-18",
+          "close": 95600.0
         }
-      ]
+      ],
+      "endedDate": "2026-11-18",
+      "completedAsOf": "2026-11-18"
     }
   ],
-  "snapshotAt": "2026-11-17T21:00:00+09:00",
-  "generatedAt": "2026-11-17T21:01:35+09:00"
+  "snapshotAt": "2026-11-18T21:00:00+09:00",
+  "generatedAt": "2026-11-18T21:01:23+09:00"
 }
