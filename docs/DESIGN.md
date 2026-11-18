@@ -28,9 +28,11 @@ conventions describe the current four-route dashboard.
   smaller screens. Empty notes are hidden.
 - The current title line is “Korea & US Equity breakout screeners.” The Korean
   universe remains explicitly identified as KOSPI 200 in its subtitle/footer.
-- Tracking has a spacious title, subtitle, introduction, and separated stock
-  records. Each record shows the found date, status/count, price change, and
-  every close through the first drop. A chart appears after two closes.
+- The overview explains screening and subsequent tracking in two short paragraphs.
+- Tracking has a spacious title/subtitle and separated stock records. Compact
+  headers show the found date, status/session count, and change since discovery.
+  The history table contains every close and marks the first drop; the drop date
+  and latest price are not repeated in the header. A chart appears after two closes.
 
 Preserve these conventions during maintenance unless a design change is
 requested. DOM IDs are shared hooks for the renderer and frontend checks.

@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KOSPI &amp; US Momentum Screener (by MQ)</title>
-  <link rel="stylesheet" href="style.css?v=20261118-footers">
-  <script src="script.js?v=20261117-windows" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261118-tracking">
+  <script src="script.js?v=20261118-tracking" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
@@ -34,7 +34,8 @@
           <p class="hero-lead">Korea &amp; US Equity breakout screeners.<br>Designed by Moon Quixote.</p>
           
           <div class="hero-desc">
-            <p><strong>How it works</strong><br>Find stocks whose last three trading closes rise consecutively. Compare those three sessions’ average volume and latest close with the averages from the five calendar days immediately before them, keeping stocks above both thresholds.</p>
+            <p><strong>How it works</strong><br>The screen identifies stocks with three consecutively rising trading closes, evaluating average volume and the latest close against the preceding five-calendar-day base. Both volume and price thresholds must be exceeded.</p>
+            <p>Matches are then tracked independently of screening criteria while closing prices hold or rise. Tracking ends at the first lower close, with the full price history retained on view through that market session.</p>
           </div>
 
           <div class="hero-actions" id="hero-actions">
@@ -153,7 +154,6 @@
           <h2 class="tile-title">Tracking.</h2>
           <p class="tile-subtitle">Found once. Followed until the first lower close.</p>
         </div>
-        <p class="tracking-intro">Korean and US matches stay here while their closing price holds or rises, regardless of volume or screening ratios. The first down day completes the record and remains visible through that market session.</p>
         <div id="tracking-cards" aria-live="polite"><p class="empty-state">Loading tracking…</p></div>
       </div>
     </section>

@@ -164,21 +164,20 @@ function renderTracking() {
     const count = episode.survivedSessions;
     const unit = count === 1 ? "session" : "sessions";
     const ended = episode.status === "ended";
-    const status = ended ? `Price fell after ${count} ${unit}`
-      : count === 0 ? "Found · tracking begins" : `Tracking · ${count} ${unit} survived`;
+    const status = ended ? `Fell after ${count} ${unit}` : `Tracking · ${count} ${unit}`;
     const first = episode.history[0], last = episode.history.at(-1);
     const change = (last.close / first.close - 1) * 100;
     return `<article class="tracking-card${ended ? " tracking-ended" : ""}">
       <div class="tracking-card-header">
         <div><h3>${escapeHTML(episode.name)} <span class="tracking-ticker">${escapeHTML(episode.ticker)} · ${market.name}</span></h3>
-        <p class="tracking-meta">Found ${formatDate(episode.foundDate)}${ended ? ` · First drop ${formatDate(episode.endedDate)}` : ""}</p></div>
+        <p class="tracking-meta">Found ${formatDate(episode.foundDate)}</p></div>
         <div class="tracking-result"><p class="tracking-status">${status}</p>
-        <p class="tracking-meta">${change >= 0 ? "+" : ""}${change.toFixed(2)}% since found · ${market.symbol}${formatPrice(last.close, market)}</p></div>
+        <p class="tracking-meta">${change >= 0 ? "+" : ""}${change.toFixed(2)}% since discovery</p></div>
       </div>
       ${trackingChart(episode)}
       <div class="table-container"><table class="tracking-history">
-        <caption>Closing prices (${market.symbol}) · entire tracking period</caption>
-        <thead><tr>${episode.history.map((point) => `<th scope="col">${escapeHTML(point.date)}${point.date === episode.foundDate ? '<span class="history-marker">Found</span>' : ended && point.date === episode.endedDate ? '<span class="history-marker">First drop</span>' : ""}</th>`).join("")}</tr></thead>
+        <caption>Close (${market.symbol})</caption>
+        <thead><tr>${episode.history.map((point) => `<th scope="col">${escapeHTML(point.date)}${ended && point.date === episode.endedDate ? '<span class="history-marker">First drop</span>' : ""}</th>`).join("")}</tr></thead>
         <tbody><tr>${episode.history.map((point) => `<td>${formatPrice(point.close, market)}</td>`).join("")}</tr></tbody>
       </table></div>
     </article>`;

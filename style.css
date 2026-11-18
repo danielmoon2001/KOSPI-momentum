@@ -223,6 +223,8 @@ h1, h2, h3, p {
   margin-bottom: 40px;
 }
 
+.hero-desc p + p { margin-top: 16px; }
+
 .hero-desc strong {
   font-family: var(--font-text);
   font-weight: 600;
@@ -436,14 +438,7 @@ tr:last-child td {
 /* Price-only tracking follows the existing dark market-page layout. */
 #view-tracking > section { padding-top: 96px; }
 #view-tracking .tile-title { margin-bottom: 18px; }
-#view-tracking .matches-header { margin-bottom: 40px; }
-.tracking-intro {
-  max-width: 760px;
-  color: var(--body-muted);
-  font-size: 16px;
-  line-height: 1.7;
-  margin-bottom: 64px;
-}
+#view-tracking .matches-header { margin-bottom: 64px; }
 .tracking-card {
   border-top: 1px solid var(--hairline-dark);
   padding: 28px 0 36px;
@@ -453,11 +448,11 @@ tr:last-child td {
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 24px;
 }
 .tracking-card h3 { font-size: 21px; font-weight: 600; }
 .tracking-ticker { font-size: 13px; font-weight: 400; color: var(--body-muted); white-space: nowrap; }
-.tracking-meta { color: var(--body-muted); font-size: 13px; margin-top: 6px; }
+.tracking-meta { color: var(--body-muted); font-size: 13px; margin-top: 10px; }
 .tracking-result { text-align: right; }
 .tracking-status { font-size: 16px; font-weight: 500; }
 .tracking-ended .tracking-status { color: #f2b4ad; }
