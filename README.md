@@ -5,17 +5,18 @@ A static dashboard designed by Moon Quixote.
 
 Vanilla HTML, CSS, and JavaScript; no frontend framework, build step, or browser
 API credentials. This repository contains the **public website and generated
-results**. The private local screeners, FX/commodity fetchers, and Windows task installation live outside
+results**. The private local screeners, market-history fetchers, and Windows task installation live outside
 this Git repository and are not included in a clone.
 
 ## Repository layout
 
 ```text
-index.html                  Dashboard home, equities, FX and commodities
+index.html                  Dashboard home, equities, FX, commodities, crypto and bonds
 style.css                   Layout, typography, tables, responsive criteria
 script.js                   Routing, result loading, formatting, rendering
 fx.js                       FX validation and display configuration
 commodities.js              Futures validation and display configuration
+crypto-bonds.js              Crypto and government-bond ETF configuration
 history-dashboard.js        Shared charts, controls and daily signal tables
 fx-analysis.js              Shared close-based indicators and filter rules
 hero_image.png              Hero illustration
@@ -24,6 +25,8 @@ data/results-us.json        Generated US results
 data/tracking.json          Persistent tracking episodes and full price histories
 data/fx.json                Daily KRW histories for eight major currencies
 data/commodities.json       Daily prices for nine major commodity futures
+data/crypto.json            Bitcoin and Ethereum daily USD closes
+data/bonds.json             Nine Korean/US government-bond ETF histories
 docs/DATA.md                JSON contract and data semantics
 docs/DESIGN.md              Current design conventions
 ```
@@ -34,6 +37,8 @@ docs/DESIGN.md              Current design conventions
 | --- | --- |
 | `#home` (also default URL) | Dashboard entry point: Equities, FX and Commodities |
 | `#commodities` | Nine major futures markets: charts, technical rules and daily prices |
+| `#crypto` | Bitcoin and Ethereum daily USD charts and technical rules |
+| `#bonds` | Korean/US government-bond ETF prices grouped by country and maturity |
 | `#fx` | Major currencies against KRW: charts, technical rules, daily observations |
 | `#overview`, `#equities` | Equity introduction, market links, counts, and snapshot notes |
 | `#KOSPImatches` | KOSPI 200 matches, raw prices, and normalized history |
@@ -128,12 +133,18 @@ applies no additional roll adjustment or spot-price reconstruction. See
 
 The local Windows task `Momentum_Daily_Snapshot` runs at sign-in, resume, and
 21:00 while the laptop is available. It publishes both equity results, tracking,
-FX and commodities together after all five outputs succeed, and skips a completed cutoff.
+FX, commodities, crypto and bond ETFs together after all seven outputs succeed, and skips a completed cutoff.
 The laptop must be online with the user signed in; this is not a hosted data job.
 
 GitHub Pages serves this repository's root from `main`. Data commits and frontend
 commits deploy through Pages. Do not hand-edit generated result values. The
 local project root README and operations guide document the private runner.
+
+Crypto (`#crypto`) contains BTC and ETH in USD. Government Bonds (`#bonds`)
+contains three Korean and six US ETF maturity exposures, grouped by country.
+Both share the chart tools with independent settings. ETF closes are prices,
+not yields or total returns; distributions affect price signals. See
+[instruments and methodology](docs/CRYPTO-BONDS.md).
 
 ## Development
 
@@ -147,6 +158,7 @@ node --check fx.js
 node --check fx-analysis.js
 node --check history-dashboard.js
 node --check commodities.js
+node --check crypto-bonds.js
 ```
 
 Open <http://127.0.0.1:8000>. `file://` does not support normal JSON fetching.

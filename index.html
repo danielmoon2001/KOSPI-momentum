@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Moon Quixote · Asset Dashboard</title>
-  <link rel="stylesheet" href="style.css?v=20261119-commodities">
-  <script src="fx-analysis.js?v=20261119-commodities" defer></script>
-  <script src="history-dashboard.js?v=20261119-commodities" defer></script>
-  <script src="fx.js?v=20261119-commodities" defer></script>
-  <script src="commodities.js?v=20261119-commodities" defer></script>
-  <script src="script.js?v=20261119-commodities" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261119-crypto-bonds">
+  <script src="fx-analysis.js?v=20261119-crypto-bonds" defer></script>
+  <script src="history-dashboard.js?v=20261119-crypto-bonds" defer></script>
+  <script src="fx.js?v=20261119-crypto-bonds" defer></script>
+  <script src="commodities.js?v=20261119-crypto-bonds" defer></script>
+  <script src="crypto-bonds.js?v=20261119-crypto-bonds" defer></script>
+  <script src="script.js?v=20261119-crypto-bonds" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
@@ -22,6 +23,8 @@
           <a href="#overview" id="nav-equities">Equities</a>
           <a href="#fx" id="nav-fx">FX</a>
           <a href="#commodities" id="nav-commodities">Commodities</a>
+          <a href="#crypto" id="nav-crypto">Crypto</a>
+          <a href="#bonds" id="nav-bonds">Bonds</a>
         </div>
       </div>
       <p id="asof">Loading…</p>
@@ -43,11 +46,13 @@
     <section class="tile tile-light dashboard-intro"><div class="content-bound">
       <p class="eyebrow">PERSONAL ASSET DASHBOARD</p>
       <h1 class="tile-title">Markets, in perspective.</h1>
-      <p class="dashboard-description">A daily view across equities, currencies, and commodities. Monitor momentum, follow discoveries, and compare the movements that matter.</p>
+      <p class="dashboard-description">A daily view across equities, currencies, commodities, crypto, and government bonds. Monitor momentum, follow discoveries, and compare the movements that matter.</p>
       <div class="dashboard-sections">
         <a href="#overview" class="dashboard-card"><span class="eyebrow">01 / EQUITIES</span><h2>Momentum</h2><p>KOSPI 200 and US large-cap screening, with price tracking after discovery.</p><span id="home-equities-status" class="dashboard-status">Loading equity snapshots…</span></a>
         <a href="#fx" class="dashboard-card"><span class="eyebrow">02 / FOREIGN EXCHANGE</span><h2>The won &amp; the world</h2><p>Eight major currencies against KRW. Daily charts, trend indicators, and configurable trading rules.</p><span id="home-fx-status" class="dashboard-status">Loading FX snapshot…</span></a>
         <a href="#commodities" class="dashboard-card"><span class="eyebrow">03 / COMMODITIES</span><h2>Metals, energy &amp; grains</h2><p>Nine major futures markets. Daily price charts and the same configurable technical tools.</p><span id="home-commodities-status" class="dashboard-status">Loading commodities snapshot…</span></a>
+        <a href="#crypto" class="dashboard-card"><span class="eyebrow">04 / CRYPTO</span><h2>Bitcoin &amp; Ethereum</h2><p>Daily USD prices, longer-term charts, and configurable technical signals.</p><span id="home-crypto-status" class="dashboard-status">Loading crypto snapshot…</span></a>
+        <a href="#bonds" class="dashboard-card"><span class="eyebrow">05 / GOVERNMENT BONDS</span><h2>Across the curve</h2><p>Korean government-bond and US Treasury ETF prices across major maturity exposures.</p><span id="home-bonds-status" class="dashboard-status">Loading bond snapshot…</span></a>
       </div>
     </div></section>
     <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p>Designed by Moon Quixote.</p><p>Daily snapshots · 9 PM KST cutoff.</p><p>Each section shows its own observation dates.</p></div></footer>
@@ -137,6 +142,92 @@
       <div id="commodities-content" aria-live="polite"><p class="empty-state">Loading daily commodity futures…</p></div>
     </div></section>
     <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p id="commodities-updated"></p><p>USD or US cents, in the unit labeled on each chart.</p><p>Yahoo futures series, not physical spot prices. Contract changes may cause jumps and signals; no roll adjustment is applied here. Daily closes exclude the unfinished cutoff day. Indicators are analytical, not executed trades.</p></div></footer>
+  </main>
+
+  <main id="view-crypto" class="page-view" style="display:none">
+    <section class="tile tile-light fx-section"><div class="content-bound">
+      <p class="eyebrow">CRYPTO</p><h1 class="tile-title">Bitcoin &amp; Ethereum.</h1>
+      <p class="dashboard-description">Two cryptocurrencies, quoted in US dollars. Explore completed UTC daily closes, including weekends, under the shared snapshot cutoff.</p>
+      <form id="crypto-controls" class="fx-controls">
+        <div class="fx-toolbar">
+          <label for="crypto-range">Chart range</label><select id="crypto-range"><option>1D</option><option>1W</option><option>2W</option><option>1M</option><option selected>3M</option><option>6M</option><option>1Y</option><option>2Y</option><option>3Y</option><option>5Y</option><option value="custom">Custom days</option><option value="dates">Exact dates</option></select>
+          <div id="crypto-custom-days" hidden><label for="crypto-days">Calendar days</label><input id="crypto-days" type="number" min="1" max="2225" step="1" value="90"></div>
+          <div id="crypto-custom-dates" hidden><label for="crypto-start">From</label><input id="crypto-start" type="date"><label for="crypto-end">To</label><input id="crypto-end" type="date"></div>
+          <button class="fx-apply" type="submit">Apply settings</button>
+        </div>
+        <details class="fx-settings">
+          <summary>Technical indicators &amp; filter rules</summary>
+          <div class="fx-settings-grid">
+            <fieldset><legend><label><input id="crypto-averages" type="checkbox" checked> Moving averages</label></legend>
+              <label for="crypto-fast">Fast SMA</label><input id="crypto-fast" type="number" min="2" max="250" step="1" value="20" required>
+              <label for="crypto-slow">Slow SMA</label><input id="crypto-slow" type="number" min="2" max="250" step="1" value="50" required>
+            </fieldset>
+            <fieldset><legend><label><input id="crypto-bands" type="checkbox" checked> Support / resistance</label></legend>
+              <label for="crypto-channel">Channel lookback</label><input id="crypto-channel" type="number" min="2" max="250" step="1" value="20" required>
+              <p>Prior closes define the channel. A close outside it marks a breakout.</p>
+            </fieldset>
+            <fieldset class="fx-filter-settings"><legend><label><input id="crypto-filter" type="checkbox" checked> Percentage filter rule</label></legend>
+              <label for="crypto-x">Entry / reversal x (%)</label><input id="crypto-x" type="number" min="0.01" max="50" step="0.01" value="1" required>
+              <label for="crypto-mode">Reference extrema</label><select id="crypto-mode"><option value="running">Running extrema</option><option value="rolling">Rolling d closes</option></select>
+              <label for="crypto-lookback">Rolling lookback d</label><input id="crypto-lookback" type="number" min="2" max="250" step="1" value="20" required>
+              <label for="crypto-hold-mode">Holding rule</label><select id="crypto-hold-mode"><option value="minimum">Minimum hold</option><option value="fixed">Exit after h</option></select>
+              <label for="crypto-hold">Hold h (observations)</label><input id="crypto-hold" type="number" min="0" max="250" step="1" value="0" required>
+              <label for="crypto-neutral">Exit to neutral</label><input id="crypto-neutral" type="checkbox">
+              <label for="crypto-y">Neutral exit y (%)</label><input id="crypto-y" type="number" min="0.01" max="49.99" step="0.01" value="0.5" required>
+            </fieldset>
+          </div>
+          <p class="fx-rule-note">Long: a rise of x% from the reference low. Short: a fall of x% from the reference high. Running extrema reset at each position change; rolling extrema use the previous d closes. Smaller moves are ignored. A y% reversal can exit to neutral (y &lt; x), with re-entry evaluated on a later observation. Minimum hold suppresses signals until h observations after entry; “Exit after h” instead closes at that point. Long/short refer to the cryptocurrency price in USD.</p>
+          <button class="fx-apply" type="submit">Apply settings</button>
+        </details>
+        <p id="crypto-error" role="alert"></p>
+        <p id="crypto-coverage" class="fx-muted"></p>
+      </form>
+      <div id="crypto-content" aria-live="polite"><p class="empty-state">Loading Bitcoin and Ethereum…</p></div>
+    </div></section>
+    <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p id="crypto-updated"></p><p>USD per coin · Completed UTC daily bars; the unfinished cutoff day is excluded. Technical signals are analytical, not executed trades.</p></div></footer>
+  </main>
+
+  <main id="view-bonds" class="page-view" style="display:none">
+    <section class="tile tile-light fx-section"><div class="content-bound">
+      <p class="eyebrow">SOVEREIGN EXPOSURE</p><h1 class="tile-title">Government bonds.</h1>
+      <p class="dashboard-description">Korean government-bond and US Treasury ETFs across major maturity exposures. Charts show ETF share prices, not government bond yields.</p>
+      <form id="bonds-controls" class="fx-controls">
+        <div class="fx-toolbar">
+          <label for="bonds-range">Chart range</label><select id="bonds-range"><option>1D</option><option>1W</option><option>2W</option><option>1M</option><option selected>3M</option><option>6M</option><option>1Y</option><option>2Y</option><option>3Y</option><option>5Y</option><option value="custom">Custom days</option><option value="dates">Exact dates</option></select>
+          <div id="bonds-custom-days" hidden><label for="bonds-days">Calendar days</label><input id="bonds-days" type="number" min="1" max="2225" step="1" value="90"></div>
+          <div id="bonds-custom-dates" hidden><label for="bonds-start">From</label><input id="bonds-start" type="date"><label for="bonds-end">To</label><input id="bonds-end" type="date"></div>
+          <button class="fx-apply" type="submit">Apply settings</button>
+        </div>
+        <details class="fx-settings">
+          <summary>Technical indicators &amp; filter rules</summary>
+          <div class="fx-settings-grid">
+            <fieldset><legend><label><input id="bonds-averages" type="checkbox" checked> Moving averages</label></legend>
+              <label for="bonds-fast">Fast SMA</label><input id="bonds-fast" type="number" min="2" max="250" step="1" value="20" required>
+              <label for="bonds-slow">Slow SMA</label><input id="bonds-slow" type="number" min="2" max="250" step="1" value="50" required>
+            </fieldset>
+            <fieldset><legend><label><input id="bonds-bands" type="checkbox" checked> Support / resistance</label></legend>
+              <label for="bonds-channel">Channel lookback</label><input id="bonds-channel" type="number" min="2" max="250" step="1" value="20" required>
+              <p>Prior closes define the channel. A close outside it marks a breakout.</p>
+            </fieldset>
+            <fieldset class="fx-filter-settings"><legend><label><input id="bonds-filter" type="checkbox" checked> Percentage filter rule</label></legend>
+              <label for="bonds-x">Entry / reversal x (%)</label><input id="bonds-x" type="number" min="0.01" max="50" step="0.01" value="1" required>
+              <label for="bonds-mode">Reference extrema</label><select id="bonds-mode"><option value="running">Running extrema</option><option value="rolling">Rolling d closes</option></select>
+              <label for="bonds-lookback">Rolling lookback d</label><input id="bonds-lookback" type="number" min="2" max="250" step="1" value="20" required>
+              <label for="bonds-hold-mode">Holding rule</label><select id="bonds-hold-mode"><option value="minimum">Minimum hold</option><option value="fixed">Exit after h</option></select>
+              <label for="bonds-hold">Hold h (observations)</label><input id="bonds-hold" type="number" min="0" max="250" step="1" value="0" required>
+              <label for="bonds-neutral">Exit to neutral</label><input id="bonds-neutral" type="checkbox">
+              <label for="bonds-y">Neutral exit y (%)</label><input id="bonds-y" type="number" min="0.01" max="49.99" step="0.01" value="0.5" required>
+            </fieldset>
+          </div>
+          <p class="fx-rule-note">Long: a rise of x% from the reference low. Short: a fall of x% from the reference high. Running extrema reset at each position change; rolling extrema use the previous d closes. Smaller moves are ignored. A y% reversal can exit to neutral (y &lt; x), with re-entry evaluated on a later observation. Minimum hold suppresses signals until h observations after entry; “Exit after h” instead closes at that point. Long/short refer to the ETF price, not its yield. Cash distributions can cause price drops.</p>
+          <button class="fx-apply" type="submit">Apply settings</button>
+        </details>
+        <p id="bonds-error" role="alert"></p>
+        <p id="bonds-coverage" class="fx-muted"></p>
+      </form>
+      <div id="bonds-content" aria-live="polite"><p class="empty-state">Loading government-bond ETFs…</p></div>
+    </div></section>
+    <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p id="bonds-updated"></p><p>Unadjusted ETF closes in local currency. Maturity labels describe portfolio exposure, not exact remaining maturity or duration. Distributions can cause price drops; charts exclude cash income. Korean and US closing dates may differ.</p></div></footer>
   </main>
 
   <!-- Overview -->

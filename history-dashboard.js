@@ -84,12 +84,13 @@ class HistoryDashboard {
     const items = this.config.items(data);
     $('#asof').textContent = `Updated ${formatUpdated(data.generatedAt, true)}`;
     this.node('updated').textContent = `Snapshot: ${formatSnapshot(data.snapshotAt)} · Source: Yahoo Finance.`;
-    const earliest = items.map(p => p.history[0].date).sort().at(-1), latest = items.map(p => p.asOf).sort().at(-1);
+    const earliest = items.map(p => p.history[0].date).sort()[0], latest = items.map(p => p.asOf).sort().at(-1);
     this.node('coverage').textContent = `Available history: ${earliest} — ${latest}. Periods use daily observations; ranges use calendar days.`;
     for (const id of ['start','end']) { this.node(id).min = earliest; this.node(id).max = latest; }
     if (!this.start) { this.start = earliest; this.node('start').value = earliest; }
     if (!this.end) { this.end = latest; this.node('end').value = latest; }
-    container.innerHTML = `<div class="fx-pairs">${items.map(pair => {
+    const groups = this.config.groups ? this.config.groups(items) : [{label:null, items}];
+    container.innerHTML = groups.map(group => `${group.label ? `<h2 class="history-group-title">${escapeHTML(group.label)}</h2>` : ''}<div class="fx-pairs">${group.items.map(pair => {
       const view = this.config.describe(pair);
       // Cropping never restarts a rule or moving average.
       const history = this.window(fxAnalyze(pair.history, this.settings)), last = history.at(-1);
@@ -97,11 +98,12 @@ class HistoryDashboard {
       const amount = value => value === null ? '—' : `${view.prefix}${historyNumber(value * view.scale, view.decimals)}`;
       const selectedChange = history.every(p => p.close > 0) ? (last.close / history[0].close - 1) * 100 : null;
       return `<article class="fx-panel fx-pair"><div class="fx-pair-heading"><div><h2>${escapeHTML(view.title)}</h2><p class="fx-muted">${escapeHTML(view.subtitle)}</p></div><div class="fx-quote"><strong>${amount(last.close)}</strong><span>${last.date}${this.range === 'dates' ? ' · selected end' : ''}</span></div></div>
+        ${view.note ? `<p class="fx-muted">${escapeHTML(view.note)}</p>` : ''}
         <div class="fx-stats"><span>1D <strong>${historyPercent(last.change)}</strong></span>${this.range === '1D' ? '' : `<span>Range <strong>${historyPercent(selectedChange)}</strong></span>`}<span>${history.length} observations</span></div>
         ${this.chart(history, view)}
         <div class="fx-signals">${this.settings.filter ? `<div><span>Filter rule</span><strong>${last.state}</strong><small>${last.since ? `Since ${last.since}` : 'Awaiting entry'}</small></div>` : ''}${this.settings.bands ? `<div><span>Channel · ${this.settings.channel}</span><strong>${last.breakout === 'Inside' ? 'Inside channel' : last.breakout === 'Warming up' ? 'Warming up' : `${last.breakout} breakout`}</strong><small>${amount(last.support)} – ${amount(last.resistance)}</small></div>` : ''}${this.settings.averages ? `<div><span>SMA ${this.settings.fast} / ${this.settings.slow}</span><strong>${amount(last.fast)} / ${amount(last.slow)}</strong><small>Through ${last.date}</small></div>` : ''}</div>
         ${this.table(history, view)}</article>`;
-    }).join('')}</div>`;
+    }).join('')}</div>`).join('');
   }
 
   async load() {

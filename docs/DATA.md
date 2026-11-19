@@ -166,4 +166,23 @@ metadata is inferred from the generic Yahoo symbol.
 See [COMMODITIES.md](COMMODITIES.md) for exact ticker/unit mappings, validation,
 cutoff, display precision and nonpositive-price handling. The browser loads this
 file independently of FX, equity matches and tracking. The daily runner stages
-and publishes all five JSON outputs through the existing single-task cycle.
+and publishes all seven JSON outputs through the existing single-task cycle.
+
+## Crypto and bond histories (`data/crypto.json`, `data/bonds.json`)
+
+Both use `schemaVersion: 1`, `priceBasis: "unadjusted-close"`, `source`,
+`snapshotAt`, `generatedAt` and `asOf`. Crypto has `assetClass: "crypto"` and
+an `assets` array; bonds has `assetClass: "government-bond-etfs"` and a `bonds`
+array. Each ordered instrument has `code`, `name`, `ticker`, `unit`,
+`pricePrefix`, `decimals`, `asOf` and ascending `{date, close}` history.
+Bond items additionally have `country` and `maturity`; the Korean 30-year ETF
+has `inception: "2022-08-23"`. All closes must be finite and positive.
+
+The fixed instrument set, metadata and history coverage are validated before
+publication. Crypto requires uninterrupted UTC calendar dates and excludes the
+cutoff day's unfinished bar. Korean bond ETFs allow the cutoff date; US ETFs
+exclude it. Top-level `asOf` is the minimum of instrument latest dates, while
+cards retain their own dates. Coverage extends 2,225 calendar days where the
+instrument existed; the Korean 30-year ETF starts at inception. Exact-date
+controls span the union of coverage; an individual card can have no observations
+in an earlier selected range. [Methodology and units](CRYPTO-BONDS.md).

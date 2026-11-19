@@ -1,7 +1,7 @@
 # Current frontend conventions
 
-The source of truth is `index.html`, `style.css`, `script.js`, `history-dashboard.js`, `fx.js`, and `commodities.js`. The
-dashboard has top-level Home, Equities, FX and Commodities sections; equity subroutes retain
+The source of truth is `index.html`, `style.css`, `script.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, and `crypto-bonds.js`. The
+dashboard has top-level Home, Equities, FX, Commodities, Crypto and Bonds sections; equity subroutes retain
 their existing tables, thresholds, and tracking layout.
 
 - Monochrome palette: white, parchment `#f5f5f7`, dark surface `#272729`, and ink
@@ -43,13 +43,13 @@ behavior. Keep provider data escaped before inserting names or symbols into HTML
 
 ## Dashboard, FX and commodities
 
-The home page uses three simple linked section cards. FX and Commodities retain the same content
+The home page uses five simple linked section cards. The four history dashboards retain the same content
 width, white surfaces, restrained typography, and compact footer. Accent colors distinguish the closing rate, two moving averages and channel
 boundaries; filter entries/exits also use different marker shapes.
 
 A shared range control offers presets, a numeric day count and exact dates.
 Technical controls are in a native disclosure with an explicit Apply action.
-Settings apply within each section; FX and Commodities settings are independent.
+Settings apply within each section; FX, Commodities, Crypto and Bonds settings are independent. Bond cards are grouped into Korea and United States, with explicit maturity exposure and ETF price units. Available date controls span the union of histories; shorter-lived funds show only their available observations.
 The renderer and technical calculations are shared. Chart cards use two columns on desktop and
 one on mobile. Charts retain readable minimum widths and scroll inside their
 panels. Native details expose exact daily rates, indicator values and signals;

@@ -213,7 +213,9 @@ function syncView(scroll = false) {
   const fx = window.location.hash === "#fx";
   const commodities = window.location.hash === "#commodities";
   const equities = !!key || tracking || ["#overview", "#equities"].includes(window.location.hash);
-  const home = !equities && !fx && !commodities;
+  const crypto = window.location.hash === "#crypto";
+  const bonds = window.location.hash === "#bonds";
+  const home = !equities && !fx && !commodities && !crypto && !bonds;
   const current = tracking ? "tracking" : key || "overview";
   for (const page of ["overview", "kospi", "us", "tracking"]) {
     $(`#nav-${page}`).setAttribute("aria-current", page === current ? "page" : "false");
@@ -222,6 +224,10 @@ function syncView(scroll = false) {
   $("#nav-equities").setAttribute("aria-current", equities ? "page" : "false");
   $("#nav-fx").setAttribute("aria-current", fx ? "page" : "false");
   $("#nav-commodities").setAttribute("aria-current", commodities ? "page" : "false");
+  $("#nav-crypto").setAttribute("aria-current", crypto ? "page" : "false");
+  $("#nav-bonds").setAttribute("aria-current", bonds ? "page" : "false");
+  $("#view-crypto").style.display = crypto ? "block" : "none";
+  $("#view-bonds").style.display = bonds ? "block" : "none";
   $("#equity-navigation").style.display = equities ? "flex" : "none";
   $("#view-home").style.display = home ? "block" : "none";
   $("#view-fx").style.display = fx ? "block" : "none";
@@ -231,10 +237,12 @@ function syncView(scroll = false) {
   $("#view-tracking").style.display = tracking ? "block" : "none";
   if (fx) fxDashboard.render();
   else if (commodities) commoditiesDashboard.render();
+  else if (crypto) cryptoDashboard.render();
+  else if (bonds) bondsDashboard.render();
   else if (tracking) renderTracking();
   else if (key) renderMarket(key);
   else {
-    const entries = [...Object.values(state), ...(home ? [fxDashboard.state, commoditiesDashboard.state] : [])];
+    const entries = [...Object.values(state), ...(home ? [fxDashboard.state, commoditiesDashboard.state, cryptoDashboard.state, bondsDashboard.state] : [])];
     const latest = entries.map((entry) => entry.data?.generatedAt).filter(Boolean).sort().at(-1);
     $("#asof").textContent = latest ? `Updated ${formatUpdated(latest, true)}`
       : entries.some((entry) => entry.loading) ? "Loading…" : "Update unavailable";
@@ -249,6 +257,8 @@ function syncView(scroll = false) {
     : fxDashboard.state.loading ? "Loading FX snapshot…" : "FX snapshot unavailable";
   $("#home-commodities-status").textContent = commoditiesDashboard.state.data ? `9 futures · Coverage through ${formatDate(commoditiesDashboard.state.data.asOf)}`
     : commoditiesDashboard.state.loading ? "Loading commodities snapshot…" : "Commodities snapshot unavailable";
+  $("#home-crypto-status").textContent = cryptoDashboard.state.data ? `2 cryptocurrencies · Through ${formatDate(cryptoDashboard.state.data.asOf)}` : cryptoDashboard.state.loading ? "Loading crypto snapshot…" : "Crypto snapshot unavailable";
+  $("#home-bonds-status").textContent = bondsDashboard.state.data ? `9 ETF proxies · Through ${formatDate(bondsDashboard.state.data.asOf)}` : bondsDashboard.state.loading ? "Loading bond snapshot…" : "Bond snapshot unavailable";
   if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -277,3 +287,6 @@ Promise.allSettled(Object.keys(markets).map(loadMarket));
 loadTracking();
 fxDashboard.init();
 commoditiesDashboard.init();
+
+cryptoDashboard.init();
+bondsDashboard.init();
