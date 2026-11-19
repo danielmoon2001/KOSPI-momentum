@@ -14,7 +14,8 @@ this Git repository and are not included in a clone.
 index.html                  Dashboard home, equity views, and FX section
 style.css                   Layout, typography, tables, responsive criteria
 script.js                   Routing, result loading, formatting, rendering
-fx.js                       FX charts, daily tables, relative comparisons
+fx.js                       FX charts, range controls and daily signal tables
+fx-analysis.js              Pure close-based indicator and filter-rule calculations
 hero_image.png              Hero illustration
 data/results.json           Generated Korean results
 data/results-us.json        Generated US results
@@ -29,7 +30,7 @@ docs/DESIGN.md              Current design conventions
 | Route | Content |
 | --- | --- |
 | `#home` (also default URL) | Dashboard entry point: Equities and FX |
-| `#fx` | Major currencies against KRW: charts, comparisons, daily observations |
+| `#fx` | Major currencies against KRW: charts, technical rules, daily observations |
 | `#overview`, `#equities` | Equity introduction, market links, counts, and snapshot notes |
 | `#KOSPImatches` | KOSPI 200 matches, raw prices, and normalized history |
 | `#USmatches` | Nasdaq-100 / S&P 500 matches, raw prices, and normalized history |
@@ -98,10 +99,12 @@ See [DATA.md](docs/DATA.md) for required fields, optional metadata, and limitati
 FX uses the same snapshot cutoff and excludes that day's unfinished daily bar.
 USD, EUR, JPY, GBP, CNY, CHF, AUD, and CAD are shown in KRW (JPY per 100 yen).
 Yahoo Finance supplies daily history; CNY uses matching USD/KRW and USD/CNY
-observations. Charts cover 1D/1W/2W/1M/3M/6M/1Y, with 3M selected initially.
-The comparison rebases currencies on shared dates; expandable tables show
-daily rates and momentum relative to the eight-currency median. See
-[FX data semantics](docs/DATA.md#fx-history-datafxjson) for calculation details.
+observations. Presets span 1D through 5Y, with custom calendar-day lookbacks and
+exact start/end dates. The initial range is 3M. Configurable simple moving averages,
+prior-close support/resistance channels and percentage filter rules annotate each
+chart; daily tables expose rates, indicators, thresholds, and position changes.
+See [technical rules](docs/FX-RULES.md) for exact semantics and
+[FX data semantics](docs/DATA.md#fx-history-datafxjson) for the data contract.
 
 Reference rates omit conversion fees/spreads and are not executable bank quotes.
 
@@ -125,6 +128,7 @@ python -m http.server 8000 --bind 127.0.0.1
 git diff --check
 node --check script.js
 node --check fx.js
+node --check fx-analysis.js
 ```
 
 Open <http://127.0.0.1:8000>. `file://` does not support normal JSON fetching.

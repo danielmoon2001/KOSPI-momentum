@@ -44,12 +44,14 @@ behavior. Keep provider data escaped before inserting names or symbols into HTML
 ## Dashboard and FX
 
 The home page uses two simple linked section cards. FX retains the same content
-width, white surfaces, restrained typography, and compact footer. Its only
-accent colors identify currencies consistently across charts and legends.
+width, white surfaces, restrained typography, and compact footer. Accent colors distinguish the closing rate, two moving averages and channel
+boundaries; filter entries/exits also use different marker shapes.
 
-A shared range selector controls the comparison and all pair charts. The
-comparison legend toggles lines with keyboard-accessible buttons. Pair cards
-use two columns on desktop and one on mobile. Charts retain readable minimum
-widths and scroll within their panels on small screens. Native details/summary
-elements expose momentum calculations and daily data tables; exact values do
-not require pointer hover. There is no external chart library or browser API key.
+A shared range control offers presets, a numeric day count and exact dates.
+Technical controls are in a native disclosure with an explicit Apply action.
+Settings apply to all eight charts. Pair cards use two columns on desktop and
+one on mobile. Charts retain readable minimum widths and scroll inside their
+panels. Native details expose exact daily rates, indicator values and signals;
+keyboard and touch access do not depend on hovering. Chart paths retain every
+observation; only invisible hover targets are sampled for longer ranges.
+There is no external chart library, browser API key or automatic order execution.

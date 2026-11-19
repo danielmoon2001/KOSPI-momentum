@@ -117,7 +117,7 @@ The `#fx` section loads this independently of equity results and tracking.
 Top-level fields are `schemaVersion: 1`, `quoteCurrency: "KRW"`, `source`,
 `snapshotAt`, `generatedAt`, `asOf`, and `pairs`. `asOf` is the earliest of the
 eight pairs' latest dates, indicating coverage through that date. Pair cards
-always display their own latest date; the comparison uses shared dates only.
+display their own final observation within the selected range, including historical ends.
 
 Each pair has `code`, `name`, provider `ticker`, `sourceSymbols`, `method`,
 `displayUnits`, `asOf`, and ascending `history` entries `{date, close}`. Codes
@@ -133,17 +133,18 @@ The local fetcher uses the shared 21:00 KST cutoff and excludes the entire
 cutoff-date FX bar. Dates are Yahoo daily observation labels, not intraday
 prices or guaranteed Korean closing times. Weekends/missing observations are
 not filled. Provider revisions may change historical values. A valid batch
-requires all eight pairs, at least 200 observations per pair and shared dates,
-one year of coverage, and last observations within seven calendar days of the
+requires all eight pairs, at least 1,200 observations per pair and shared dates,
+2,225 calendar days of history (up to seven days of start-date tolerance), and last observations within seven calendar days of the
 eligible end date. No partial FX batch is published.
 
-The default chart range is 3M. 1D uses the latest two observations; other ranges
-use rolling 7/14/30/90/180/365 calendar days. Individual percentage changes use
-each pair's own selected start/end. The comparison rebases all eight currencies
-to 0% on the same first shared date. Legend toggles do not change that baseline.
-The momentum table uses 1/5/20 shared-observation returns; `5D relative` subtracts
-the median 5D return of the eight currencies, in percentage points. It describes
-relative movement and does not infer fair value or an executable opportunity.
+The default chart range is 3M. Presets extend to 5Y; custom ranges accept a
+calendar-day lookback or inclusive exact dates within available history. 1D
+uses the latest two observations. The fetcher retains five years plus 400
+calendar days for indicator warm-up. A partial warm-up at the very beginning
+is displayed as unavailable, not zero. Indicators use the full stored history
+before chart cropping; a historical view ends with its historical price and
+state. No frontend provider requests are made. See [FX-RULES.md](FX-RULES.md)
+for averages, prior-close channels and percentage filter state transitions.
 
 Daily reference rates exclude customer conversion spreads and fees. The public
 dashboard contains no FX credentials and makes no live provider calls.
