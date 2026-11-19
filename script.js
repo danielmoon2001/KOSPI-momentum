@@ -2,8 +2,10 @@
 const markets = {
   kospi: { name: "KOSPI", route: "#KOSPImatches", file: "data/results.json", currency: "KRW", symbol: "₩", source: "KRX" },
   us: { name: "US", route: "#USmatches", file: "data/results-us.json", currency: "USD", symbol: "$", source: "Yahoo Finance" },
+  japan: {name:"Japan",route:"#JapanMatches",file:"data/results-japan.json",currency:"JPY",symbol:"¥",source:"Nikkei / Yahoo Finance"},
+  hk: {name:"Hong Kong",route:"#HKmatches",file:"data/results-hk.json",currency:"HKD",symbol:"HK$",source:"Hang Seng Indexes / Yahoo Finance"},
 };
-const state = { kospi: { loading: true }, us: { loading: true } };
+const state = Object.fromEntries(Object.keys(markets).map(key => [key,{loading:true}]));
 let trackingState = { loading: true };
 const $ = (selector) => document.querySelector(selector);
 const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
@@ -32,8 +34,8 @@ function formatSnapshot(value) {
 function formatPrice(value, market) {
   if (typeof value !== "number" || !Number.isFinite(value)) return "—";
   return new Intl.NumberFormat(market.currency === "KRW" ? "ko-KR" : "en-US", {
-    minimumFractionDigits: market.currency === "USD" ? 2 : 0,
-    maximumFractionDigits: market.currency === "USD" ? 2 : 0,
+    minimumFractionDigits: ["USD","HKD"].includes(market.currency) ? 2 : 0,
+    maximumFractionDigits: market.currency === "KRW" ? 0 : 2,
   }).format(value);
 }
 
@@ -50,9 +52,10 @@ function formatCap(stock, market) {
   return `${stock.marketCapMethod === "estimated" ? "≈ " : ""}${market.symbol}${amount}${unit}`;
 }
 
-// Both market routes share one set of tables; clear them before each render.
+// Market routes share one set of tables; clear them before each render.
 function activeMarket() {
-  if (window.location.hash === "#USmatches") return "us";
+  const found = Object.keys(markets).find(key => markets[key].route === window.location.hash);
+  if (found) return found;
   if (["#KOSPImatches", "#matches"].includes(window.location.hash)) return "kospi";
   return null;
 }
@@ -67,6 +70,8 @@ function renderMarket(key) {
   $("#matches-title").textContent = `${market.name} Matches.`;
   $("#matches-subtitle").textContent = key === "us"
     ? "Nasdaq-100 or S&P 500 stocks crossing the volume and price thresholds."
+    : key === "japan" ? "Nikkei 225 stocks crossing the volume and price thresholds."
+    : key === "hk" ? "Hang Seng stocks crossing the volume and price thresholds."
     : "KOSPI 200 stocks crossing the volume and price thresholds.";
   $("#market-cap-heading").textContent = "Market cap";
   $("#prices-subtitle").textContent = `Daily closing prices (${market.symbol}) over the base and evaluation windows.`;
@@ -152,7 +157,7 @@ function renderTracking() {
     return;
   }
   $("#asof").textContent = `Updated ${formatUpdated(data.generatedAt, true)}`;
-  $("#tracking-updated").textContent = `KOSPI close: ${formatDate(data.markets.kospi.asOf)} · US close: ${formatDate(data.markets.us.asOf)} · Snapshot: ${formatSnapshot(data.snapshotAt)}.`;
+  $("#tracking-updated").textContent = Object.entries(data.markets).map(([key,value])=>`${markets[key].name}: ${formatDate(value.asOf)}`).join(" · ") + ` · ${formatSnapshot(data.snapshotAt)}.`;
   $("#tracking-started").textContent = `Tracking started ${formatUpdated(data.startedAt, true)}, seeded from that snapshot’s matches.`;
   const episodes = visibleEpisodes(data);
   if (!episodes.length) {
@@ -217,7 +222,7 @@ function syncView(scroll = false) {
   const bonds = window.location.hash === "#bonds";
   const home = !equities && !fx && !commodities && !crypto && !bonds;
   const current = tracking ? "tracking" : key || "overview";
-  for (const page of ["overview", "kospi", "us", "tracking"]) {
+  for (const page of ["overview", ...Object.keys(markets), "tracking"]) {
     $(`#nav-${page}`).setAttribute("aria-current", page === current ? "page" : "false");
   }
   $("#nav-home").setAttribute("aria-current", home ? "page" : "false");
@@ -248,7 +253,7 @@ function syncView(scroll = false) {
       : entries.some((entry) => entry.loading) ? "Loading…" : "Update unavailable";
   }
   const snapshots = Object.values(state).map((entry) => entry.data?.snapshotAt);
-  $("#snapshot-status").textContent = snapshots.every(Boolean) && snapshots[0] === snapshots[1]
+  $("#snapshot-status").textContent = snapshots.every(Boolean) && snapshots.every(stamp => stamp === snapshots[0])
     ? `Snapshot: ${formatSnapshot(snapshots[0])}.`
     : "Daily 9 PM KST snapshots; see each market for its cutoff.";
   $("#home-equities-status").textContent = Object.entries(state).map(([key, value]) => value.data
@@ -258,7 +263,7 @@ function syncView(scroll = false) {
   $("#home-commodities-status").textContent = commoditiesDashboard.state.data ? `9 futures · Coverage through ${formatDate(commoditiesDashboard.state.data.asOf)}`
     : commoditiesDashboard.state.loading ? "Loading commodities snapshot…" : "Commodities snapshot unavailable";
   $("#home-crypto-status").textContent = cryptoDashboard.state.data ? `2 cryptocurrencies · Through ${formatDate(cryptoDashboard.state.data.asOf)}` : cryptoDashboard.state.loading ? "Loading crypto snapshot…" : "Crypto snapshot unavailable";
-  $("#home-bonds-status").textContent = bondsDashboard.state.data ? `9 ETF proxies · Through ${formatDate(bondsDashboard.state.data.asOf)}` : bondsDashboard.state.loading ? "Loading bond snapshot…" : "Bond snapshot unavailable";
+  $("#home-bonds-status").textContent = bondsDashboard.state.data ? `9 indices · Through ${formatDate(bondsDashboard.state.data.asOf)}` : bondsDashboard.state.loading ? "Loading bond snapshot…" : "Bond snapshot unavailable";
   if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 

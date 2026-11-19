@@ -1,7 +1,8 @@
 # Result data contract
 
-The frontend reads `data/results.json` (Korea) and `data/results-us.json` (US).
-All amounts and ratios are JSON numbers, not formatted strings. Both payloads
+The frontend reads `data/results.json` (Korea), `data/results-us.json` (US),
+`data/results-japan.json` (Japan), and `data/results-hk.json` (Hong Kong).
+All amounts and ratios are JSON numbers, not formatted strings. All four payloads
 describe the same daily cutoff, with potentially different trading anchors.
 
 ## Common payload
@@ -36,7 +37,7 @@ threshold rules. The update does not rewrite previously completed snapshots.
 | Field | Meaning |
 | --- | --- |
 | `ticker`, `name` | Symbol and display name; Korean symbols remain strings with leading zeros |
-| `marketCap` | Full KRW or USD amount; US may use null |
+| `marketCap` | Full local-currency amount; non-Korean markets may use null |
 | `volumeRatio`, `priceRatio` | Ratios rounded to two decimals after filtering |
 | `closes` | Aligned daily closing prices, or null for unavailable observations |
 
@@ -84,14 +85,14 @@ This file is both a public dashboard payload and the next run's persistent
 state. Preserve it when deploying or restoring the project; never replace it
 with an empty sample. `schemaVersion` is 1. `snapshotAt` is the shared cutoff,
 `generatedAt` is the write time, and `startedAt` is the feature's initialization
-time. `markets.kospi.asOf` and `markets.us.asOf` record independent session dates.
+time. `markets.<market>.asOf` records each of the four independent session dates.
 
 Each entry in `episodes` contains:
 
 | Field | Meaning |
 | --- | --- |
 | `id` | Market, ticker, and discovery date joined with colons |
-| `market`, `ticker`, `name` | Security identity; market is `kospi` or `us` |
+| `market`, `ticker`, `name` | Security identity; market is `kospi`, `us`, `japan` or `hk` |
 | `foundDate` | Trading date of the match that started this episode |
 | `status` | `active` or `ended` |
 | `survivedSessions` | Non-declining sessions after discovery, excluding the ending session |
@@ -134,13 +135,13 @@ cutoff-date FX bar. Dates are Yahoo daily observation labels, not intraday
 prices or guaranteed Korean closing times. Weekends/missing observations are
 not filled. Provider revisions may change historical values. A valid batch
 requires all eight pairs, at least 1,200 observations per pair and shared dates,
-2,225 calendar days of history (up to seven days of start-date tolerance), and last observations within seven calendar days of the
+history from December 1, 2003 (up to seven days of start-date tolerance), and last observations within seven calendar days of the
 eligible end date. No partial FX batch is published.
 
-The default chart range is 3M. Presets extend to 5Y; custom ranges accept a
+The default chart range is 3M. Each chart has independent controls. Presets extend to 20Y and MAX; custom ranges accept a
 calendar-day lookback or inclusive exact dates within available history. 1D
-uses the latest two observations. The fetcher retains five years plus 400
-calendar days for indicator warm-up. A partial warm-up at the very beginning
+uses the latest two observations. The fetcher retains history from December 2003. All overlays start off;
+valid settings apply immediately. A partial warm-up at the very beginning
 is displayed as unavailable, not zero. Indicators use the full stored history
 before chart cropping; a historical view ends with its historical price and
 state. No frontend provider requests are made. See [FX-RULES.md](FX-RULES.md)
@@ -166,23 +167,31 @@ metadata is inferred from the generic Yahoo symbol.
 See [COMMODITIES.md](COMMODITIES.md) for exact ticker/unit mappings, validation,
 cutoff, display precision and nonpositive-price handling. The browser loads this
 file independently of FX, equity matches and tracking. The daily runner stages
-and publishes all seven JSON outputs through the existing single-task cycle.
+and publishes all nine JSON outputs through the existing single-task cycle.
 
 ## Crypto and bond histories (`data/crypto.json`, `data/bonds.json`)
 
-Both use `schemaVersion: 1`, `priceBasis: "unadjusted-close"`, `source`,
-`snapshotAt`, `generatedAt` and `asOf`. Crypto has `assetClass: "crypto"` and
-an `assets` array; bonds has `assetClass: "government-bond-etfs"` and a `bonds`
-array. Each ordered instrument has `code`, `name`, `ticker`, `unit`,
-`pricePrefix`, `decimals`, `asOf` and ascending `{date, close}` history.
-Bond items additionally have `country` and `maturity`; the Korean 30-year ETF
-has `inception: "2022-08-23"`. All closes must be finite and positive.
+Both use `schemaVersion: 1`, `source`, `snapshotAt`, `generatedAt` and `asOf`.
+Crypto uses `assetClass: "crypto"`, `priceBasis: "unadjusted-close"`, and `assets`.
+Bonds uses `assetClass: "government-bond-indices"`,
+`priceBasis: "total-return-index"`, and `bonds`.
+Each instrument includes `code`, `name`, `ticker`, `unit`, `pricePrefix`,
+`decimals`, `historyStart`, `asOf`, and ordered `{date, close}` history.
+Bond entries also include `source`, `country`, `currency` and `maturity`.
+Bond `close` means total-return index points, not a traded product price.
 
-The fixed instrument set, metadata and history coverage are validated before
-publication. Crypto requires uninterrupted UTC calendar dates and excludes the
-cutoff day's unfinished bar. Korean bond ETFs allow the cutoff date; US ETFs
-exclude it. Top-level `asOf` is the minimum of instrument latest dates, while
-cards retain their own dates. Coverage extends 2,225 calendar days where the
-instrument existed; the Korean 30-year ETF starts at inception. Exact-date
-controls span the union of coverage; an individual card can have no observations
-in an earlier selected range. [Methodology and units](CRYPTO-BONDS.md).
+Every configured instrument, metadata field, and coverage boundary is validated.
+Crypto requires all UTC calendar dates and excludes the cutoff day's unfinished
+bar. Korean indices allow the cutoff date; US indices exclude it. Actual provider
+dates remain visible; up to seven days of end-date lag is allowed. Bond interior
+gaps over 21 calendar days fail validation. Top-level `asOf` is the minimum of
+instrument latest dates. See [sources and coverage](CRYPTO-BONDS.md).
+
+## Japan and Hong Kong
+
+These use the common equity contract with `market`, `currency` (JPY/HKD),
+`source`, and `universe` metadata. Official Nikkei 225 / Hang Seng constituents
+are reconciled to the cutoff with effective-dated change logs when needed.
+Yahoo symbols use `.T` and `.HK`. Missing constituent history fails the batch.
+Caps follow the US reported/estimated/unavailable convention. Tracking records
+use market keys `japan` and `hk`; existing Korean/US episodes are preserved.

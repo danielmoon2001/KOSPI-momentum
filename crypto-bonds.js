@@ -1,22 +1,22 @@
-// Explicit metadata keeps ETF units/maturities separate from crypto USD prices.
+// Actual government-bond index levels and crypto USD prices have distinct units.
 const cryptoSpecs = [
   ['bitcoin','BTC-USD','USD / BTC','$',2], ['ethereum','ETH-USD','USD / ETH','$',2]
 ];
 const bondSpecs = [
-  ['kr-3y','114260.KS','KRW / share','₩',0,'KR','3 years'],
-  ['kr-10y','148070.KS','KRW / share','₩',0,'KR','10 years'],
-  ['kr-30y','439870.KS','KRW / share','₩',0,'KR','30 years'],
-  ['us-0-3m','SGOV','USD / share','$',2,'US','0–3 months'],
-  ['us-1-3y','SHY','USD / share','$',2,'US','1–3 years'],
-  ['us-3-7y','IEI','USD / share','$',2,'US','3–7 years'],
-  ['us-7-10y','IEF','USD / share','$',2,'US','7–10 years'],
-  ['us-10-20y','TLH','USD / share','$',2,'US','10–20 years'],
-  ['us-20y','TLT','USD / share','$',2,'US','20+ years']
+  ['kr-3y','KAPKTB3Y','Index points','',2,'KR','3 years'],
+  ['kr-5y','KAPKTB5Y','Index points','',2,'KR','5 years'],
+  ['kr-10y','KAPKTB10Y','Index points','',2,'KR','10 years'],
+  ['kr-30y','KAPKTB30Y','Index points','',2,'KR','30 years'],
+  ['us-0-1y','DE000SLA9S87','Index points','',2,'US','0–1 year'],
+  ['us-1-3y','DE000SLA4B65','Index points','',2,'US','1–3 years'],
+  ['us-3-10y','DE000SLA4B73','Index points','',2,'US','3–10 years'],
+  ['us-10-20y','DE000SLA4B81','Index points','',2,'US','10–20 years'],
+  ['us-20y','DE000SLA4B99','Index points','',2,'US','20+ years']
 ];
 
 function validateAssetHistory(data, specs, assetClass, key) {
   const items = data[key];
-  if (data.schemaVersion !== 1 || data.assetClass !== assetClass || data.priceBasis !== 'unadjusted-close'
+  if (data.schemaVersion !== 1 || data.assetClass !== assetClass || data.priceBasis !== (assetClass === 'crypto' ? 'unadjusted-close' : 'total-return-index')
       || !data.generatedAt || !data.snapshotAt || !Array.isArray(items) || items.length !== specs.length
       || items.some((item,index) => {
         const [code,ticker,unit,prefix,decimals,country,maturity] = specs[index];
@@ -38,12 +38,11 @@ const cryptoDashboard = new HistoryDashboard({
 });
 
 const bondsDashboard = new HistoryDashboard({
-  id:'bonds', label:'Government bonds', file:'data/bonds.json', loadingText:'Loading government-bond ETFs…', tableNoun:'ETF prices',
+  id:'bonds', label:'Government bonds', file:'data/bonds.json', loadingText:'Loading bond indices…', tableNoun:'index levels',
   items: data => data.bonds,
-  validate: data => validateAssetHistory(data,bondSpecs,'government-bond-etfs','bonds'),
+  validate: data => validateAssetHistory(data,bondSpecs,'government-bond-indices','bonds'),
   groups: items => [{label:'Korea',items:items.filter(p => p.country === 'KR')},
                    {label:'United States',items:items.filter(p => p.country === 'US')}],
-  describe: item => ({title:`${item.maturity} exposure`, subtitle:`${item.name} · ${item.ticker} · ${item.unit}`,
-    note:item.code === 'kr-30y' ? 'History begins August 23, 2022.' : '',
+  describe: item => ({title:item.maturity, subtitle:`${item.source} · Total return · ${item.currency}`,
     scale:1, prefix:item.pricePrefix, decimals:item.decimals, unitLabel:item.unit})
 });

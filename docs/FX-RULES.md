@@ -9,22 +9,25 @@ Commodities uses the same calculation and chart modules with a separate settings
 instance. Its quote units, contract changes and nonpositive-price handling are
 described in [COMMODITIES.md](COMMODITIES.md).
 
-Crypto and government-bond ETFs also reuse these calculations with independent
-settings. There, Long/Short describes the coin's USD price or ETF's local-currency
-share price. Crypto periods include weekends; bond periods count ETF sessions.
+Crypto and government-bond indices also reuse these calculations with independent
+settings. There, Long/Short describes the coin's USD price or bond's total-return index level. Crypto periods include weekends; bond periods count index observations.
 See [crypto and bond methodology](CRYPTO-BONDS.md) for cutoffs and price limitations.
+
+All indicators and filter rules are off on initial load. Valid settings apply
+immediately; there is no Apply button. Each chart has independent range controls,
+while technical settings apply across its section. Reloading restores defaults.
 
 ## Ranges and timing
 
 The default range is 3M. Presets use 7/14/30/90/180/365/730/1095/1825 calendar-day
-lookbacks; 1D uses the latest two observations. Custom days accepts 1–2225 days
+lookbacks, plus 10Y (3652), 20Y (7305) and MAX; 1D uses the latest two observations. Custom days accepts 1–50000 days
 back from each pair's latest observation, including both boundary dates when
 present. Exact dates include observations on both selected dates. An empty range
 is explicitly shown. Weekends and missing dates are never filled.
 
 All indicators calculate from the full stored history before cropping. Selecting
 a past end date displays that date's price and state, not the latest snapshot's.
-The stored window contains five years plus 400 calendar days of prehistory. At
+FX history begins in December 2003; other sections use their available histories. At
 its earliest edge, incomplete indicators show “Warming up” or an em dash.
 
 ## Moving averages

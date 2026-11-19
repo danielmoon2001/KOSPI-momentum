@@ -11,7 +11,7 @@ their existing tables, thresholds, and tracking layout.
   on the active route. Equity sublinks occupy a second row only in that section.
   On narrow screens links wrap onto their own scrollable row.
 - The overview uses a two-column hero above 860 px and one column below it.
-  Three lightweight links show the market/tracking label, arrow, and count.
+  Five lightweight links show the market/tracking label, arrow, and count.
 - The shared market view contains a dark summary, light raw history, parchment
   normalized history, and a compact source/date footer.
 - Four criteria use content-width columns with equal intervening gaps. The final
@@ -28,7 +28,7 @@ their existing tables, thresholds, and tracking layout.
 - Footers use 12 px text and 20 px vertical padding. Note groups spread across
   the content width with space between them and wrap with 8 px row gaps on
   smaller screens. Empty notes are hidden.
-- The current title line is “Korea & US Equity breakout screeners.” The Korean
+- The overview introduces equity breakout screeners across four markets. The Korean
   universe remains explicitly identified as KOSPI 200 in its subtitle/footer.
 - The overview explains screening and subsequent tracking in two short paragraphs.
 - Tracking has a spacious title/subtitle and separated stock records. Compact
@@ -47,9 +47,11 @@ The home page uses five simple linked section cards. The four history dashboards
 width, white surfaces, restrained typography, and compact footer. Accent colors distinguish the closing rate, two moving averages and channel
 boundaries; filter entries/exits also use different marker shapes.
 
-A shared range control offers presets, a numeric day count and exact dates.
-Technical controls are in a native disclosure with an explicit Apply action.
-Settings apply within each section; FX, Commodities, Crypto and Bonds settings are independent. Bond cards are grouped into Korea and United States, with explicit maturity exposure and ETF price units. Available date controls span the union of histories; shorter-lived funds show only their available observations.
+Each chart has a range control with presets through 20Y/MAX, a numeric day
+count and exact dates. Technical controls are in a native disclosure, start
+off, and apply valid changes immediately.
+Settings apply within each section; FX, Commodities, Crypto and Bonds settings are independent. Bond cards are grouped into Korea and United States, with maturity labels and total-return index points. Date controls use each instrument’s
+available coverage. No earlier observations are synthesized.
 The renderer and technical calculations are shared. Chart cards use two columns on desktop and
 one on mobile. Charts retain readable minimum widths and scroll inside their
 panels. Native details expose exact daily rates, indicator values and signals;

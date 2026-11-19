@@ -1,56 +1,59 @@
 # Crypto and government bonds
 
-`#crypto` contains only Bitcoin (`BTC-USD`) and Ethereum (`ETH-USD`), quoted in
-USD per coin. `#bonds` groups the following government-bond ETF proxies by country.
-These charts show **unadjusted ETF share prices**, not yields or total returns.
+Crypto shows Bitcoin and Ethereum daily USD closes from Yahoo Finance. Available
+history begins September 17, 2014 for BTC and November 9, 2017 for ETH. Every
+completed UTC calendar day is retained, including weekends. The snapshot day's
+unfinished daily bar is excluded.
 
-| Country | Maturity exposure | Yahoo symbol | Fund |
+Government Bonds shows actual **total-return indices**, including reinvested
+interest. Values are index points, not ETF prices or yields. A rising index
+indicates a positive total return for the represented bond basket. Index levels
+have different bases; compare percentage movements, not their absolute levels.
+
+| Country | Maturity | Provider identifier | History begins |
 | --- | --- | --- | --- |
-| Korea | 3 years | `114260.KS` | KODEX 국고채3년 |
-| Korea | 10 years | `148070.KS` | KIWOOM 국고채10년 |
-| Korea | 30 years | `439870.KS` | KODEX 국고채30년액티브 |
-| US | 0–3 months | `SGOV` | iShares 0–3 Month Treasury Bond ETF |
-| US | 1–3 years | `SHY` | iShares 1–3 Year Treasury Bond ETF |
-| US | 3–7 years | `IEI` | iShares 3–7 Year Treasury Bond ETF |
-| US | 7–10 years | `IEF` | iShares 7–10 Year Treasury Bond ETF |
-| US | 10–20 years | `TLH` | iShares 10–20 Year Treasury Bond ETF |
-| US | 20+ years | `TLT` | iShares 20+ Year Treasury Bond ETF |
+| Korea | 3 years | KAP `KAPKTB3Y` | 2015-12-31 |
+| Korea | 5 years | KAP `KAPKTB5Y` | 2015-12-31 |
+| Korea | 10 years | KAP `KAPKTB10Y` | 2015-12-31 |
+| Korea | 30 years | KAP `KAPKTB30Y` | 2016-03-10 |
+| US | 0–1 year | Solactive `DE000SLA9S87` | 2006-12-29 |
+| US | 1–3 years | Solactive `DE000SLA4B65` | 2006-12-29 |
+| US | 3–10 years | Solactive `DE000SLA4B73` | 2006-12-29 |
+| US | 10–20 years | Solactive `DE000SLA4B81` | 2006-12-29 |
+| US | 20+ years | Solactive `DE000SLA4B99` | 2006-12-29 |
 
-Korean funds are quoted in KRW per share; US funds in USD per share. Maturity
-labels describe each fund's exposure, not its exact duration or remaining
-maturity. ETF distributions can cause price drops and technical signals; cash
-income is excluded. Price direction must not be read as yield direction.
+KAP's KTB baskets represent recent Korean Treasury issues at the named original
+maturity; they are not exact remaining-maturity bands. The KAP feed's `TotalIndex`
+field is used. Solactive's US Treasury maturity bands are total-return indices in
+USD. Their pre-launch histories are backtested: the 0–1-year index launched
+February 5, 2020; the other four launched October 9, 2017.
 
-## History and snapshot
+## Dates and coverage
 
-Yahoo Finance daily `Close` is fetched with automatic adjustment disabled.
-The history target is 2,225 calendar days (five years plus 400 days of indicator
-warm-up). The Korean 30-year fund began August 23, 2022 and shows only available
-history. A 5Y range does not invent earlier prices or guarantee a complete
-warm-up for this newer fund. Unavailable indicators display warming-up states.
+All sections use the latest 21:00 Asia/Seoul snapshot. Korean index observations
+on that date are eligible; US indices use dates before it. Provider publication
+may lag the eligible session. Each card shows its actual last observation date.
+No synthetic annual points, interpolation, or ETF fallback is used.
 
-All pages share the most recent 21:00 Asia/Seoul cutoff. Korean ETF sessions on
-that date have closed and are eligible. US ETFs exclude that date's session.
-Crypto excludes that date's unfinished UTC bar: 21:00 KST is 12:00 UTC. Its
-history includes every calendar day, including weekends. ETFs contain actual
-provider sessions; their latest dates can differ across countries and holidays.
-Each chart displays its own closing date. Top-level `asOf` is the earliest
-latest date across the instruments, not a forced common endpoint.
+The full configured history is validated for ordered unique finite positive
+levels, coverage near its start, and a recent eligible end. Bond gaps longer
+than 21 calendar days fail validation. KAP history is retained locally from the
+validated published payload and its latest month is refreshed each run; Solactive
+history is downloaded in full. Older KAP revisions outside that month require a
+full refresh. Provider revisions can affect historical reproducibility.
 
-Presets through 5Y, custom calendar-day counts, exact date ranges, daily tables,
-moving averages, prior-close support/resistance and channel breakouts use the
-shared chart engine. Percentage filter rules follow [the existing definition](FX-RULES.md).
-Settings are independent per section. Indicators use all retained prehistory
-before cropping to the selected range. Crypto periods count daily observations;
-ETF periods count observed trading sessions. No orders are executed.
+## Controls
+
+Each chart offers independent ranges through 20Y/MAX, custom day counts and
+inclusive dates. Initial range: 3M. All overlays and filter rules start off;
+valid settings apply immediately. Enabled indicators use the full history before
+cropping. Bond periods count index observations; crypto periods include weekends.
+See [technical rules](FX-RULES.md). These signals do not execute orders.
 
 ## Sources
 
-- [Samsung government-bond ETFs](https://www.samsungfund.com/etf/product/ytm.do)
-- [KIWOOM government-bond 10-year ETF](https://www.kiwoometf.com/service/etf/KO02010200M?gcode=148070)
-- [iShares US Treasury ETF suite](https://www.ishares.com/us/literature/product-brief/ishares-us-treasury-bond-etfs-product-brief-en-us.pdf)
-- [Yahoo Bitcoin history](https://finance.yahoo.com/quote/BTC-USD/history/)
-- [Yahoo Ethereum history](https://finance.yahoo.com/quote/ETH-USD/history/)
-
-Provider history can be revised. The dashboard records the snapshot cutoff and
-fetch time but does not archive every prior provider revision.
+- [KAP KTB indices and daily levels](https://www.koreaap.com/kor/index_pe01_02.html)
+- [Solactive US Treasury family methodology](https://www.solactive.com/downloads/Guideline-Solactive-US-Treasury-Bond-Index-Family.)
+- [Solactive US Treasury 3–10 Year Index](https://www.solactive.com/index/DE000SLA4B73/)
+- [Yahoo BTC/USD](https://finance.yahoo.com/quote/BTC-USD/history/)
+- [Yahoo ETH/USD](https://finance.yahoo.com/quote/ETH-USD/history/)

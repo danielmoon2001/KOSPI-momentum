@@ -552,3 +552,14 @@ tr:last-child td {
   .tracking-card-header { flex-direction: column; }
   .tracking-ticker { display: block; margin-top: 4px; }
 }
+
+/* Chart-local controls do not affect the equity layouts. */
+.chart-range { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin:20px 0; font-size:14px; }
+.chart-range select, .chart-range input { border:1px solid var(--hairline); border-radius:6px; padding:7px; background:white; color:var(--ink); font:inherit; max-width:100%; }
+.chart-range input[type="number"] { width:90px; }
+.chart-range span:not([hidden]) { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.chart-error { color:#a53e70; width:100%; }
+.history-latest { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:16px; }
+.history-latest strong { font-size:24px; font-weight:600; }
+.history-latest span { font-size:12px; color:var(--ink-muted); }
+.fx-signals:empty { display:none; }

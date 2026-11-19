@@ -31,7 +31,9 @@ US futures session is not included. Provider dates remain session labels; a
 close is not asserted to be an official exchange settlement or a Korean close.
 Weekends, holidays and missing observations are not filled.
 
-History spans 2,225 calendar days: five years plus 400 days of indicator warm-up.
+History starts in 2000 for eight contracts and July 30, 2007 for Brent.
+Each chart offers 10Y, 20Y and MAX as available, plus custom dates/days.
+Indicators start off and valid settings apply immediately.
 Every instrument must have at least 1,200 unique ordered finite closes, begin
 within seven days of the expected history boundary, and end no more than seven
 calendar days behind the eligible end date. Exact metadata and all nine series

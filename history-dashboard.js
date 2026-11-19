@@ -1,5 +1,5 @@
 // Shared chart UI. FX and commodities own separate state, controls and data.
-const historyRanges = {'1D':1,'1W':7,'2W':14,'1M':30,'3M':90,'6M':180,'1Y':365,'2Y':730,'3Y':1095,'5Y':1825};
+const historyRanges = {'1D':1,'1W':7,'2W':14,'1M':30,'3M':90,'6M':180,'1Y':365,'2Y':730,'3Y':1095,'5Y':1825,'10Y':3652,'20Y':7305};
 const historyPercent = value => value == null ? '—' : `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`;
 const historyFormatters = new Map();
 const historyNumber = (value, decimals = 2) => {
@@ -17,16 +17,19 @@ class HistoryDashboard {
     this.days = 90;
     this.start = '';
     this.end = '';
-    this.settings = {...fxDefaults};
+    this.settings = {...fxDefaults, averages:false, bands:false, filter:false};
+    this.selections = new Map();
+    this.rendered = new Map();
   }
 
   node(suffix) { return $(`#${this.config.id}-${suffix}`); }
 
-  window(history, range = this.range) {
+  window(history, range = this.range, selection = this) {
     if (!history.length) return [];
-    if (range === 'dates') return history.filter(p => p.date >= this.start && p.date <= this.end);
+    if (range === 'MAX') return history;
+    if (range === 'dates') return history.filter(p => p.date >= selection.start && p.date <= selection.end);
     if (range === '1D') return history.slice(-2);
-    const boundary = Date.parse(history.at(-1).date) - (range === 'custom' ? this.days : historyRanges[range]) * 86400000;
+    const boundary = Date.parse(history.at(-1).date) - (range === 'custom' ? selection.days : historyRanges[range]) * 86400000;
     return history.filter(p => Date.parse(p.date) >= boundary);
   }
 
@@ -67,10 +70,44 @@ class HistoryDashboard {
   }
 
   table(history, view) {
-    const amount = value => value === null ? '—' : historyNumber(value * view.scale, view.decimals);
-    return `<details class="fx-details"><summary>Daily ${this.config.tableNoun} &amp; signals · ${history.length} observations</summary><div class="table-container"><table class="fx-table"><caption>${escapeHTML(view.unitLabel)} · selected range · newest first</caption>
-      <thead><tr><th>Date</th><th>Close (${escapeHTML(view.prefix)})</th><th>Change</th><th>SMA ${this.settings.fast}</th><th>SMA ${this.settings.slow}</th><th>Support</th><th>Resistance</th><th>Channel</th><th>FR state</th><th>FR signal</th><th>FR upper</th><th>FR lower</th></tr></thead>
-      <tbody>${[...history].reverse().map(p => `<tr><th scope="row">${p.date}</th><td>${amount(p.close)}</td><td>${historyPercent(p.change)}</td><td>${amount(p.fast)}</td><td>${amount(p.slow)}</td><td>${amount(p.support)}</td><td>${amount(p.resistance)}</td><td>${p.breakout}</td><td>${p.state}</td><td>${p.signal || '—'}</td><td>${amount(p.upper)}</td><td>${amount(p.lower)}</td></tr>`).join('')}</tbody></table></div></details>`;
+    const amount = value => value == null ? '—' : historyNumber(value * view.scale, view.decimals);
+    const columns = [{label:view.prefix ? `Close (${view.prefix})` : 'Index level', key:'close',format:amount}, {label:'Change',key:'change',format:historyPercent}];
+    if (this.settings.averages) columns.push({label:`SMA ${this.settings.fast}`,key:'fast',format:amount},{label:`SMA ${this.settings.slow}`,key:'slow',format:amount});
+    if (this.settings.bands) columns.push({label:'Support',key:'support',format:amount},{label:'Resistance',key:'resistance',format:amount},{label:'Channel',key:'breakout',format:escapeHTML});
+    if (this.settings.filter) columns.push({label:'FR state',key:'state',format:escapeHTML},{label:'FR signal',key:'signal',format:v=>escapeHTML(v || '—')},{label:'FR upper',key:'upper',format:amount},{label:'FR lower',key:'lower',format:amount});
+    return `<details><summary>Daily ${this.config.tableNoun}</summary><div class="table-container"><table class="fx-table"><caption>${escapeHTML(view.unitLabel)} · newest first</caption>
+      <thead><tr><th>Date</th>${columns.map(c=>`<th>${escapeHTML(c.label)}</th>`).join('')}</tr></thead>
+      <tbody>${[...history].reverse().map(p=>`<tr><th scope="row">${p.date}</th>${columns.map(c=>`<td>${c.format(p[c.key])}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>`;
+  }
+
+  selection(item) {
+    return this.selections.get(item.code) || {range:this.range, days:this.days,
+      start:this.start || item.history[0].date, end:this.end || item.asOf};
+  }
+
+  rangeControls(item) {
+    const value = this.selection(item), id = `${this.config.id}-${item.code}`;
+    return `<div class="chart-range" data-code="${item.code}">
+      <label for="${id}-range">Range</label><select id="${id}-range" data-field="range">${[...Object.keys(historyRanges),'MAX','custom','dates'].map(r => `<option value="${r}" ${r === value.range ? 'selected' : ''}>${r === 'custom' ? 'Custom days' : r === 'dates' ? 'Exact dates' : r}</option>`).join('')}</select>
+      <span data-custom ${value.range !== 'custom' ? 'hidden' : ''}><label for="${id}-days">Days</label><input id="${id}-days" data-field="days" type="number" min="1" max="50000" step="1" value="${value.days}"></span>
+      <span data-dates ${value.range !== 'dates' ? 'hidden' : ''}><label for="${id}-start">From</label><input id="${id}-start" data-field="start" type="date" min="${item.history[0].date}" max="${item.asOf}" value="${value.start}"><label for="${id}-end">To</label><input id="${id}-end" data-field="end" type="date" min="${item.history[0].date}" max="${item.asOf}" value="${value.end}"></span>
+      <small class="chart-error" role="alert"></small></div>`;
+  }
+
+  cardBody(item) {
+    const view = this.config.describe(item), selection = this.selection(item);
+    const analyzed = this.settings.averages || this.settings.bands || this.settings.filter ? fxAnalyze(item.history,this.settings)
+      : item.history.map((p,i) => ({...p,change:i && p.close > 0 && item.history[i-1].close > 0 ? (p.close/item.history[i-1].close-1)*100 : null}));
+    const history = this.window(analyzed, selection.range, selection), last = history.at(-1);
+    this.rendered.set(item.code, {history,view});
+    if (!last) return '<p class="fx-muted">No observations in this range.</p>';
+    const amount = value => value === null ? '—' : `${view.prefix}${historyNumber(value * view.scale, view.decimals)}`;
+    const selectedChange = history.every(p => p.close > 0) ? (last.close / history[0].close - 1) * 100 : null;
+    return `<div class="history-latest"><strong>${amount(last.close)}</strong><span>${last.date}${selection.range === 'dates' ? ' · selected end' : ''}</span></div>
+      <div class="fx-stats"><span>1D <strong>${historyPercent(last.change)}</strong></span>${selection.range === '1D' ? '' : `<span>Range <strong>${historyPercent(selectedChange)}</strong></span>`}<span>${history.length} observations</span></div>
+      ${this.chart(history,view)}
+      <div class="fx-signals">${this.settings.filter ? `<div><span>Filter rule</span><strong>${last.state}</strong><small>${last.since ? `Since ${last.since}` : 'Awaiting entry'}</small></div>` : ''}${this.settings.bands ? `<div><span>Channel · ${this.settings.channel}</span><strong>${last.breakout === 'Inside' ? 'Inside channel' : last.breakout === 'Warming up' ? 'Warming up' : `${last.breakout} breakout`}</strong><small>${amount(last.support)} – ${amount(last.resistance)}</small></div>` : ''}${this.settings.averages ? `<div><span>SMA ${this.settings.fast} / ${this.settings.slow}</span><strong>${amount(last.fast)} / ${amount(last.slow)}</strong></div>` : ''}</div>
+      <details class="fx-details" data-history="${item.code}"><summary>Daily ${this.config.tableNoun} &amp; signals · ${history.length} observations</summary><div class="history-table"></div></details>`;
   }
 
   render() {
@@ -80,29 +117,16 @@ class HistoryDashboard {
       $('#asof').textContent = this.state.loading ? 'Loading…' : `${this.config.label} unavailable`;
       return;
     }
-    const data = this.state.data;
-    const items = this.config.items(data);
-    $('#asof').textContent = `Updated ${formatUpdated(data.generatedAt, true)}`;
-    this.node('updated').textContent = `Snapshot: ${formatSnapshot(data.snapshotAt)} · Source: Yahoo Finance.`;
+    const data = this.state.data, items = this.config.items(data);
+    $('#asof').textContent = `Updated ${formatUpdated(data.generatedAt,true)}`;
+    this.node('updated').textContent = `${formatSnapshot(data.snapshotAt)} · ${data.source || 'Yahoo Finance'}`;
     const earliest = items.map(p => p.history[0].date).sort()[0], latest = items.map(p => p.asOf).sort().at(-1);
-    this.node('coverage').textContent = `Available history: ${earliest} — ${latest}. Periods use daily observations; ranges use calendar days.`;
-    for (const id of ['start','end']) { this.node(id).min = earliest; this.node(id).max = latest; }
-    if (!this.start) { this.start = earliest; this.node('start').value = earliest; }
-    if (!this.end) { this.end = latest; this.node('end').value = latest; }
-    const groups = this.config.groups ? this.config.groups(items) : [{label:null, items}];
-    container.innerHTML = groups.map(group => `${group.label ? `<h2 class="history-group-title">${escapeHTML(group.label)}</h2>` : ''}<div class="fx-pairs">${group.items.map(pair => {
-      const view = this.config.describe(pair);
-      // Cropping never restarts a rule or moving average.
-      const history = this.window(fxAnalyze(pair.history, this.settings)), last = history.at(-1);
-      if (!last) return `<article class="fx-panel fx-pair"><h2>${escapeHTML(view.title)}</h2><p class="fx-muted">No observations in this range.</p></article>`;
-      const amount = value => value === null ? '—' : `${view.prefix}${historyNumber(value * view.scale, view.decimals)}`;
-      const selectedChange = history.every(p => p.close > 0) ? (last.close / history[0].close - 1) * 100 : null;
-      return `<article class="fx-panel fx-pair"><div class="fx-pair-heading"><div><h2>${escapeHTML(view.title)}</h2><p class="fx-muted">${escapeHTML(view.subtitle)}</p></div><div class="fx-quote"><strong>${amount(last.close)}</strong><span>${last.date}${this.range === 'dates' ? ' · selected end' : ''}</span></div></div>
-        ${view.note ? `<p class="fx-muted">${escapeHTML(view.note)}</p>` : ''}
-        <div class="fx-stats"><span>1D <strong>${historyPercent(last.change)}</strong></span>${this.range === '1D' ? '' : `<span>Range <strong>${historyPercent(selectedChange)}</strong></span>`}<span>${history.length} observations</span></div>
-        ${this.chart(history, view)}
-        <div class="fx-signals">${this.settings.filter ? `<div><span>Filter rule</span><strong>${last.state}</strong><small>${last.since ? `Since ${last.since}` : 'Awaiting entry'}</small></div>` : ''}${this.settings.bands ? `<div><span>Channel · ${this.settings.channel}</span><strong>${last.breakout === 'Inside' ? 'Inside channel' : last.breakout === 'Warming up' ? 'Warming up' : `${last.breakout} breakout`}</strong><small>${amount(last.support)} – ${amount(last.resistance)}</small></div>` : ''}${this.settings.averages ? `<div><span>SMA ${this.settings.fast} / ${this.settings.slow}</span><strong>${amount(last.fast)} / ${amount(last.slow)}</strong><small>Through ${last.date}</small></div>` : ''}</div>
-        ${this.table(history, view)}</article>`;
+    this.node('coverage').textContent = `${earliest} — ${latest}`;
+    const groups = this.config.groups ? this.config.groups(items) : [{label:null,items}];
+    container.innerHTML = groups.map(group => `${group.label ? `<h2 class="history-group-title">${escapeHTML(group.label)}</h2>` : ''}<div class="fx-pairs">${group.items.map(item => {
+      const view = this.config.describe(item);
+      return `<article class="fx-panel fx-pair" id="${this.config.id}-card-${item.code}"><div class="fx-pair-heading"><div><h2>${escapeHTML(view.title)}</h2><p class="fx-muted">${escapeHTML(view.subtitle)}</p></div></div>
+        ${this.rangeControls(item)}<div class="history-body">${this.cardBody(item)}</div></article>`;
     }).join('')}</div>`).join('');
   }
 
@@ -112,38 +136,59 @@ class HistoryDashboard {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       this.config.validate(data);
-      this.state = {data, loading:false};
+      this.state = {data,loading:false};
     } catch (error) {
-      console.error(`${this.config.label}:`, error);
-      this.state = {error:true, loading:false};
+      console.error(`${this.config.label}:`,error);
+      this.state = {error:true,loading:false};
     }
     syncView();
   }
 
   init() {
-    this.node('range').addEventListener('change', event => {
-      const range = event.target.value;
-      this.node('custom-days').hidden = range !== 'custom';
-      this.node('custom-dates').hidden = range !== 'dates';
-      if (!['custom','dates'].includes(range)) { this.range = range; this.node('error').textContent = ''; this.render(); }
-    });
-    this.node('controls').addEventListener('submit', event => {
-      event.preventDefault();
+    const form = this.node('controls');
+    form.addEventListener('submit',event => event.preventDefault());
+    const updateSettings = () => {
       const candidate = {...this.settings};
       for (const key of ['fast','slow','channel','x','y','lookback','hold']) candidate[key] = Number(this.node(key).value);
       for (const key of ['neutral','averages','bands','filter']) candidate[key] = this.node(key).checked;
       candidate.mode = this.node('mode').value;
       candidate.holdMode = this.node('hold-mode').value;
-      const range = this.node('range').value, days = Number(this.node('days').value);
-      const start = this.node('start').value, end = this.node('end').value;
-      let error = fxSettingsError(candidate);
-      if (range === 'custom' && (!Number.isInteger(days) || days < 1 || days > 2225)) error = 'Choose 1–2225 calendar days.';
-      if (range === 'dates' && (!historyDate(start) || !historyDate(end) || start > end || start < this.node('start').min || end > this.node('end').max)) error = 'Choose ordered dates within the available history.';
+      const error = fxSettingsError(candidate);
       this.node('error').textContent = error;
       if (error) return;
-      this.settings = candidate; this.range = range; this.days = days; this.start = start; this.end = end;
+      this.settings = candidate;
       this.render();
-    });
+    };
+    form.addEventListener('change',updateSettings);
+    form.addEventListener('input',updateSettings);
+    const content = this.node('content');
+    const updateRange = event => {
+      const controls = event.target.closest('.chart-range');
+      if (!controls || !event.target.dataset.field || !this.state.data) return;
+      const item = this.config.items(this.state.data).find(p => p.code === controls.dataset.code);
+      const field = key => controls.querySelector(`[data-field="${key}"]`).value;
+      const selected = {range:field('range'),days:Number(field('days')),start:field('start'),end:field('end')};
+      controls.querySelector('[data-custom]').hidden = selected.range !== 'custom';
+      controls.querySelector('[data-dates]').hidden = selected.range !== 'dates';
+      const error = selected.range === 'custom' && (!Number.isInteger(selected.days) || selected.days < 1 || selected.days > 50000) ? 'Choose 1–50000 days.'
+        : selected.range === 'dates' && (!historyDate(selected.start) || !historyDate(selected.end) || selected.start > selected.end || selected.start < item.history[0].date || selected.end > item.asOf) ? 'Choose dates within this history.' : '';
+      controls.querySelector('.chart-error').textContent = error;
+      if (error) return;
+      this.selections.set(item.code,selected);
+      controls.closest('article').querySelector('.history-body').innerHTML = this.cardBody(item);
+    };
+    content.addEventListener('change',updateRange);
+    content.addEventListener('input',updateRange);
+    // Long histories stay inexpensive until their exact daily table is requested.
+    content.addEventListener('toggle',event => {
+      const code = event.target.dataset.history;
+      if (!code || !event.target.open) return;
+      const destination = event.target.querySelector('.history-table');
+      if (destination.innerHTML) return;
+      const {history,view} = this.rendered.get(code);
+      const html = this.table(history,view);
+      destination.innerHTML = html.slice(html.indexOf('<div class="table-container">'),html.lastIndexOf('</details>'));
+    },true);
     this.load();
   }
 }

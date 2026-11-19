@@ -1,0 +1,31 @@
+{
+  "market": "Hong Kong",
+  "currency": "HKD",
+  "source": "Yahoo Finance",
+  "generatedAt": "2026-11-20T01:04:21+09:00",
+  "snapshotAt": "2026-11-19T21:00:00+09:00",
+  "asOf": "2026-11-18",
+  "volumeMultiplier": 1.5,
+  "priceMultiplier": 1.1,
+  "windowDays": 5,
+  "baseCalendarDays": 5,
+  "evalTradingDays": 3,
+  "dates": [
+    "2026-11-11",
+    "2026-11-12",
+    "2026-11-13",
+    "2026-11-16",
+    "2026-11-17",
+    "2026-11-18"
+  ],
+  "stocks": [],
+  "universe": {
+    "name": "Hang Seng",
+    "count": 95,
+    "screenedCount": 95,
+    "sources": [
+      "https://www.hsi.com.hk/api/wsit-hsi-ddoc-ea-public-website-proxy/v1/product-data/pub/constituent/metadata/v2"
+    ],
+    "membershipAsOf": "2026-11-19"
+  }
+}

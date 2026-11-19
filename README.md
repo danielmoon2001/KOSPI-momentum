@@ -16,17 +16,19 @@ style.css                   Layout, typography, tables, responsive criteria
 script.js                   Routing, result loading, formatting, rendering
 fx.js                       FX validation and display configuration
 commodities.js              Futures validation and display configuration
-crypto-bonds.js              Crypto and government-bond ETF configuration
+crypto-bonds.js              Crypto and government-bond index configuration
 history-dashboard.js        Shared charts, controls and daily signal tables
 fx-analysis.js              Shared close-based indicators and filter rules
 hero_image.png              Hero illustration
 data/results.json           Generated Korean results
 data/results-us.json        Generated US results
+data/results-japan.json     Generated Nikkei 225 results
+data/results-hk.json        Generated Hang Seng Index results
 data/tracking.json          Persistent tracking episodes and full price histories
 data/fx.json                Daily KRW histories for eight major currencies
 data/commodities.json       Daily prices for nine major commodity futures
 data/crypto.json            Bitcoin and Ethereum daily USD closes
-data/bonds.json             Nine Korean/US government-bond ETF histories
+data/bonds.json             Nine Korean/US government-bond total-return histories
 docs/DATA.md                JSON contract and data semantics
 docs/DESIGN.md              Current design conventions
 ```
@@ -35,15 +37,17 @@ docs/DESIGN.md              Current design conventions
 
 | Route | Content |
 | --- | --- |
-| `#home` (also default URL) | Dashboard entry point: Equities, FX and Commodities |
+| `#home` (also default URL) | Dashboard entry point: Equities, FX, Commodities, Crypto and Bonds |
 | `#commodities` | Nine major futures markets: charts, technical rules and daily prices |
 | `#crypto` | Bitcoin and Ethereum daily USD charts and technical rules |
-| `#bonds` | Korean/US government-bond ETF prices grouped by country and maturity |
+| `#bonds` | Korean/US government-bond total-return indices grouped by country and maturity |
 | `#fx` | Major currencies against KRW: charts, technical rules, daily observations |
 | `#overview`, `#equities` | Equity introduction, market links, counts, and snapshot notes |
 | `#KOSPImatches` | KOSPI 200 matches, raw prices, and normalized history |
 | `#USmatches` | Nasdaq-100 / S&P 500 matches, raw prices, and normalized history |
-| `#tracking` | Korean and US discoveries followed through their first lower close |
+| `#JapanMatches` | Nikkei 225 matches and price history |
+| `#HKmatches` | Hang Seng Index matches and price history |
+| `#tracking` | Discoveries from all four markets followed through their first lower close |
 | `#matches` | Compatibility alias for the Korean view |
 
 The top-right date is the result fetch date in Korea time. Footer notes show the
@@ -51,8 +55,8 @@ snapshot cutoff and actual closing-data dates, which can differ between markets.
 Each market loads independently: a failed or empty response does not prevent
 the other market from displaying.
 
-The sticky grey bar contains Dashboard, Equities, FX and Commodities beside Moon Quixote.
-Within Equities, a second navigation row exposes the four existing equity views. Overview
+The sticky grey bar contains Dashboard, Equities, FX, Commodities, Crypto and Bonds beside Moon Quixote.
+Within Equities, a second navigation row exposes the overview, four markets and tracking. Overview
 links use compact text, arrows, and counts. The active navigation link is
 underlined. Tracking retains the same dark-page typography and table style.
 
@@ -78,6 +82,7 @@ audit even after leaving the tracking view.
 - Last three trading-session closes strictly increase.
 - Korea: **KOSPI 200**, pykrx index `1028`, with membership on the anchor date.
 - US: **Nasdaq-100 ∪ S&P 500**, using index-list revisions at or before the cutoff.
+- Japan: **Nikkei 225**; Hong Kong: **Hang Seng Index**, using official membership and effective-dated changes.
 
 The local screeners apply these rules; the website only renders generated data.
 Daily volume averages use actual trading sessions. Weekends and holidays count
@@ -90,8 +95,8 @@ brief historical-rule note until a new update replaces them.
 
 ## Snapshot and display semantics
 
-Both markets use the most recent **21:00 Asia/Seoul**. The Korean session on that
-date is eligible; the same-date US regular session has not opened, so US prices
+All four markets use the most recent **21:00 Asia/Seoul**. Korean, Japanese and Hong Kong sessions on that
+date are eligible; the same-date US regular session has not opened, so US prices
 come from a prior trading date. Weekends and holidays use available sessions.
 
 Market caps remain full numeric amounts in JSON and display as `₩675.2억`,
@@ -108,8 +113,9 @@ See [DATA.md](docs/DATA.md) for required fields, optional metadata, and limitati
 FX uses the same snapshot cutoff and excludes that day's unfinished daily bar.
 USD, EUR, JPY, GBP, CNY, CHF, AUD, and CAD are shown in KRW (JPY per 100 yen).
 Yahoo Finance supplies daily history; CNY uses matching USD/KRW and USD/CNY
-observations. Presets span 1D through 5Y, with custom calendar-day lookbacks and
-exact start/end dates. The initial range is 3M. Configurable simple moving averages,
+observations. Presets span 1D through 20Y and MAX, with custom calendar-day lookbacks and
+exact start/end dates. The initial range is 3M. Each chart has its own range selector. All indicators
+start off; valid settings apply immediately, without an Apply step. Configurable simple moving averages,
 prior-close support/resistance channels and percentage filter rules annotate each
 chart; daily tables expose rates, indicators, thresholds, and position changes.
 See [technical rules](docs/FX-RULES.md) for exact semantics and
@@ -132,8 +138,8 @@ applies no additional roll adjustment or spot-price reconstruction. See
 ## Publication
 
 The local Windows task `Momentum_Daily_Snapshot` runs at sign-in, resume, and
-21:00 while the laptop is available. It publishes both equity results, tracking,
-FX, commodities, crypto and bond ETFs together after all seven outputs succeed, and skips a completed cutoff.
+21:00 while the laptop is available. It publishes all four equity results, tracking,
+FX, commodities, crypto and bond indices together after all nine outputs succeed, and skips a completed cutoff.
 The laptop must be online with the user signed in; this is not a hosted data job.
 
 GitHub Pages serves this repository's root from `main`. Data commits and frontend
@@ -141,9 +147,10 @@ commits deploy through Pages. Do not hand-edit generated result values. The
 local project root README and operations guide document the private runner.
 
 Crypto (`#crypto`) contains BTC and ETH in USD. Government Bonds (`#bonds`)
-contains three Korean and six US ETF maturity exposures, grouped by country.
-Both share the chart tools with independent settings. ETF closes are prices,
-not yields or total returns; distributions affect price signals. See
+contains four KAP Korean and five Solactive US Treasury total-return indices.
+They include reinvested interest and are displayed in index points. Histories
+begin in 2015–2016 and 2006 respectively; pre-launch US histories are backtested.
+Crypto history begins in September 2014 (BTC) and November 2017 (ETH). See
 [instruments and methodology](docs/CRYPTO-BONDS.md).
 
 ## Development
