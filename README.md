@@ -5,22 +5,25 @@ A static dashboard designed by Moon Quixote.
 
 Vanilla HTML, CSS, and JavaScript; no frontend framework, build step, or browser
 API credentials. This repository contains the **public website and generated
-results**. The private local screeners, FX fetcher, and Windows task installation live outside
+results**. The private local screeners, FX/commodity fetchers, and Windows task installation live outside
 this Git repository and are not included in a clone.
 
 ## Repository layout
 
 ```text
-index.html                  Dashboard home, equity views, and FX section
+index.html                  Dashboard home, equities, FX and commodities
 style.css                   Layout, typography, tables, responsive criteria
 script.js                   Routing, result loading, formatting, rendering
-fx.js                       FX charts, range controls and daily signal tables
-fx-analysis.js              Pure close-based indicator and filter-rule calculations
+fx.js                       FX validation and display configuration
+commodities.js              Futures validation and display configuration
+history-dashboard.js        Shared charts, controls and daily signal tables
+fx-analysis.js              Shared close-based indicators and filter rules
 hero_image.png              Hero illustration
 data/results.json           Generated Korean results
 data/results-us.json        Generated US results
 data/tracking.json          Persistent tracking episodes and full price histories
 data/fx.json                Daily KRW histories for eight major currencies
+data/commodities.json       Daily prices for nine major commodity futures
 docs/DATA.md                JSON contract and data semantics
 docs/DESIGN.md              Current design conventions
 ```
@@ -29,7 +32,8 @@ docs/DESIGN.md              Current design conventions
 
 | Route | Content |
 | --- | --- |
-| `#home` (also default URL) | Dashboard entry point: Equities and FX |
+| `#home` (also default URL) | Dashboard entry point: Equities, FX and Commodities |
+| `#commodities` | Nine major futures markets: charts, technical rules and daily prices |
 | `#fx` | Major currencies against KRW: charts, technical rules, daily observations |
 | `#overview`, `#equities` | Equity introduction, market links, counts, and snapshot notes |
 | `#KOSPImatches` | KOSPI 200 matches, raw prices, and normalized history |
@@ -42,7 +46,7 @@ snapshot cutoff and actual closing-data dates, which can differ between markets.
 Each market loads independently: a failed or empty response does not prevent
 the other market from displaying.
 
-The sticky grey bar contains Dashboard, Equities, and FX beside Moon Quixote.
+The sticky grey bar contains Dashboard, Equities, FX and Commodities beside Moon Quixote.
 Within Equities, a second navigation row exposes the four existing equity views. Overview
 links use compact text, arrows, and counts. The active navigation link is
 underlined. Tracking retains the same dark-page typography and table style.
@@ -108,11 +112,23 @@ See [technical rules](docs/FX-RULES.md) for exact semantics and
 
 Reference rates omit conversion fees/spreads and are not executable bank quotes.
 
+## Commodity futures
+
+Gold, silver, copper, WTI/Brent crude oil, natural gas, wheat, corn and soybeans
+use Yahoo futures series. Each chart retains its quoted unit: dollars per troy
+ounce, pound, barrel or MMBtu, and **US cents per bushel** for grains. Copper,
+silver and natural gas retain extra display precision. No KRW conversion is applied.
+
+The page reuses FX's ranges and technical tools with separate settings. These
+series can switch contracts; rolls can affect charts and signals. This dashboard
+applies no additional roll adjustment or spot-price reconstruction. See
+[commodity methodology](docs/COMMODITIES.md) for sources, units and limitations.
+
 ## Publication
 
 The local Windows task `Momentum_Daily_Snapshot` runs at sign-in, resume, and
 21:00 while the laptop is available. It publishes both equity results, tracking,
-and FX together after all four updates succeed, and skips a completed cutoff.
+FX and commodities together after all five outputs succeed, and skips a completed cutoff.
 The laptop must be online with the user signed in; this is not a hosted data job.
 
 GitHub Pages serves this repository's root from `main`. Data commits and frontend
@@ -129,6 +145,8 @@ git diff --check
 node --check script.js
 node --check fx.js
 node --check fx-analysis.js
+node --check history-dashboard.js
+node --check commodities.js
 ```
 
 Open <http://127.0.0.1:8000>. `file://` does not support normal JSON fetching.

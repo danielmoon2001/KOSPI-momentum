@@ -1,7 +1,7 @@
 # Current frontend conventions
 
-The source of truth is `index.html`, `style.css`, `script.js`, and `fx.js`. The
-dashboard has top-level Home, Equities, and FX sections; equity subroutes retain
+The source of truth is `index.html`, `style.css`, `script.js`, `history-dashboard.js`, `fx.js`, and `commodities.js`. The
+dashboard has top-level Home, Equities, FX and Commodities sections; equity subroutes retain
 their existing tables, thresholds, and tracking layout.
 
 - Monochrome palette: white, parchment `#f5f5f7`, dark surface `#272729`, and ink
@@ -41,15 +41,16 @@ requested. DOM IDs are shared hooks for the renderer and frontend checks.
 Use explicit CSS/JS asset query versions for changes that affect appearance or
 behavior. Keep provider data escaped before inserting names or symbols into HTML.
 
-## Dashboard and FX
+## Dashboard, FX and commodities
 
-The home page uses two simple linked section cards. FX retains the same content
+The home page uses three simple linked section cards. FX and Commodities retain the same content
 width, white surfaces, restrained typography, and compact footer. Accent colors distinguish the closing rate, two moving averages and channel
 boundaries; filter entries/exits also use different marker shapes.
 
 A shared range control offers presets, a numeric day count and exact dates.
 Technical controls are in a native disclosure with an explicit Apply action.
-Settings apply to all eight charts. Pair cards use two columns on desktop and
+Settings apply within each section; FX and Commodities settings are independent.
+The renderer and technical calculations are shared. Chart cards use two columns on desktop and
 one on mobile. Charts retain readable minimum widths and scroll inside their
 panels. Native details expose exact daily rates, indicator values and signals;
 keyboard and touch access do not depend on hovering. Chart paths retain every

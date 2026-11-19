@@ -5,6 +5,10 @@ Long means long that foreign currency against KRW; short means the opposite.
 These are analytical states and signals, not executed positions or profit estimates.
 Settings apply to all eight charts and last for the current page session.
 
+Commodities uses the same calculation and chart modules with a separate settings
+instance. Its quote units, contract changes and nonpositive-price handling are
+described in [COMMODITIES.md](COMMODITIES.md).
+
 ## Ranges and timing
 
 The default range is 3M. Presets use 7/14/30/90/180/365/730/1095/1825 calendar-day

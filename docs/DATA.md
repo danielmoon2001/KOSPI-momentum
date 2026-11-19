@@ -148,3 +148,22 @@ for averages, prior-close channels and percentage filter state transitions.
 
 Daily reference rates exclude customer conversion spreads and fees. The public
 dashboard contains no FX credentials and makes no live provider calls.
+
+## Commodity futures (`data/commodities.json`)
+
+Top-level fields: `schemaVersion: 1`, `assetClass: "commodity-futures"`,
+`quoteCurrency: "USD"`, `source`, `snapshotAt`, `generatedAt`, `asOf`, `commodities`.
+`asOf` is the earliest latest observation date across the nine series.
+`quoteCurrency` identifies the denomination; **per-series units can be US cents**.
+
+Each entry contains `code`, `name`, `ticker`, `category`, `unit`, `pricePrefix`,
+`decimals`, `asOf`, and ascending `history` entries `{date, close}`. Codes are
+`gold`, `silver`, `copper`, `wti`, `brent`, `gas`, `wheat`, `corn`, `soybeans`, in
+that order. Prices stay in provider quote units. Zero/negative futures prices
+are retained; non-finite values are rejected. No contract-month or roll-adjustment
+metadata is inferred from the generic Yahoo symbol.
+
+See [COMMODITIES.md](COMMODITIES.md) for exact ticker/unit mappings, validation,
+cutoff, display precision and nonpositive-price handling. The browser loads this
+file independently of FX, equity matches and tracking. The daily runner stages
+and publishes all five JSON outputs through the existing single-task cycle.

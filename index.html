@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Moon Quixote · Asset Dashboard</title>
-  <link rel="stylesheet" href="style.css?v=20261119-fx-analysis">
-  <script src="fx-analysis.js?v=20261119-fx-analysis" defer></script>
-  <script src="fx.js?v=20261119-fx-analysis" defer></script>
-  <script src="script.js?v=20261119-dashboard" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261119-commodities">
+  <script src="fx-analysis.js?v=20261119-commodities" defer></script>
+  <script src="history-dashboard.js?v=20261119-commodities" defer></script>
+  <script src="fx.js?v=20261119-commodities" defer></script>
+  <script src="commodities.js?v=20261119-commodities" defer></script>
+  <script src="script.js?v=20261119-commodities" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
@@ -19,6 +21,7 @@
           <a href="#home" id="nav-home">Dashboard</a>
           <a href="#overview" id="nav-equities">Equities</a>
           <a href="#fx" id="nav-fx">FX</a>
+          <a href="#commodities" id="nav-commodities">Commodities</a>
         </div>
       </div>
       <p id="asof">Loading…</p>
@@ -40,10 +43,11 @@
     <section class="tile tile-light dashboard-intro"><div class="content-bound">
       <p class="eyebrow">PERSONAL ASSET DASHBOARD</p>
       <h1 class="tile-title">Markets, in perspective.</h1>
-      <p class="dashboard-description">A daily view across equities and currencies. Monitor momentum, follow discoveries, and compare the movements that matter.</p>
+      <p class="dashboard-description">A daily view across equities, currencies, and commodities. Monitor momentum, follow discoveries, and compare the movements that matter.</p>
       <div class="dashboard-sections">
-        <a href="#overview" class="dashboard-card"><span class="eyebrow">01 / EQUITIES</span><h2>Momentum <span aria-hidden="true">↗</span></h2><p>KOSPI 200 and US large-cap screening, with price tracking after discovery.</p><span id="home-equities-status" class="dashboard-status">Loading equity snapshots…</span></a>
-        <a href="#fx" class="dashboard-card"><span class="eyebrow">02 / FOREIGN EXCHANGE</span><h2>The won &amp; the world <span aria-hidden="true">↗</span></h2><p>Eight major currencies against KRW. Daily charts, trend indicators, and configurable trading rules.</p><span id="home-fx-status" class="dashboard-status">Loading FX snapshot…</span></a>
+        <a href="#overview" class="dashboard-card"><span class="eyebrow">01 / EQUITIES</span><h2>Momentum</h2><p>KOSPI 200 and US large-cap screening, with price tracking after discovery.</p><span id="home-equities-status" class="dashboard-status">Loading equity snapshots…</span></a>
+        <a href="#fx" class="dashboard-card"><span class="eyebrow">02 / FOREIGN EXCHANGE</span><h2>The won &amp; the world</h2><p>Eight major currencies against KRW. Daily charts, trend indicators, and configurable trading rules.</p><span id="home-fx-status" class="dashboard-status">Loading FX snapshot…</span></a>
+        <a href="#commodities" class="dashboard-card"><span class="eyebrow">03 / COMMODITIES</span><h2>Metals, energy &amp; grains</h2><p>Nine major futures markets. Daily price charts and the same configurable technical tools.</p><span id="home-commodities-status" class="dashboard-status">Loading commodities snapshot…</span></a>
       </div>
     </div></section>
     <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p>Designed by Moon Quixote.</p><p>Daily snapshots · 9 PM KST cutoff.</p><p>Each section shows its own observation dates.</p></div></footer>
@@ -90,6 +94,49 @@
       <div id="fx-content" aria-live="polite"><p class="empty-state">Loading daily FX rates…</p></div>
     </div></section>
     <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p id="fx-updated"></p><p>KRW per 1 foreign unit · JPY per 100 yen.</p><p>Daily close-based signals, not executed orders. Rates exclude fees/spreads and the unfinished cutoff day. CNY uses a USD cross-rate. Rules start neutral at the first stored observation; early indicators need warm-up.</p></div></footer>
+  </main>
+
+  <main id="view-commodities" class="page-view" style="display:none">
+    <section class="tile tile-light fx-section"><div class="content-bound">
+      <p class="eyebrow">COMMODITY FUTURES</p><h1 class="tile-title">Major commodities.</h1>
+      <p class="dashboard-description">Gold, silver, copper, crude oil, natural gas, and grains. Explore daily futures prices and technical signals across nine markets.</p>
+      <form id="commodities-controls" class="fx-controls">
+        <div class="fx-toolbar">
+          <label for="commodities-range">Chart range</label><select id="commodities-range"><option>1D</option><option>1W</option><option>2W</option><option>1M</option><option selected>3M</option><option>6M</option><option>1Y</option><option>2Y</option><option>3Y</option><option>5Y</option><option value="custom">Custom days</option><option value="dates">Exact dates</option></select>
+          <div id="commodities-custom-days" hidden><label for="commodities-days">Calendar days</label><input id="commodities-days" type="number" min="1" max="2225" step="1" value="90"></div>
+          <div id="commodities-custom-dates" hidden><label for="commodities-start">From</label><input id="commodities-start" type="date"><label for="commodities-end">To</label><input id="commodities-end" type="date"></div>
+          <button class="fx-apply" type="submit">Apply settings</button>
+        </div>
+        <details class="fx-settings">
+          <summary>Technical indicators &amp; filter rules</summary>
+          <div class="fx-settings-grid">
+            <fieldset><legend><label><input id="commodities-averages" type="checkbox" checked> Moving averages</label></legend>
+              <label for="commodities-fast">Fast SMA</label><input id="commodities-fast" type="number" min="2" max="250" step="1" value="20" required>
+              <label for="commodities-slow">Slow SMA</label><input id="commodities-slow" type="number" min="2" max="250" step="1" value="50" required>
+            </fieldset>
+            <fieldset><legend><label><input id="commodities-bands" type="checkbox" checked> Support / resistance</label></legend>
+              <label for="commodities-channel">Channel lookback</label><input id="commodities-channel" type="number" min="2" max="250" step="1" value="20" required>
+              <p>Prior closes define the channel. A close outside it marks a breakout.</p>
+            </fieldset>
+            <fieldset class="fx-filter-settings"><legend><label><input id="commodities-filter" type="checkbox" checked> Percentage filter rule</label></legend>
+              <label for="commodities-x">Entry / reversal x (%)</label><input id="commodities-x" type="number" min="0.01" max="50" step="0.01" value="1" required>
+              <label for="commodities-mode">Reference extrema</label><select id="commodities-mode"><option value="running">Running extrema</option><option value="rolling">Rolling d closes</option></select>
+              <label for="commodities-lookback">Rolling lookback d</label><input id="commodities-lookback" type="number" min="2" max="250" step="1" value="20" required>
+              <label for="commodities-hold-mode">Holding rule</label><select id="commodities-hold-mode"><option value="minimum">Minimum hold</option><option value="fixed">Exit after h</option></select>
+              <label for="commodities-hold">Hold h (observations)</label><input id="commodities-hold" type="number" min="0" max="250" step="1" value="0" required>
+              <label for="commodities-neutral">Exit to neutral</label><input id="commodities-neutral" type="checkbox">
+              <label for="commodities-y">Neutral exit y (%)</label><input id="commodities-y" type="number" min="0.01" max="49.99" step="0.01" value="0.5" required>
+            </fieldset>
+          </div>
+          <p class="fx-rule-note">Long: a rise of x% from the reference low. Short: a fall of x% from the reference high. Running extrema reset at each position change; rolling extrema use the previous d closes. Smaller moves are ignored. A y% reversal can exit to neutral (y &lt; x), with re-entry evaluated on a later observation. Minimum hold suppresses signals until h observations after entry; “Exit after h” instead closes at that point. Long/short refer to the commodity futures price. Contract changes can affect signals.</p>
+          <button class="fx-apply" type="submit">Apply settings</button>
+        </details>
+        <p id="commodities-error" role="alert"></p>
+        <p id="commodities-coverage" class="fx-muted"></p>
+      </form>
+      <div id="commodities-content" aria-live="polite"><p class="empty-state">Loading daily commodity futures…</p></div>
+    </div></section>
+    <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p id="commodities-updated"></p><p>USD or US cents, in the unit labeled on each chart.</p><p>Yahoo futures series, not physical spot prices. Contract changes may cause jumps and signals; no roll adjustment is applied here. Daily closes exclude the unfinished cutoff day. Indicators are analytical, not executed trades.</p></div></footer>
   </main>
 
   <!-- Overview -->

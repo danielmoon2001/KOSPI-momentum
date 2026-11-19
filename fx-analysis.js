@@ -24,6 +24,7 @@ function fxAnalyze(history, settings = fxDefaults) {
   if (error) throw new Error(error);
   let sum = 0, state = "Neutral", entered = null, since = null;
   let high = history[0]?.close, low = high;
+  let positiveStart = 0;
   const prefix = [0];
   const average = (period, index) => index + 1 < period ? null : (prefix[index + 1] - prefix[index + 1 - period]) / period;
   return history.map((point, index) => {
@@ -33,10 +34,20 @@ function fxAnalyze(history, settings = fxDefaults) {
     const support = previous.length === settings.channel ? Math.min(...previous.map(p => p.close)) : null;
     const resistance = previous.length === settings.channel ? Math.max(...previous.map(p => p.close)) : null;
     const breakout = resistance !== null && point.close > resistance ? "Up" : support !== null && point.close < support ? "Down" : "Inside";
+    // Futures may trade at zero/negative prices. Keep linear indicators but pause
+    // percentage rules, then restart neutral with the next positive observation.
+    if (point.close <= 0) {
+      positiveStart = index + 1;
+      state = "Neutral"; entered = since = null;
+      return {...point, fast: average(settings.fast, index), slow: average(settings.slow, index),
+        support, resistance, breakout: support === null ? "Warming up" : breakout,
+        state: "Unavailable", since: null, signal: "", upper: null, lower: null, change: null};
+    }
+    if (index === positiveStart) high = low = point.close;
     let signal = "", upper = null, lower = null;
-    let ready = index > 0;
+    let ready = index > positiveStart;
     if (settings.mode === "rolling") {
-      const reference = history.slice(Math.max(0, index - settings.lookback), index);
+      const reference = history.slice(Math.max(positiveStart, index - settings.lookback), index);
       ready = reference.length === settings.lookback;
       if (ready) {
         high = Math.max(...reference.map(p => p.close));
@@ -72,6 +83,6 @@ function fxAnalyze(history, settings = fxDefaults) {
     return {...point, fast: average(settings.fast, index), slow: average(settings.slow, index),
       support, resistance, breakout: support === null ? "Warming up" : breakout,
       state: ready ? state : "Warming up", since, signal, upper, lower,
-      change: index ? (point.close / history[index - 1].close - 1) * 100 : null};
+      change: index > positiveStart ? (point.close / history[index - 1].close - 1) * 100 : null};
   });
 }
