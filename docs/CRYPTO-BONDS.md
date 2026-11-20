@@ -45,7 +45,7 @@ full refresh. Provider revisions can affect historical reproducibility.
 ## Controls
 
 Each chart offers independent ranges through 20Y/MAX, custom day counts and
-inclusive dates. Initial range: 3M. All overlays and filter rules start off;
+inclusive dates. Initial range: 1M. All overlays and filter rules start off;
 valid settings apply immediately. Enabled indicators use the full history before
 cropping. Bond periods count index observations; crypto periods include weekends.
 See [technical rules](FX-RULES.md). These signals do not execute orders.

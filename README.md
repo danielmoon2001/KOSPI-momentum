@@ -16,6 +16,7 @@ style.css                   Layout, typography, tables, responsive criteria
 script.js                   Routing, result loading, formatting, rendering
 fx.js                       FX validation and display configuration
 commodities.js              Futures validation and display configuration
+indices.js                  Nine equity-index history charts
 crypto-bonds.js              Crypto and government-bond index configuration
 history-dashboard.js        Shared charts, controls and daily signal tables
 fx-analysis.js              Shared close-based indicators and filter rules
@@ -28,6 +29,7 @@ data/tracking.json          Persistent tracking episodes and full price historie
 data/fx.json                Daily KRW histories for eight major currencies
 data/commodities.json       Daily prices for nine major commodity futures
 data/crypto.json            Bitcoin and Ethereum daily USD closes
+data/indices.json           Nine major equity-index histories
 data/bonds.json             Nine Korean/US government-bond total-return histories
 docs/DATA.md                JSON contract and data semantics
 docs/DESIGN.md              Current design conventions
@@ -41,6 +43,7 @@ docs/DESIGN.md              Current design conventions
 | `#commodities` | Nine major futures markets: charts, technical rules and daily prices |
 | `#crypto` | Bitcoin and Ethereum daily USD charts and technical rules |
 | `#bonds` | Korean/US government-bond total-return indices grouped by country and maturity |
+| `#indices` | Nine major price indices, grouped into Korea, US, Japan and Hong Kong |
 | `#fx` | Major currencies against KRW: charts, technical rules, daily observations |
 | `#overview`, `#equities` | Equity introduction, market links, counts, and snapshot notes |
 | `#KOSPImatches` | KOSPI 200 matches, raw prices, and normalized history |
@@ -114,7 +117,7 @@ FX uses the same snapshot cutoff and excludes that day's unfinished daily bar.
 USD, EUR, JPY, GBP, CNY, CHF, AUD, and CAD are shown in KRW (JPY per 100 yen).
 Yahoo Finance supplies daily history; CNY uses matching USD/KRW and USD/CNY
 observations. Presets span 1D through 20Y and MAX, with custom calendar-day lookbacks and
-exact start/end dates. The initial range is 3M. Each chart has its own range selector. All indicators
+exact start/end dates. The initial range is 1M. Each chart has its own range selector. All indicators
 start off; valid settings apply immediately, without an Apply step. Configurable simple moving averages,
 prior-close support/resistance channels and percentage filter rules annotate each
 chart; daily tables expose rates, indicators, thresholds, and position changes.
@@ -139,7 +142,7 @@ applies no additional roll adjustment or spot-price reconstruction. See
 
 The local Windows task `Momentum_Daily_Snapshot` runs at sign-in, resume, and
 21:00 while the laptop is available. It publishes all four equity results, tracking,
-FX, commodities, crypto and bond indices together after all nine outputs succeed, and skips a completed cutoff.
+FX, commodities, crypto, bond indices and equity indices together after all ten outputs succeed, and skips a completed cutoff.
 The laptop must be online with the user signed in; this is not a hosted data job.
 
 GitHub Pages serves this repository's root from `main`. Data commits and frontend
@@ -177,3 +180,6 @@ When changing CSS or JS behavior, update its asset query version in `index.html`
 Keep credentials, logs, local environments, research files, and private scripts
 outside this public directory. See [DESIGN.md](docs/DESIGN.md) for presentation
 conventions.
+
+See [equity-index methodology](docs/INDICES.md). Every history chart defaults to
+1M (30 calendar days); screening windows and full tracking histories are unchanged.

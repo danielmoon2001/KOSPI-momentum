@@ -138,7 +138,7 @@ requires all eight pairs, at least 1,200 observations per pair and shared dates,
 history from December 1, 2003 (up to seven days of start-date tolerance), and last observations within seven calendar days of the
 eligible end date. No partial FX batch is published.
 
-The default chart range is 3M. Each chart has independent controls. Presets extend to 20Y and MAX; custom ranges accept a
+The default chart range is 1M. Each chart has independent controls. Presets extend to 20Y and MAX; custom ranges accept a
 calendar-day lookback or inclusive exact dates within available history. 1D
 uses the latest two observations. The fetcher retains history from December 2003. All overlays start off;
 valid settings apply immediately. A partial warm-up at the very beginning
@@ -167,7 +167,7 @@ metadata is inferred from the generic Yahoo symbol.
 See [COMMODITIES.md](COMMODITIES.md) for exact ticker/unit mappings, validation,
 cutoff, display precision and nonpositive-price handling. The browser loads this
 file independently of FX, equity matches and tracking. The daily runner stages
-and publishes all nine JSON outputs through the existing single-task cycle.
+and publishes all ten JSON outputs through the existing single-task cycle.
 
 ## Crypto and bond histories (`data/crypto.json`, `data/bonds.json`)
 
@@ -195,3 +195,9 @@ are reconciled to the cutoff with effective-dated change logs when needed.
 Yahoo symbols use `.T` and `.HK`. Missing constituent history fails the batch.
 Caps follow the US reported/estimated/unavailable convention. Tracking records
 use market keys `japan` and `hk`; existing Korean/US episodes are preserved.
+
+## Equity-index history (`data/indices.json`)
+
+Nine daily price indices across the four equity markets use `priceBasis: "price-index"`
+and `assetClass: "equity-indices"`. See [the complete contract and symbols](INDICES.md).
+All ten JSON files participate in the existing snapshot publication cycle.

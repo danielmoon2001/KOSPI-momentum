@@ -13,8 +13,8 @@ class HistoryDashboard {
   constructor(config) {
     this.config = config;
     this.state = {loading: true};
-    this.range = '3M';
-    this.days = 90;
+    this.range = '1M';
+    this.days = 30;
     this.start = '';
     this.end = '';
     this.settings = {...fxDefaults, averages:false, bands:false, filter:false};

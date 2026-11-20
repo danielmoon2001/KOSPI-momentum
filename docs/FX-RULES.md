@@ -19,7 +19,7 @@ while technical settings apply across its section. Reloading restores defaults.
 
 ## Ranges and timing
 
-The default range is 3M. Presets use 7/14/30/90/180/365/730/1095/1825 calendar-day
+The default range is 1M. Presets use 7/14/30/90/180/365/730/1095/1825 calendar-day
 lookbacks, plus 10Y (3652), 20Y (7305) and MAX; 1D uses the latest two observations. Custom days accepts 1–50000 days
 back from each pair's latest observation, including both boundary dates when
 present. Exact dates include observations on both selected dates. An empty range

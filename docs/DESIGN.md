@@ -1,7 +1,7 @@
 # Current frontend conventions
 
 The source of truth is `index.html`, `style.css`, `script.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, and `crypto-bonds.js`. The
-dashboard has top-level Home, Equities, FX, Commodities, Crypto and Bonds sections; equity subroutes retain
+dashboard has top-level Home, Equities, Indices, FX, Commodities, Crypto and Bonds sections; equity subroutes retain
 their existing tables, thresholds, and tracking layout.
 
 - Monochrome palette: white, parchment `#f5f5f7`, dark surface `#272729`, and ink
@@ -43,7 +43,7 @@ behavior. Keep provider data escaped before inserting names or symbols into HTML
 
 ## Dashboard, FX and commodities
 
-The home page uses five simple linked section cards. The four history dashboards retain the same content
+The home page uses six simple linked section cards. The five history dashboards retain the same content
 width, white surfaces, restrained typography, and compact footer. Accent colors distinguish the closing rate, two moving averages and channel
 boundaries; filter entries/exits also use different marker shapes.
 
@@ -58,3 +58,6 @@ panels. Native details expose exact daily rates, indicator values and signals;
 keyboard and touch access do not depend on hovering. Chart paths retain every
 observation; only invisible hover targets are sampled for longer ranges.
 There is no external chart library, browser API key or automatic order execution.
+
+Equity indices use the shared history cards, grouped by country. Every history
+chart starts at 1M (30 calendar days), independently adjustable.

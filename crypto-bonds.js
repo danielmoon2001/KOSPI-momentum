@@ -14,9 +14,9 @@ const bondSpecs = [
   ['us-20y','DE000SLA4B99','Index points','',2,'US','20+ years']
 ];
 
-function validateAssetHistory(data, specs, assetClass, key) {
+function validateAssetHistory(data, specs, assetClass, key, priceBasis = assetClass === 'crypto' ? 'unadjusted-close' : 'total-return-index') {
   const items = data[key];
-  if (data.schemaVersion !== 1 || data.assetClass !== assetClass || data.priceBasis !== (assetClass === 'crypto' ? 'unadjusted-close' : 'total-return-index')
+  if (data.schemaVersion !== 1 || data.assetClass !== assetClass || data.priceBasis !== priceBasis
       || !data.generatedAt || !data.snapshotAt || !Array.isArray(items) || items.length !== specs.length
       || items.some((item,index) => {
         const [code,ticker,unit,prefix,decimals,country,maturity] = specs[index];
@@ -24,7 +24,7 @@ function validateAssetHistory(data, specs, assetClass, key) {
           || item.decimals !== decimals || item.country !== country || item.maturity !== maturity
           || typeof item.name !== 'string' || !Array.isArray(item.history) || item.history.length < 21
           || item.asOf !== item.history.at(-1).date || item.history.some((p,i) => !historyDate(p.date)
-            || (country === 'KR' ? p.date > data.snapshotAt.slice(0,10) : p.date >= data.snapshotAt.slice(0,10))
+            || (['KR','JP','HK'].includes(country) ? p.date > data.snapshotAt.slice(0,10) : p.date >= data.snapshotAt.slice(0,10))
             || !Number.isFinite(p.close) || p.close <= 0 || (i && p.date <= item.history[i-1].date));
       }) || data.asOf !== items.map(p => p.asOf).sort()[0]) throw new Error(`Invalid ${assetClass} data`);
 }
