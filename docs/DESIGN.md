@@ -1,6 +1,6 @@
 # Current frontend conventions
 
-The source of truth is `index.html`, `style.css`, `script.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, and `crypto-bonds.js`. The
+The source of truth is `index.html`, `style.css`, `script.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, `crypto-bonds.js`, and `indices.js`. The
 dashboard has top-level Home, Equities, Indices, FX, Commodities, Crypto and Bonds sections; equity subroutes retain
 their existing tables, thresholds, and tracking layout.
 
@@ -50,7 +50,7 @@ boundaries; filter entries/exits also use different marker shapes.
 Each chart has a range control with presets through 20Y/MAX, a numeric day
 count and exact dates. Technical controls are in a native disclosure, start
 off, and apply valid changes immediately.
-Settings apply within each section; FX, Commodities, Crypto and Bonds settings are independent. Bond cards are grouped into Korea and United States, with maturity labels and total-return index points. Date controls use each instrument’s
+Settings apply within each section; Indices, FX, Commodities, Crypto and Bonds settings are independent. Bond cards are grouped into Korea and United States, with maturity labels and total-return index points. Date controls use each instrument’s
 available coverage. No earlier observations are synthesized.
 The renderer and technical calculations are shared. Chart cards use two columns on desktop and
 one on mobile. Charts retain readable minimum widths and scroll inside their

@@ -1,4 +1,4 @@
-// Shared chart UI. FX and commodities own separate state, controls and data.
+// Shared chart UI; each history section owns separate state, controls and data.
 const historyRanges = {'1D':1,'1W':7,'2W':14,'1M':30,'3M':90,'6M':180,'1Y':365,'2Y':730,'3Y':1095,'5Y':1825,'10Y':3652,'20Y':7305};
 const historyPercent = value => value == null ? '—' : `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`;
 const historyFormatters = new Map();

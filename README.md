@@ -1,185 +1,100 @@
 # Moon Quixote · Asset Dashboard
 
-A static dashboard designed by Moon Quixote.
-[Open the live site](https://danielmoon2001.github.io/KOSPI-momentum/).
+[Live dashboard](https://danielmoon2001.github.io/KOSPI-momentum/), designed by Moon Quixote.
+Static HTML, CSS and JavaScript, with no framework, build step or browser credentials.
+This repository contains the public website and generated data. The private Python
+backend and Windows task live outside this repository; a clone cannot fetch updates.
 
-Vanilla HTML, CSS, and JavaScript; no frontend framework, build step, or browser
-API credentials. This repository contains the **public website and generated
-results**. The private local screeners, market-history fetchers, and Windows task installation live outside
-this Git repository and are not included in a clone.
-
-## Repository layout
-
-```text
-index.html                  Dashboard home, equities, FX, commodities, crypto and bonds
-style.css                   Layout, typography, tables, responsive criteria
-script.js                   Routing, result loading, formatting, rendering
-fx.js                       FX validation and display configuration
-commodities.js              Futures validation and display configuration
-indices.js                  Nine equity-index history charts
-crypto-bonds.js              Crypto and government-bond index configuration
-history-dashboard.js        Shared charts, controls and daily signal tables
-fx-analysis.js              Shared close-based indicators and filter rules
-hero_image.png              Hero illustration
-data/results.json           Generated Korean results
-data/results-us.json        Generated US results
-data/results-japan.json     Generated Nikkei 225 results
-data/results-hk.json        Generated Hang Seng Index results
-data/tracking.json          Persistent tracking episodes and full price histories
-data/fx.json                Daily KRW histories for eight major currencies
-data/commodities.json       Daily prices for nine major commodity futures
-data/crypto.json            Bitcoin and Ethereum daily USD closes
-data/indices.json           Nine major equity-index histories
-data/bonds.json             Nine Korean/US government-bond total-return histories
-docs/DATA.md                JSON contract and data semantics
-docs/DESIGN.md              Current design conventions
-```
-
-## Views
+## Sections
 
 | Route | Content |
 | --- | --- |
-| `#home` (also default URL) | Dashboard entry point: Equities, FX, Commodities, Crypto and Bonds |
-| `#commodities` | Nine major futures markets: charts, technical rules and daily prices |
-| `#crypto` | Bitcoin and Ethereum daily USD charts and technical rules |
-| `#bonds` | Korean/US government-bond total-return indices grouped by country and maturity |
-| `#indices` | Nine major price indices, grouped into Korea, US, Japan and Hong Kong |
-| `#fx` | Major currencies against KRW: charts, technical rules, daily observations |
-| `#overview`, `#equities` | Equity introduction, market links, counts, and snapshot notes |
-| `#KOSPImatches` | KOSPI 200 matches, raw prices, and normalized history |
-| `#USmatches` | Nasdaq-100 / S&P 500 matches, raw prices, and normalized history |
-| `#JapanMatches` | Nikkei 225 matches and price history |
-| `#HKmatches` | Hang Seng Index matches and price history |
-| `#tracking` | Discoveries from all four markets followed through their first lower close |
-| `#matches` | Compatibility alias for the Korean view |
+| #home (default) | Six dashboard sections |
+| #overview / #equities | Equity introduction and market links |
+| #KOSPImatches / #matches | KOSPI 200 screen; second route is a legacy alias |
+| #USmatches | Nasdaq-100 ∪ S&P 500 screen |
+| #JapanMatches | Nikkei 225 screen |
+| #HKmatches | Hang Seng Index screen |
+| #tracking | Discoveries through the first lower close |
+| #indices | Nine major price indices across the four markets |
+| #fx | Eight major currencies against KRW; JPY per 100 yen |
+| #commodities | Nine futures series in their quoted USD/US-cent units |
+| #crypto | Bitcoin and Ethereum in USD |
+| #bonds | Four Korean KAP and five US Solactive government-bond total-return indices |
 
-The top-right date is the result fetch date in Korea time. Footer notes show the
-snapshot cutoff and actual closing-data dates, which can differ between markets.
-Each market loads independently: a failed or empty response does not prevent
-the other market from displaying.
+History charts start at 1M (30 calendar days). Each chart has presets, custom day
+counts and exact dates. Indicators start off; valid settings apply immediately.
+Simple moving averages, prior-close channels and percentage filter rules use the
+full available history before chart clipping. Settings are independent by section.
+[Technical rules](docs/FX-RULES.md).
 
-The sticky grey bar contains Dashboard, Equities, FX, Commodities, Crypto and Bonds beside Moon Quixote.
-Within Equities, a second navigation row exposes the overview, four markets and tracking. Overview
-links use compact text, arrows, and counts. The active navigation link is
-underlined. Tracking retains the same dark-page typography and table style.
+## Equity rules and tracking
 
-Tracking starts with each stock's discovery close and counts subsequent trading
-sessions with equal or higher closes. The first lower close is included in the
-history but is not counted as survived. Completed episodes stay visible through
-that market session, then leave the view on the next session. Volume and window
-ratios are not retested. Repeated matches do not reset active episodes; a new
-match after completion can begin a new episode. Histories show every session
-from discovery to the first drop, with a chart once two closes are available.
+The base window is five calendar days immediately before the latest three trading
+dates (evaluation). A match requires evaluation/base average volume > 1.5, final
+close/base average close > 1.1, and three strictly increasing evaluation closes.
+The private screeners apply these rules; this website renders their output.
+Thresholds/window metadata come from JSON. Historical payloads retain their own labels.
 
-Tracking launched November 15, 2026, seeded from the latest published matches;
-it does not claim to reconstruct older discoveries. Match pages continue to
-show the current screen independently. Completed episodes remain in JSON for
-audit even after leaving the tracking view.
+Tracking starts at discovery with zero survived sessions. Flat or higher subsequent
+closes continue it. The first lower close ends it and remains visible through that
+market session, without counting as survived. Completed records remain in JSON.
+Repeat matches do not reset an active episode; later matches may begin new episodes.
+Tracking began November 15, 2026; older discoveries are not reconstructed.
 
-## Screening contract
+## Data and display
 
-- Evaluation: **3 trading dates**, ending on the latest eligible session.
-- Base: **5 calendar days** immediately before the first evaluation date.
-- Evaluation average daily volume / base average daily volume **> 1.5**.
-- Final evaluation close / base average close **> 1.1**.
-- Last three trading-session closes strictly increase.
-- Korea: **KOSPI 200**, pykrx index `1028`, with membership on the anchor date.
-- US: **Nasdaq-100 ∪ S&P 500**, using index-list revisions at or before the cutoff.
-- Japan: **Nikkei 225**; Hong Kong: **Hang Seng Index**, using official membership and effective-dated changes.
+One local Windows task publishes ten datasets using the most recent 21:00 KST.
+Asian equities may use that day's completed session; US equities use a prior date.
+Provider observation dates and cutoff timestamps are separate. See [data contract](docs/DATA.md).
+The laptop must be available, signed in and online. This is not a cloud data job.
 
-The local screeners apply these rules; the website only renders generated data.
-Daily volume averages use actual trading sessions. Weekends and holidays count
-toward the base's calendar span but not toward the three evaluation sessions.
-Current thresholds are read from each JSON. This window definition applies to
-new runs from November 17, 2026; earlier saved snapshots use the former two
-five-calendar-day windows. The overview describes the current rule; each match
-page labels the windows used by its actual payload. Earlier snapshots show a
-brief historical-rule note until a new update replaces them.
+Caps use compact units with at most one decimal place; approximate caps are marked
+and unavailable values remain missing. Raw History cells omit currency symbols;
+section labels and caps retain units. Normalized prices start at 100.
 
-## Snapshot and display semantics
+FX rates omit conversion spreads; futures can roll contracts; equity indices are
+price indices; bond indices include reinvested interest. Some bond history predates
+index launch and is backtested. These are reference charts, not executable quotes
+or a measured trading strategy. Source details: [commodities](docs/COMMODITIES.md),
+[crypto/bonds](docs/CRYPTO-BONDS.md), [indices](docs/INDICES.md).
 
-All four markets use the most recent **21:00 Asia/Seoul**. Korean, Japanese and Hong Kong sessions on that
-date are eligible; the same-date US regular session has not opened, so US prices
-come from a prior trading date. Weekends and holidays use available sessions.
+## Files
 
-Market caps remain full numeric amounts in JSON and display as `₩675.2억`,
-`₩2.6조`, `$10.6bn`, or `$2.5tn`. KRX caps use the anchor date. US estimates
-are marked `≈`; unavailable caps show `—`. Currency symbols remain in market
-caps and section descriptions, but **Raw History price cells omit them**.
-US prices retain two decimal places; Korean prices use whole won. Normalized
-prices are unitless, with each stock's first available close indexed to 100.
+| Files | Purpose |
+| --- | --- |
+| index.html, style.css, script.js | Routes, layout and equity/tracking renderer |
+| history-dashboard.js, fx-analysis.js | Shared charts, controls and calculations |
+| fx.js, commodities.js, crypto-bonds.js, indices.js | Section adapters and validation |
+| hero_image.png, .nojekyll | Static illustration and Pages configuration |
+| data/results*.json | Four equity result files |
+| data/tracking.json | Persistent episodes and histories |
+| data/fx.json, commodities.json, crypto.json, bonds.json, indices.json | Five history datasets |
+| tests/frontend.test.cjs, tools/check.cjs | Self-contained offline verification |
+| .github/workflows/checks.yml | Public regression CI |
+| docs/ | Contracts, design and methodology |
 
-See [DATA.md](docs/DATA.md) for required fields, optional metadata, and limitations.
+## Contributing
 
-## FX monitoring
-
-FX uses the same snapshot cutoff and excludes that day's unfinished daily bar.
-USD, EUR, JPY, GBP, CNY, CHF, AUD, and CAD are shown in KRW (JPY per 100 yen).
-Yahoo Finance supplies daily history; CNY uses matching USD/KRW and USD/CNY
-observations. Presets span 1D through 20Y and MAX, with custom calendar-day lookbacks and
-exact start/end dates. The initial range is 1M. Each chart has its own range selector. All indicators
-start off; valid settings apply immediately, without an Apply step. Configurable simple moving averages,
-prior-close support/resistance channels and percentage filter rules annotate each
-chart; daily tables expose rates, indicators, thresholds, and position changes.
-See [technical rules](docs/FX-RULES.md) for exact semantics and
-[FX data semantics](docs/DATA.md#fx-history-datafxjson) for the data contract.
-
-Reference rates omit conversion fees/spreads and are not executable bank quotes.
-
-## Commodity futures
-
-Gold, silver, copper, WTI/Brent crude oil, natural gas, wheat, corn and soybeans
-use Yahoo futures series. Each chart retains its quoted unit: dollars per troy
-ounce, pound, barrel or MMBtu, and **US cents per bushel** for grains. Copper,
-silver and natural gas retain extra display precision. No KRW conversion is applied.
-
-The page reuses FX's ranges and technical tools with separate settings. These
-series can switch contracts; rolls can affect charts and signals. This dashboard
-applies no additional roll adjustment or spot-price reconstruction. See
-[commodity methodology](docs/COMMODITIES.md) for sources, units and limitations.
-
-## Publication
-
-The local Windows task `Momentum_Daily_Snapshot` runs at sign-in, resume, and
-21:00 while the laptop is available. It publishes all four equity results, tracking,
-FX, commodities, crypto, bond indices and equity indices together after all ten outputs succeed, and skips a completed cutoff.
-The laptop must be online with the user signed in; this is not a hosted data job.
-
-GitHub Pages serves this repository's root from `main`. Data commits and frontend
-commits deploy through Pages. Do not hand-edit generated result values. The
-local project root README and operations guide document the private runner.
-
-Crypto (`#crypto`) contains BTC and ETH in USD. Government Bonds (`#bonds`)
-contains four KAP Korean and five Solactive US Treasury total-return indices.
-They include reinvested interest and are displayed in index points. Histories
-begin in 2015–2016 and 2006 respectively; pre-launch US histories are backtested.
-Crypto history begins in September 2014 (BTC) and November 2017 (ETH). See
-[instruments and methodology](docs/CRYPTO-BONDS.md).
-
-## Development
-
-From this repository directory:
+Node 22 or later; no npm install is needed. From this repository:
 
 ```powershell
+node tools/check.cjs
 python -m http.server 8000 --bind 127.0.0.1
 git diff --check
-node --check script.js
-node --check fx.js
-node --check fx-analysis.js
-node --check history-dashboard.js
-node --check commodities.js
-node --check crypto-bonds.js
 ```
 
-Open <http://127.0.0.1:8000>. `file://` does not support normal JSON fetching.
-In the full local project, run `node --test test_frontend.cjs` from the parent
-directory for route, failure, empty-state, and formatting regression checks.
+The check command verifies JavaScript syntax, local HTML asset references, unique
+IDs, JSON parsing/timestamps and frontend regression cases. Tests use a simulated
+DOM; inspect affected routes in a real browser for layout changes. Serve this
+repository only, never a private parent folder. file:// does not support normal fetches.
 
-Preserve the route names, result filenames, and DOM IDs used by `script.js`.
-When changing CSS or JS behavior, update its asset query version in `index.html`.
-Keep credentials, logs, local environments, research files, and private scripts
-outside this public directory. See [DESIGN.md](docs/DESIGN.md) for presentation
-conventions.
+Preserve routes, filenames and DOM hooks. Do not hand-edit generated values or
+reset tracking state. Follow [design conventions](docs/DESIGN.md); keep the
+handcrafted Korean/US views unchanged during unrelated work. Bump asset query
+versions in index.html for CSS/JS changes. Never add credentials, logs or private source.
 
-See [equity-index methodology](docs/INDICES.md). Every history chart defaults to
-1M (30 calendar days); screening windows and full tracking histories are unchanged.
+GitHub Pages serves main's root. Website checks runs separately on pushes and pull
+requests; it does not gate the existing branch-based Pages deployment. After a
+push verify both workflows and the live page. Backend setup/recovery belongs to
+the private project's onboarding and operations guides.
