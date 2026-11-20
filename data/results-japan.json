@@ -2,21 +2,21 @@
   "market": "Japan",
   "currency": "JPY",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-20T01:07:12+09:00",
-  "snapshotAt": "2026-11-19T21:00:00+09:00",
-  "asOf": "2026-11-18",
+  "generatedAt": "2026-11-20T21:01:50+09:00",
+  "snapshotAt": "2026-11-20T21:00:00+09:00",
+  "asOf": "2026-11-20",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
   "baseCalendarDays": 5,
   "evalTradingDays": 3,
   "dates": [
-    "2026-11-11",
-    "2026-11-12",
     "2026-11-13",
     "2026-11-16",
     "2026-11-17",
-    "2026-11-18"
+    "2026-11-18",
+    "2026-11-19",
+    "2026-11-20"
   ],
   "stocks": [],
   "universe": {
@@ -26,6 +26,6 @@
     "sources": [
       "https://indexes.nikkei.co.jp/en/nkave/index/component"
     ],
-    "membershipAsOf": "2026-11-19"
+    "membershipAsOf": "2026-11-20"
   }
 }

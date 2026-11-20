@@ -3,16 +3,16 @@
   "startedAt": "2026-11-15T10:04:55+09:00",
   "markets": {
     "kospi": {
-      "asOf": "2026-11-19"
+      "asOf": "2026-11-20"
     },
     "us": {
-      "asOf": "2026-11-18"
+      "asOf": "2026-11-19"
     },
     "japan": {
-      "asOf": "2026-11-18"
+      "asOf": "2026-11-20"
     },
     "hk": {
-      "asOf": "2026-11-18"
+      "asOf": "2026-11-20"
     }
   },
   "episodes": [
@@ -64,14 +64,20 @@
       "ticker": "352820",
       "name": "하이브",
       "foundDate": "2026-11-19",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-19",
           "close": 189400.0
+        },
+        {
+          "date": "2026-11-20",
+          "close": 183600.0
         }
-      ]
+      ],
+      "endedDate": "2026-11-20",
+      "completedAsOf": "2026-11-20"
     },
     {
       "id": "kospi:034230:2026-11-19",
@@ -79,14 +85,20 @@
       "ticker": "034230",
       "name": "파라다이스",
       "foundDate": "2026-11-19",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-19",
           "close": 11570.0
+        },
+        {
+          "date": "2026-11-20",
+          "close": 11300.0
         }
-      ]
+      ],
+      "endedDate": "2026-11-20",
+      "completedAsOf": "2026-11-20"
     },
     {
       "id": "kospi:090430:2026-11-19",
@@ -94,16 +106,52 @@
       "ticker": "090430",
       "name": "아모레퍼시픽",
       "foundDate": "2026-11-19",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-19",
           "close": 142500.0
+        },
+        {
+          "date": "2026-11-20",
+          "close": 139400.0
+        }
+      ],
+      "endedDate": "2026-11-20",
+      "completedAsOf": "2026-11-20"
+    },
+    {
+      "id": "us:OKTA:2026-11-19",
+      "market": "us",
+      "ticker": "OKTA",
+      "name": "Okta, Inc.",
+      "foundDate": "2026-11-19",
+      "status": "active",
+      "survivedSessions": 0,
+      "history": [
+        {
+          "date": "2026-11-19",
+          "close": 206.85
+        }
+      ]
+    },
+    {
+      "id": "us:PANW:2026-11-19",
+      "market": "us",
+      "ticker": "PANW",
+      "name": "Palo Alto Networks, Inc.",
+      "foundDate": "2026-11-19",
+      "status": "active",
+      "survivedSessions": 0,
+      "history": [
+        {
+          "date": "2026-11-19",
+          "close": 361.73
         }
       ]
     }
   ],
-  "snapshotAt": "2026-11-19T21:00:00+09:00",
-  "generatedAt": "2026-11-20T01:11:53+09:00"
+  "snapshotAt": "2026-11-20T21:00:00+09:00",
+  "generatedAt": "2026-11-20T21:02:04+09:00"
 }
