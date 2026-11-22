@@ -3,8 +3,8 @@
   "assetClass": "government-bond-indices",
   "priceBasis": "total-return-index",
   "source": "KAP / Solactive",
-  "snapshotAt": "2026-11-20T21:00:00+09:00",
-  "generatedAt": "2026-11-20T21:02:38+09:00",
+  "snapshotAt": "2026-11-21T21:00:00+09:00",
+  "generatedAt": "2026-11-22T10:47:21+09:00",
   "asOf": "2026-11-19",
   "bonds": [
     {
@@ -42767,7 +42767,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-19",
+      "asOf": "2026-11-20",
       "history": [
         {
           "date": "2006-12-29",
@@ -62660,6 +62660,10 @@
         {
           "date": "2026-11-19",
           "close": 1207.82
+        },
+        {
+          "date": "2026-11-20",
+          "close": 1208.34
         }
       ]
     },
@@ -62675,7 +62679,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-19",
+      "asOf": "2026-11-20",
       "history": [
         {
           "date": "2006-12-29",
@@ -82556,6 +82560,10 @@
         {
           "date": "2026-11-19",
           "close": 1480.1
+        },
+        {
+          "date": "2026-11-20",
+          "close": 1483.7
         }
       ]
     },
@@ -82571,7 +82579,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-19",
+      "asOf": "2026-11-20",
       "history": [
         {
           "date": "2006-12-29",
@@ -102452,6 +102460,10 @@
         {
           "date": "2026-11-19",
           "close": 1799.27
+        },
+        {
+          "date": "2026-11-20",
+          "close": 1810.75
         }
       ]
     },
@@ -102467,7 +102479,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-19",
+      "asOf": "2026-11-20",
       "history": [
         {
           "date": "2006-12-29",
@@ -122344,6 +122356,10 @@
         {
           "date": "2026-11-19",
           "close": 1728.65
+        },
+        {
+          "date": "2026-11-20",
+          "close": 1747.91
         }
       ]
     },
@@ -122359,7 +122375,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-19",
+      "asOf": "2026-11-20",
       "history": [
         {
           "date": "2006-12-29",
@@ -142220,6 +142236,10 @@
         {
           "date": "2026-11-19",
           "close": 1737.58
+        },
+        {
+          "date": "2026-11-20",
+          "close": 1761.07
         }
       ]
     }

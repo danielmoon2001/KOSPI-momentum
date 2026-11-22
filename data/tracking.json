@@ -6,7 +6,7 @@
       "asOf": "2026-11-20"
     },
     "us": {
-      "asOf": "2026-11-19"
+      "asOf": "2026-11-20"
     },
     "japan": {
       "asOf": "2026-11-20"
@@ -127,14 +127,20 @@
       "ticker": "OKTA",
       "name": "Okta, Inc.",
       "foundDate": "2026-11-19",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-19",
           "close": 206.85
+        },
+        {
+          "date": "2026-11-20",
+          "close": 191.46
         }
-      ]
+      ],
+      "endedDate": "2026-11-20",
+      "completedAsOf": "2026-11-20"
     },
     {
       "id": "us:PANW:2026-11-19",
@@ -142,16 +148,22 @@
       "ticker": "PANW",
       "name": "Palo Alto Networks, Inc.",
       "foundDate": "2026-11-19",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-19",
           "close": 361.73
+        },
+        {
+          "date": "2026-11-20",
+          "close": 343.32
         }
-      ]
+      ],
+      "endedDate": "2026-11-20",
+      "completedAsOf": "2026-11-20"
     }
   ],
-  "snapshotAt": "2026-11-20T21:00:00+09:00",
-  "generatedAt": "2026-11-20T21:02:04+09:00"
+  "snapshotAt": "2026-11-21T21:00:00+09:00",
+  "generatedAt": "2026-11-22T10:45:19+09:00"
 }
