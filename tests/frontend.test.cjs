@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
-const source = ['fx-analysis.js', 'history-dashboard.js', 'fx.js', 'commodities.js', 'crypto-bonds.js', 'indices.js', 'metrics.js', 'home.js', 'script.js'].map(file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8')).join('\n');
+const source = ['fx-analysis.js', 'history-dashboard.js', 'fx.js', 'commodities.js', 'bond-rates.js', 'crypto-bonds.js', 'indices.js', 'metrics.js', 'home.js', 'script.js'].map(file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8')).join('\n');
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
 function metricsPayload() {
@@ -544,6 +544,8 @@ test('zero and negative futures preserve linear indicators and restart percentag
 function assetPayload(kind) {
   // Use the published schema/metadata; keep fixture dates small and deterministic.
   const data = JSON.parse(fs.readFileSync(path.join(__dirname, '../data', `${kind}.json`), 'utf8'));
+  // These are legacy index fixtures. Rate tests attach dated synthetic rates.
+  delete data.rates;
   const key = kind === 'crypto' ? 'assets' : 'bonds';
   data.snapshotAt = '2026-11-18T21:00:00+09:00';
   data.asOf = '2026-11-17';
@@ -653,4 +655,64 @@ test('chart ranges are independent, support MAX and keep daily indicator prehist
   assert.match(p.node('#fx-content').innerHTML,/id="fx-USD-range"/);
   assert.match(p.node('#fx-content').innerHTML,/id="fx-EUR-range"/);
   assert.equal(p.evaluate('fxDashboard.rendered.get("USD").history.at(-1).date'),'2026-11-10');
+});
+
+
+function ratePayload(p) {
+  return p.evaluate(`bondRateSpecs.map(([code,name,country,lagDays])=>({code,name,country,lagDays,unit:'Percent',
+    status:'current',fetchedAt:'2026-11-18T21:02:00+09:00',asOf:new Date(Date.parse('2026-11-18')-lagDays*86400000).toISOString().slice(0,10),
+    history:[{date:new Date(Date.parse('2026-11-17')-lagDays*86400000).toISOString().slice(0,10),close:3},
+             {date:new Date(Date.parse('2026-11-18')-lagDays*86400000).toISOString().slice(0,10),close:code==='ffr-upper'?3.25:3.025}]}))`);
+}
+
+test('bond rates and Home show percent levels, bp changes and a correctly paired Fed target range',async()=>{
+  const p=page('#bonds'),data=assetPayload('bonds');data.rates=ratePayload(p);
+  respond(p,'data/bonds.json',data);await settle();
+  const html=p.node('#bonds-rates').innerHTML;
+  assert.match(html,/BOK base rate/);assert.match(html,/US 30Y/);assert.match(html,/Korea 20Y/);
+  assert.match(html,/3\.025%/);assert.match(html,/\+2\.5 bp/);
+  assert.match(html,/3\.03–3\.25%/);assert.match(html,/2026-11-16/);
+  assert.match(p.node('#bonds-content').innerHTML,/Total return/);
+  p.go('#home');
+  assert.match(p.node('#home-rates-summary').innerHTML,/Fed target range/);
+  assert.match(p.node('#home-rates-summary').innerHTML,/Korea 10Y/);
+  assert.match(p.node('#home-rates-summary').innerHTML,/US 2Y/);
+  assert.doesNotMatch(p.node('#home-rates-summary').innerHTML,/US 30Y|<svg/);
+  p.evaluate('bondsDashboard.selections.set("kr-3y",{range:"7D"});renderHomeSummary()');
+  assert.match(p.node('#home-rates-summary').innerHTML,/3\.025%/);
+});
+
+test('rate source outages and unpaired target dates are explicit while bond indices remain available',async()=>{
+  const p=page('#bonds'),data=assetPayload('bonds');data.rates=ratePayload(p);
+  data.rates[0].status='stale';data.rates[1]={...data.rates[1],history:[],asOf:null,fetchedAt:null,status:'unavailable'};
+  const upper=data.rates[8];upper.history.pop();upper.asOf=upper.history.at(-1).date;
+  respond(p,'data/bonds.json',data);await settle();
+  assert.match(p.node('#bonds-rates').innerHTML,/Delayed/);
+  assert.match(p.node('#bonds-rates').innerHTML,/Unavailable \/ dates differ/);
+  assert.match(p.node('#bonds-content').innerHTML,/Total return/);
+  p.go('#home');assert.match(p.node('#home-rates-summary').innerHTML,/Delayed/);
+});
+
+test('rate validation rejects future observations, wrong units and inverted targets; legacy bonds still render',async()=>{
+  for(const kind of ['future','unit','inverted','missing','nan']) {
+    const p=page('#bonds'),data=assetPayload('bonds');data.rates=ratePayload(p);
+    if(kind==='future') data.rates[10].history.at(-1).date='2026-11-18';
+    if(kind==='unit') data.rates[0].unit='Basis points';
+    if(kind==='inverted') data.rates[7].history.at(-1).close=9;
+    if(kind==='missing') data.rates.pop();
+    if(kind==='nan') data.rates[0].history.at(-1).close=NaN;
+    respond(p,'data/bonds.json',data);await settle();
+    assert.match(p.node('#bonds-content').innerHTML,/data is unavailable/);
+  }
+  const p=page('#bonds');respond(p,'data/bonds.json',assetPayload('bonds'));await settle();
+  assert.match(p.node('#bonds-content').innerHTML,/Total return/);
+  assert.match(p.node('#bonds-rates').innerHTML,/Unavailable/);
+});
+
+test('the real published bond payload passes browser validation and renders its rate dates',async()=>{
+  const p=page('#bonds'),data=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/bonds.json'),'utf8'));
+  respond(p,'data/bonds.json',data);await settle();
+  assert.equal(p.evaluate('bondsDashboard.state.error'),undefined);
+  assert.equal((p.node('#bonds-content').innerHTML.match(/<article /g)||[]).length,9);
+  for (const item of data.rates || []) if(item.asOf) assert.ok(p.node('#bonds-rates').innerHTML.includes(item.asOf));
 });

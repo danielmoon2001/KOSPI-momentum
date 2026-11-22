@@ -249,7 +249,7 @@ function syncView(scroll = false) {
   if (fx) fxDashboard.render();
   else if (commodities) commoditiesDashboard.render();
   else if (crypto) cryptoDashboard.render();
-  else if (bonds) bondsDashboard.render();
+  else if (bonds) { bondsDashboard.render(); renderBondRates(); }
   else if (indices) indicesDashboard.render();
   else if (metrics) metricsDashboard.render();
   else if (tracking) renderTracking();

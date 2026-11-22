@@ -4,16 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Moon Quixote · Asset Dashboard</title>
-  <link rel="stylesheet" href="style.css?v=20261122-summary">
-  <script src="fx-analysis.js?v=20261122-summary" defer></script>
-  <script src="history-dashboard.js?v=20261122-summary" defer></script>
-  <script src="fx.js?v=20261122-summary" defer></script>
-  <script src="commodities.js?v=20261122-summary" defer></script>
-  <script src="crypto-bonds.js?v=20261122-summary" defer></script>
-  <script src="indices.js?v=20261122-summary" defer></script>
-  <script src="metrics.js?v=20261122-summary" defer></script>
-  <script src="home.js?v=20261122-summary" defer></script>
-  <script src="script.js?v=20261122-summary" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261122-rates">
+  <script src="fx-analysis.js?v=20261122-rates" defer></script>
+  <script src="history-dashboard.js?v=20261122-rates" defer></script>
+  <script src="fx.js?v=20261122-rates" defer></script>
+  <script src="commodities.js?v=20261122-rates" defer></script>
+  <script src="bond-rates.js?v=20261122-rates" defer></script>
+  <script src="crypto-bonds.js?v=20261122-rates" defer></script>
+  <script src="indices.js?v=20261122-rates" defer></script>
+  <script src="metrics.js?v=20261122-rates" defer></script>
+  <script src="home.js?v=20261122-rates" defer></script>
+  <script src="script.js?v=20261122-rates" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
@@ -88,7 +89,8 @@
         </article>
         <article class="dashboard-card">
           <a href="#bonds" class="home-section-link"><h2>Government bonds</h2><span>View</span></a>
-          <ul id="home-bonds-summary" class="home-quotes" aria-label="Government bonds summary"><li class="home-empty">Loading…</li></ul>
+          <h3 class="home-rate-heading">Rates · % / change in bp</h3><ul id="home-rates-summary" class="home-quotes" aria-label="Headline rates"></ul>
+          <h3 class="home-rate-heading">Total-return indices</h3><ul id="home-bonds-summary" class="home-quotes" aria-label="Government bonds summary"><li class="home-empty">Loading…</li></ul>
           <p id="home-bonds-status" class="dashboard-status"></p>
         </article>
       </div>
@@ -217,7 +219,9 @@
   <main id="view-bonds" class="page-view" style="display:none">
     <section class="tile tile-light fx-section"><div class="content-bound">
       <p class="eyebrow">SOVEREIGN EXPOSURE</p><h1 class="tile-title">Government bonds.</h1>
-      <p class="dashboard-description">Korea and the US. Total return across the curve.</p>
+      <p class="dashboard-description">Korea and the US. Policy rates, yields and total return.</p>
+      <section id="bonds-rates" aria-label="Policy rates and government yields" aria-live="polite"></section>
+      <h2 class="history-group-title">Total-return indices</h2>
       <form id="bonds-controls" class="fx-controls">
         <details class="fx-settings">
           <summary>Indicators &amp; rules</summary>

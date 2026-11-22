@@ -53,4 +53,6 @@ function renderHomeSummary() {
   for (const [dashboard,selections] of sections) {
     $(`#home-${dashboard.config.id}-summary`).innerHTML = homeHistoryRows(dashboard,selections);
   }
+  $('#home-rates-summary').innerHTML = ['bok','kr-3y','kr-10y','ffr','us-2y','us-10y']
+    .map(bondRateRow).join('');
 }

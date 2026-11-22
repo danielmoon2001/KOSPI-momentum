@@ -1,6 +1,6 @@
 # Current frontend conventions
 
-The source of truth is `index.html`, `style.css`, `script.js`, `home.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, `crypto-bonds.js`, `indices.js`, and `metrics.js`. The
+The source of truth is `index.html`, `style.css`, `script.js`, `home.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, `crypto-bonds.js`, `bond-rates.js`, `indices.js`, and `metrics.js`. The
 dashboard has top-level Home, Equities, Indices, FX, Commodities, Crypto, Bonds and Metrics sections; equity subroutes retain
 their existing tables, thresholds, and tracking layout.
 
@@ -46,6 +46,11 @@ behavior. Keep provider data escaped before inserting names or symbols into HTML
 Home uses a numerical market-pulse strip followed by six compact summary panels.
 Each panel header links to its full section. Selected latest levels, daily changes,
 units and observation dates provide the overview; there are no homepage charts.
+The Bonds summary includes BOK, Korea 3Y/10Y, the Fed target range and US 2Y/10Y
+above selected total-return indices. Rates show percent levels and bp changes.
+The Bonds page places two responsive country panels above the index charts;
+the target range and effective fed funds rate are explicitly distinct. Source
+dates and delayed/unavailable states stay visible. No rate charts are added.
 Match and tracking counts remain distinct. Metric deltas use absolute units, and
 delayed/unavailable labels remain visible. Panels use three desktop columns, two
 at intermediate widths and one on phones; the pulse strip wraps its five metrics.

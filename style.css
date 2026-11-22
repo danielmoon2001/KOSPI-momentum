@@ -554,6 +554,12 @@ tr:last-child td {
 .dashboard-card:focus-visible, .fx-details summary:focus-visible, .chart-range :is(select,input):focus-visible { outline: 2px solid #245db1; outline-offset: 4px; }
 
 /* Home is a compact numerical overview; navigation remains in each panel header. */
+.bond-rate-groups { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin:24px 0 16px; }
+.bond-rate-panel { border:1px solid var(--hairline); border-radius:12px; padding:20px; min-width:0; }
+.bond-rate-panel h3 { margin:0 0 16px; font-size:18px; }
+#bonds-rates { margin:32px 0 48px; }
+.home-rate-heading { font-size:14px; margin:20px 0 8px; }
+@media(max-width:760px) { .bond-rate-groups { grid-template-columns:1fr; gap:16px; } .bond-rate-panel { padding:16px; } }
 #view-home .dashboard-intro { min-height: 0; padding-top: 48px; padding-bottom: 48px; }
 #view-home .tile-title { font-size: 40px; }
 #view-home .dashboard-description { margin-top: 12px; }

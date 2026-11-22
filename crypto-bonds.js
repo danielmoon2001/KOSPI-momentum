@@ -40,7 +40,7 @@ const cryptoDashboard = new HistoryDashboard({
 const bondsDashboard = new HistoryDashboard({
   id:'bonds', label:'Government bonds', file:'data/bonds.json', loadingText:'Loading bond indices…', tableNoun:'index levels',
   items: data => data.bonds,
-  validate: data => validateAssetHistory(data,bondSpecs,'government-bond-indices','bonds'),
+  validate: data => { validateAssetHistory(data,bondSpecs,'government-bond-indices','bonds'); validateBondRates(data); },
   groups: items => [{label:'Korea',items:items.filter(p => p.country === 'KR')},
                    {label:'United States',items:items.filter(p => p.country === 'US')}],
   describe: item => ({title:item.maturity, subtitle:`${item.source} · Total return · ${item.currency}`,

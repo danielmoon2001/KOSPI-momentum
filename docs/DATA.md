@@ -1,5 +1,9 @@
 # Result data contract
 
+Bond data additionally contains a supplementary `rates` array. See the
+[rate contract and source timing](BOND-RATES.md#payload); return-index fields and
+their meaning are unchanged.
+
 The frontend reads `data/results.json` (Korea), `data/results-us.json` (US),
 `data/results-japan.json` (Japan), and `data/results-hk.json` (Hong Kong).
 All amounts and ratios are JSON numbers, not formatted strings. All four payloads

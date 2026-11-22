@@ -4,7 +4,7 @@
   "priceBasis": "total-return-index",
   "source": "KAP / Solactive",
   "snapshotAt": "2026-11-21T21:00:00+09:00",
-  "generatedAt": "2026-11-22T10:47:21+09:00",
+  "generatedAt": "2026-11-22T17:50:17+09:00",
   "asOf": "2026-11-19",
   "bonds": [
     {
@@ -142242,6 +142242,1468 @@
           "close": 1761.07
         }
       ]
+    }
+  ],
+  "rates": [
+    {
+      "code": "bok",
+      "name": "BOK base rate",
+      "country": "KR",
+      "series": "0101000",
+      "lagDays": 0,
+      "table": "722Y001",
+      "unit": "Percent",
+      "source": "BOK ECOS",
+      "sourceUrl": "https://ecos.bok.or.kr/",
+      "history": [
+        {
+          "date": "2026-11-12",
+          "close": 3.0
+        },
+        {
+          "date": "2026-11-13",
+          "close": 3.0
+        },
+        {
+          "date": "2026-11-14",
+          "close": 3.0
+        },
+        {
+          "date": "2026-11-15",
+          "close": 3.0
+        },
+        {
+          "date": "2026-11-16",
+          "close": 3.0
+        },
+        {
+          "date": "2026-11-17",
+          "close": 3.0
+        },
+        {
+          "date": "2026-11-18",
+          "close": 3.0
+        },
+        {
+          "date": "2026-11-19",
+          "close": 3.0
+        },
+        {
+          "date": "2026-11-20",
+          "close": 3.0
+        }
+      ],
+      "asOf": "2026-11-20",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "kr-2y",
+      "name": "Korea 2Y",
+      "country": "KR",
+      "series": "010195000",
+      "lagDays": 1,
+      "table": "817Y002",
+      "unit": "Percent",
+      "source": "BOK ECOS",
+      "sourceUrl": "https://ecos.bok.or.kr/",
+      "history": [
+        {
+          "date": "2026-11-11",
+          "close": 3.728
+        },
+        {
+          "date": "2026-11-12",
+          "close": 3.729
+        },
+        {
+          "date": "2026-11-13",
+          "close": 3.749
+        },
+        {
+          "date": "2026-11-16",
+          "close": 3.741
+        },
+        {
+          "date": "2026-11-17",
+          "close": 3.727
+        },
+        {
+          "date": "2026-11-18",
+          "close": 3.735
+        },
+        {
+          "date": "2026-11-19",
+          "close": 3.722
+        },
+        {
+          "date": "2026-11-20",
+          "close": 3.655
+        }
+      ],
+      "asOf": "2026-11-20",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "kr-3y",
+      "name": "Korea 3Y",
+      "country": "KR",
+      "series": "010200000",
+      "lagDays": 1,
+      "table": "817Y002",
+      "unit": "Percent",
+      "source": "BOK ECOS",
+      "sourceUrl": "https://ecos.bok.or.kr/",
+      "history": [
+        {
+          "date": "2026-11-11",
+          "close": 3.729
+        },
+        {
+          "date": "2026-11-12",
+          "close": 3.729
+        },
+        {
+          "date": "2026-11-13",
+          "close": 3.759
+        },
+        {
+          "date": "2026-11-16",
+          "close": 3.743
+        },
+        {
+          "date": "2026-11-17",
+          "close": 3.725
+        },
+        {
+          "date": "2026-11-18",
+          "close": 3.736
+        },
+        {
+          "date": "2026-11-19",
+          "close": 3.716
+        },
+        {
+          "date": "2026-11-20",
+          "close": 3.642
+        }
+      ],
+      "asOf": "2026-11-20",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "kr-5y",
+      "name": "Korea 5Y",
+      "country": "KR",
+      "series": "010200001",
+      "lagDays": 1,
+      "table": "817Y002",
+      "unit": "Percent",
+      "source": "BOK ECOS",
+      "sourceUrl": "https://ecos.bok.or.kr/",
+      "history": [
+        {
+          "date": "2026-11-11",
+          "close": 3.81
+        },
+        {
+          "date": "2026-11-12",
+          "close": 3.803
+        },
+        {
+          "date": "2026-11-13",
+          "close": 3.841
+        },
+        {
+          "date": "2026-11-16",
+          "close": 3.83
+        },
+        {
+          "date": "2026-11-17",
+          "close": 3.825
+        },
+        {
+          "date": "2026-11-18",
+          "close": 3.839
+        },
+        {
+          "date": "2026-11-19",
+          "close": 3.812
+        },
+        {
+          "date": "2026-11-20",
+          "close": 3.728
+        }
+      ],
+      "asOf": "2026-11-20",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "kr-10y",
+      "name": "Korea 10Y",
+      "country": "KR",
+      "series": "010210000",
+      "lagDays": 1,
+      "table": "817Y002",
+      "unit": "Percent",
+      "source": "BOK ECOS",
+      "sourceUrl": "https://ecos.bok.or.kr/",
+      "history": [
+        {
+          "date": "2026-11-11",
+          "close": 3.95
+        },
+        {
+          "date": "2026-11-12",
+          "close": 3.937
+        },
+        {
+          "date": "2026-11-13",
+          "close": 4.001
+        },
+        {
+          "date": "2026-11-16",
+          "close": 3.981
+        },
+        {
+          "date": "2026-11-17",
+          "close": 3.966
+        },
+        {
+          "date": "2026-11-18",
+          "close": 3.975
+        },
+        {
+          "date": "2026-11-19",
+          "close": 3.942
+        },
+        {
+          "date": "2026-11-20",
+          "close": 3.857
+        }
+      ],
+      "asOf": "2026-11-20",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "kr-20y",
+      "name": "Korea 20Y",
+      "country": "KR",
+      "series": "010220000",
+      "lagDays": 1,
+      "table": "817Y002",
+      "unit": "Percent",
+      "source": "BOK ECOS",
+      "sourceUrl": "https://ecos.bok.or.kr/",
+      "history": [
+        {
+          "date": "2026-11-11",
+          "close": 4.043
+        },
+        {
+          "date": "2026-11-12",
+          "close": 4.045
+        },
+        {
+          "date": "2026-11-13",
+          "close": 4.104
+        },
+        {
+          "date": "2026-11-16",
+          "close": 4.077
+        },
+        {
+          "date": "2026-11-17",
+          "close": 4.083
+        },
+        {
+          "date": "2026-11-18",
+          "close": 4.086
+        },
+        {
+          "date": "2026-11-19",
+          "close": 4.06
+        },
+        {
+          "date": "2026-11-20",
+          "close": 4.024
+        }
+      ],
+      "asOf": "2026-11-20",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "kr-30y",
+      "name": "Korea 30Y",
+      "country": "KR",
+      "series": "010230000",
+      "lagDays": 1,
+      "table": "817Y002",
+      "unit": "Percent",
+      "source": "BOK ECOS",
+      "sourceUrl": "https://ecos.bok.or.kr/",
+      "history": [
+        {
+          "date": "2026-11-11",
+          "close": 4.015
+        },
+        {
+          "date": "2026-11-12",
+          "close": 4.015
+        },
+        {
+          "date": "2026-11-13",
+          "close": 4.074
+        },
+        {
+          "date": "2026-11-16",
+          "close": 4.05
+        },
+        {
+          "date": "2026-11-17",
+          "close": 4.055
+        },
+        {
+          "date": "2026-11-18",
+          "close": 4.06
+        },
+        {
+          "date": "2026-11-19",
+          "close": 4.031
+        },
+        {
+          "date": "2026-11-20",
+          "close": 4.0
+        }
+      ],
+      "asOf": "2026-11-20",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "ffr-lower",
+      "name": "Fed target lower",
+      "country": "US",
+      "series": "DFEDTARL",
+      "lagDays": 1,
+      "table": null,
+      "unit": "Percent",
+      "source": "Federal Reserve / FRED",
+      "sourceUrl": "https://fred.stlouisfed.org/series/DFEDTARL",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "close": 3.75
+        },
+        {
+          "date": "2026-10-22",
+          "close": 3.75
+        },
+        {
+          "date": "2026-10-23",
+          "close": 3.75
+        },
+        {
+          "date": "2026-10-24",
+          "close": 3.75
+        },
+        {
+          "date": "2026-10-25",
+          "close": 3.75
+        },
+        {
+          "date": "2026-10-26",
+          "close": 3.75
+        },
+        {
+          "date": "2026-10-27",
+          "close": 3.75
+        },
+        {
+          "date": "2026-10-28",
+          "close": 3.75
+        },
+        {
+          "date": "2026-10-29",
+          "close": 3.75
+        },
+        {
+          "date": "2026-10-30",
+          "close": 3.75
+        },
+        {
+          "date": "2026-10-31",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-01",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-02",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-03",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-04",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-05",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-06",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-07",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-08",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-09",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-10",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-11",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-12",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-13",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-14",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-15",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-16",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-17",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-18",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-19",
+          "close": 3.75
+        },
+        {
+          "date": "2026-11-20",
+          "close": 3.75
+        }
+      ],
+      "asOf": "2026-11-20",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "ffr-upper",
+      "name": "Fed target upper",
+      "country": "US",
+      "series": "DFEDTARU",
+      "lagDays": 1,
+      "table": null,
+      "unit": "Percent",
+      "source": "Federal Reserve / FRED",
+      "sourceUrl": "https://fred.stlouisfed.org/series/DFEDTARU",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "close": 4.0
+        },
+        {
+          "date": "2026-10-22",
+          "close": 4.0
+        },
+        {
+          "date": "2026-10-23",
+          "close": 4.0
+        },
+        {
+          "date": "2026-10-24",
+          "close": 4.0
+        },
+        {
+          "date": "2026-10-25",
+          "close": 4.0
+        },
+        {
+          "date": "2026-10-26",
+          "close": 4.0
+        },
+        {
+          "date": "2026-10-27",
+          "close": 4.0
+        },
+        {
+          "date": "2026-10-28",
+          "close": 4.0
+        },
+        {
+          "date": "2026-10-29",
+          "close": 4.0
+        },
+        {
+          "date": "2026-10-30",
+          "close": 4.0
+        },
+        {
+          "date": "2026-10-31",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-01",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-02",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-03",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-04",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-05",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-06",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-07",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-08",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-09",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-10",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-11",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-12",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-13",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-14",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-15",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-16",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-17",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-18",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-19",
+          "close": 4.0
+        },
+        {
+          "date": "2026-11-20",
+          "close": 4.0
+        }
+      ],
+      "asOf": "2026-11-20",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "effr",
+      "name": "Effective fed funds",
+      "country": "US",
+      "series": "DFF",
+      "lagDays": 2,
+      "table": null,
+      "unit": "Percent",
+      "source": "Federal Reserve / FRED",
+      "sourceUrl": "https://fred.stlouisfed.org/series/DFF",
+      "history": [
+        {
+          "date": "2026-10-20",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-21",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-22",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-23",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-24",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-25",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-26",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-27",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-28",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-29",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-30",
+          "close": 3.88
+        },
+        {
+          "date": "2026-10-31",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-01",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-02",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-03",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-04",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-05",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-06",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-07",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-08",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-09",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-10",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-11",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-12",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-13",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-14",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-15",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-16",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-17",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-18",
+          "close": 3.88
+        },
+        {
+          "date": "2026-11-19",
+          "close": 3.88
+        }
+      ],
+      "asOf": "2026-11-19",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "us-3m",
+      "name": "US 3M",
+      "country": "US",
+      "series": "DGS3MO",
+      "lagDays": 1,
+      "table": null,
+      "unit": "Percent",
+      "source": "Federal Reserve / FRED",
+      "sourceUrl": "https://fred.stlouisfed.org/series/DGS3MO",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "close": 4.25
+        },
+        {
+          "date": "2026-10-22",
+          "close": 4.22
+        },
+        {
+          "date": "2026-10-23",
+          "close": 4.22
+        },
+        {
+          "date": "2026-10-26",
+          "close": 4.22
+        },
+        {
+          "date": "2026-10-27",
+          "close": 4.22
+        },
+        {
+          "date": "2026-10-28",
+          "close": 4.18
+        },
+        {
+          "date": "2026-10-29",
+          "close": 4.18
+        },
+        {
+          "date": "2026-10-30",
+          "close": 4.16
+        },
+        {
+          "date": "2026-11-02",
+          "close": 4.21
+        },
+        {
+          "date": "2026-11-03",
+          "close": 4.21
+        },
+        {
+          "date": "2026-11-04",
+          "close": 4.21
+        },
+        {
+          "date": "2026-11-05",
+          "close": 4.17
+        },
+        {
+          "date": "2026-11-06",
+          "close": 4.19
+        },
+        {
+          "date": "2026-11-09",
+          "close": 4.24
+        },
+        {
+          "date": "2026-11-10",
+          "close": 4.3
+        },
+        {
+          "date": "2026-11-12",
+          "close": 4.32
+        },
+        {
+          "date": "2026-11-13",
+          "close": 4.32
+        },
+        {
+          "date": "2026-11-16",
+          "close": 4.34
+        },
+        {
+          "date": "2026-11-17",
+          "close": 4.33
+        },
+        {
+          "date": "2026-11-18",
+          "close": 4.34
+        },
+        {
+          "date": "2026-11-19",
+          "close": 4.34
+        }
+      ],
+      "asOf": "2026-11-19",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "us-1y",
+      "name": "US 1Y",
+      "country": "US",
+      "series": "DGS1",
+      "lagDays": 1,
+      "table": null,
+      "unit": "Percent",
+      "source": "Federal Reserve / FRED",
+      "sourceUrl": "https://fred.stlouisfed.org/series/DGS1",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "close": 4.52
+        },
+        {
+          "date": "2026-10-22",
+          "close": 4.41
+        },
+        {
+          "date": "2026-10-23",
+          "close": 4.44
+        },
+        {
+          "date": "2026-10-26",
+          "close": 4.47
+        },
+        {
+          "date": "2026-10-27",
+          "close": 4.5
+        },
+        {
+          "date": "2026-10-28",
+          "close": 4.47
+        },
+        {
+          "date": "2026-10-29",
+          "close": 4.42
+        },
+        {
+          "date": "2026-10-30",
+          "close": 4.36
+        },
+        {
+          "date": "2026-11-02",
+          "close": 4.38
+        },
+        {
+          "date": "2026-11-03",
+          "close": 4.4
+        },
+        {
+          "date": "2026-11-04",
+          "close": 4.39
+        },
+        {
+          "date": "2026-11-05",
+          "close": 4.28
+        },
+        {
+          "date": "2026-11-06",
+          "close": 4.33
+        },
+        {
+          "date": "2026-11-09",
+          "close": 4.38
+        },
+        {
+          "date": "2026-11-10",
+          "close": 4.56
+        },
+        {
+          "date": "2026-11-12",
+          "close": 4.65
+        },
+        {
+          "date": "2026-11-13",
+          "close": 4.65
+        },
+        {
+          "date": "2026-11-16",
+          "close": 4.62
+        },
+        {
+          "date": "2026-11-17",
+          "close": 4.6
+        },
+        {
+          "date": "2026-11-18",
+          "close": 4.62
+        },
+        {
+          "date": "2026-11-19",
+          "close": 4.62
+        }
+      ],
+      "asOf": "2026-11-19",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "us-2y",
+      "name": "US 2Y",
+      "country": "US",
+      "series": "DGS2",
+      "lagDays": 1,
+      "table": null,
+      "unit": "Percent",
+      "source": "Federal Reserve / FRED",
+      "sourceUrl": "https://fred.stlouisfed.org/series/DGS2",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "close": 4.81
+        },
+        {
+          "date": "2026-10-22",
+          "close": 4.65
+        },
+        {
+          "date": "2026-10-23",
+          "close": 4.69
+        },
+        {
+          "date": "2026-10-26",
+          "close": 4.68
+        },
+        {
+          "date": "2026-10-27",
+          "close": 4.7
+        },
+        {
+          "date": "2026-10-28",
+          "close": 4.67
+        },
+        {
+          "date": "2026-10-29",
+          "close": 4.61
+        },
+        {
+          "date": "2026-10-30",
+          "close": 4.56
+        },
+        {
+          "date": "2026-11-02",
+          "close": 4.59
+        },
+        {
+          "date": "2026-11-03",
+          "close": 4.61
+        },
+        {
+          "date": "2026-11-04",
+          "close": 4.58
+        },
+        {
+          "date": "2026-11-05",
+          "close": 4.46
+        },
+        {
+          "date": "2026-11-06",
+          "close": 4.51
+        },
+        {
+          "date": "2026-11-09",
+          "close": 4.56
+        },
+        {
+          "date": "2026-11-10",
+          "close": 4.73
+        },
+        {
+          "date": "2026-11-12",
+          "close": 4.86
+        },
+        {
+          "date": "2026-11-13",
+          "close": 4.88
+        },
+        {
+          "date": "2026-11-16",
+          "close": 4.83
+        },
+        {
+          "date": "2026-11-17",
+          "close": 4.8
+        },
+        {
+          "date": "2026-11-18",
+          "close": 4.8
+        },
+        {
+          "date": "2026-11-19",
+          "close": 4.76
+        }
+      ],
+      "asOf": "2026-11-19",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "us-5y",
+      "name": "US 5Y",
+      "country": "US",
+      "series": "DGS5",
+      "lagDays": 1,
+      "table": null,
+      "unit": "Percent",
+      "source": "Federal Reserve / FRED",
+      "sourceUrl": "https://fred.stlouisfed.org/series/DGS5",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "close": 4.95
+        },
+        {
+          "date": "2026-10-22",
+          "close": 4.78
+        },
+        {
+          "date": "2026-10-23",
+          "close": 4.82
+        },
+        {
+          "date": "2026-10-26",
+          "close": 4.84
+        },
+        {
+          "date": "2026-10-27",
+          "close": 4.82
+        },
+        {
+          "date": "2026-10-28",
+          "close": 4.85
+        },
+        {
+          "date": "2026-10-29",
+          "close": 4.78
+        },
+        {
+          "date": "2026-10-30",
+          "close": 4.71
+        },
+        {
+          "date": "2026-11-02",
+          "close": 4.7
+        },
+        {
+          "date": "2026-11-03",
+          "close": 4.74
+        },
+        {
+          "date": "2026-11-04",
+          "close": 4.69
+        },
+        {
+          "date": "2026-11-05",
+          "close": 4.59
+        },
+        {
+          "date": "2026-11-06",
+          "close": 4.64
+        },
+        {
+          "date": "2026-11-09",
+          "close": 4.67
+        },
+        {
+          "date": "2026-11-10",
+          "close": 4.81
+        },
+        {
+          "date": "2026-11-12",
+          "close": 4.95
+        },
+        {
+          "date": "2026-11-13",
+          "close": 4.98
+        },
+        {
+          "date": "2026-11-16",
+          "close": 4.93
+        },
+        {
+          "date": "2026-11-17",
+          "close": 4.9
+        },
+        {
+          "date": "2026-11-18",
+          "close": 4.89
+        },
+        {
+          "date": "2026-11-19",
+          "close": 4.86
+        }
+      ],
+      "asOf": "2026-11-19",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "us-10y",
+      "name": "US 10Y",
+      "country": "US",
+      "series": "DGS10",
+      "lagDays": 1,
+      "table": null,
+      "unit": "Percent",
+      "source": "Federal Reserve / FRED",
+      "sourceUrl": "https://fred.stlouisfed.org/series/DGS10",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "close": 5.13
+        },
+        {
+          "date": "2026-10-22",
+          "close": 4.96
+        },
+        {
+          "date": "2026-10-23",
+          "close": 5.0
+        },
+        {
+          "date": "2026-10-26",
+          "close": 5.0
+        },
+        {
+          "date": "2026-10-27",
+          "close": 4.99
+        },
+        {
+          "date": "2026-10-28",
+          "close": 5.05
+        },
+        {
+          "date": "2026-10-29",
+          "close": 4.98
+        },
+        {
+          "date": "2026-10-30",
+          "close": 4.94
+        },
+        {
+          "date": "2026-11-02",
+          "close": 4.91
+        },
+        {
+          "date": "2026-11-03",
+          "close": 4.95
+        },
+        {
+          "date": "2026-11-04",
+          "close": 4.9
+        },
+        {
+          "date": "2026-11-05",
+          "close": 4.84
+        },
+        {
+          "date": "2026-11-06",
+          "close": 4.86
+        },
+        {
+          "date": "2026-11-09",
+          "close": 4.88
+        },
+        {
+          "date": "2026-11-10",
+          "close": 4.98
+        },
+        {
+          "date": "2026-11-12",
+          "close": 5.1
+        },
+        {
+          "date": "2026-11-13",
+          "close": 5.15
+        },
+        {
+          "date": "2026-11-16",
+          "close": 5.12
+        },
+        {
+          "date": "2026-11-17",
+          "close": 5.1
+        },
+        {
+          "date": "2026-11-18",
+          "close": 5.07
+        },
+        {
+          "date": "2026-11-19",
+          "close": 5.04
+        }
+      ],
+      "asOf": "2026-11-19",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "us-20y",
+      "name": "US 20Y",
+      "country": "US",
+      "series": "DGS20",
+      "lagDays": 1,
+      "table": null,
+      "unit": "Percent",
+      "source": "Federal Reserve / FRED",
+      "sourceUrl": "https://fred.stlouisfed.org/series/DGS20",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "close": 5.47
+        },
+        {
+          "date": "2026-10-22",
+          "close": 5.32
+        },
+        {
+          "date": "2026-10-23",
+          "close": 5.37
+        },
+        {
+          "date": "2026-10-26",
+          "close": 5.35
+        },
+        {
+          "date": "2026-10-27",
+          "close": 5.34
+        },
+        {
+          "date": "2026-10-28",
+          "close": 5.41
+        },
+        {
+          "date": "2026-10-29",
+          "close": 5.35
+        },
+        {
+          "date": "2026-10-30",
+          "close": 5.34
+        },
+        {
+          "date": "2026-11-02",
+          "close": 5.31
+        },
+        {
+          "date": "2026-11-03",
+          "close": 5.35
+        },
+        {
+          "date": "2026-11-04",
+          "close": 5.3
+        },
+        {
+          "date": "2026-11-05",
+          "close": 5.27
+        },
+        {
+          "date": "2026-11-06",
+          "close": 5.29
+        },
+        {
+          "date": "2026-11-09",
+          "close": 5.29
+        },
+        {
+          "date": "2026-11-10",
+          "close": 5.39
+        },
+        {
+          "date": "2026-11-12",
+          "close": 5.48
+        },
+        {
+          "date": "2026-11-13",
+          "close": 5.52
+        },
+        {
+          "date": "2026-11-16",
+          "close": 5.51
+        },
+        {
+          "date": "2026-11-17",
+          "close": 5.5
+        },
+        {
+          "date": "2026-11-18",
+          "close": 5.44
+        },
+        {
+          "date": "2026-11-19",
+          "close": 5.43
+        }
+      ],
+      "asOf": "2026-11-19",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
+    },
+    {
+      "code": "us-30y",
+      "name": "US 30Y",
+      "country": "US",
+      "series": "DGS30",
+      "lagDays": 1,
+      "table": null,
+      "unit": "Percent",
+      "source": "Federal Reserve / FRED",
+      "sourceUrl": "https://fred.stlouisfed.org/series/DGS30",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "close": 5.42
+        },
+        {
+          "date": "2026-10-22",
+          "close": 5.29
+        },
+        {
+          "date": "2026-10-23",
+          "close": 5.33
+        },
+        {
+          "date": "2026-10-26",
+          "close": 5.31
+        },
+        {
+          "date": "2026-10-27",
+          "close": 5.3
+        },
+        {
+          "date": "2026-10-28",
+          "close": 5.37
+        },
+        {
+          "date": "2026-10-29",
+          "close": 5.32
+        },
+        {
+          "date": "2026-10-30",
+          "close": 5.31
+        },
+        {
+          "date": "2026-11-02",
+          "close": 5.28
+        },
+        {
+          "date": "2026-11-03",
+          "close": 5.32
+        },
+        {
+          "date": "2026-11-04",
+          "close": 5.28
+        },
+        {
+          "date": "2026-11-05",
+          "close": 5.25
+        },
+        {
+          "date": "2026-11-06",
+          "close": 5.26
+        },
+        {
+          "date": "2026-11-09",
+          "close": 5.26
+        },
+        {
+          "date": "2026-11-10",
+          "close": 5.35
+        },
+        {
+          "date": "2026-11-12",
+          "close": 5.43
+        },
+        {
+          "date": "2026-11-13",
+          "close": 5.47
+        },
+        {
+          "date": "2026-11-16",
+          "close": 5.46
+        },
+        {
+          "date": "2026-11-17",
+          "close": 5.46
+        },
+        {
+          "date": "2026-11-18",
+          "close": 5.41
+        },
+        {
+          "date": "2026-11-19",
+          "close": 5.4
+        }
+      ],
+      "asOf": "2026-11-19",
+      "status": "current",
+      "fetchedAt": "2026-11-22T17:50:06+09:00"
     }
   ]
 }

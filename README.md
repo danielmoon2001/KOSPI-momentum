@@ -21,7 +21,7 @@ backend and Windows task live outside this repository; a clone cannot fetch upda
 | #commodities | Nine futures series in their quoted USD/US-cent units |
 | #crypto | Bitcoin and Ethereum in USD |
 | #metrics | VIX, MOVE, Cboe total put/call, high-yield OAS and CNN Fear & Greed |
-| #bonds | Four Korean KAP and five US Solactive government-bond total-return indices |
+| #bonds | BOK/Fed policy rates, major Korean/US Treasury yields, and nine total-return indices |
 
 History charts start at 1M (30 calendar days). Each chart has presets, custom day
 counts and exact dates. Indicators start off; valid settings apply immediately.
@@ -67,7 +67,7 @@ or a measured trading strategy. Source details: [commodities](docs/COMMODITIES.m
 | index.html, style.css, script.js | Routes, layout and equity/tracking renderer |
 | home.js | Selected latest observations and daily changes across all sections |
 | history-dashboard.js, fx-analysis.js | Shared charts, controls and calculations |
-| fx.js, commodities.js, crypto-bonds.js, indices.js, metrics.js | Section adapters and validation |
+| fx.js, commodities.js, crypto-bonds.js, bond-rates.js, indices.js, metrics.js | Section adapters and validation |
 | hero_image.png, .nojekyll | Static illustration and Pages configuration |
 | data/results*.json | Four equity result files |
 | data/tracking.json | Persistent episodes and histories |

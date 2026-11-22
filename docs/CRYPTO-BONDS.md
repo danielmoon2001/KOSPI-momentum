@@ -5,7 +5,9 @@ history begins September 17, 2014 for BTC and November 9, 2017 for ETH. Every
 completed UTC calendar day is retained, including weekends. The snapshot day's
 unfinished daily bar is excluded.
 
-Government Bonds shows actual **total-return indices**, including reinvested
+Government Bonds begins with [policy rates and benchmark yields](BOND-RATES.md)
+for Korea and the US, with observation dates and basis-point changes. Beneath
+those values it shows actual **total-return indices**, including reinvested
 interest. Values are index points, not ETF prices or yields. A rising index
 indicates a positive total return for the represented bond basket. Index levels
 have different bases; compare percentage movements, not their absolute levels.
