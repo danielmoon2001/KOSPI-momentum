@@ -1,6 +1,6 @@
 # Current frontend conventions
 
-The source of truth is `index.html`, `style.css`, `script.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, `crypto-bonds.js`, `indices.js`, and `metrics.js`. The
+The source of truth is `index.html`, `style.css`, `script.js`, `home.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, `crypto-bonds.js`, `indices.js`, and `metrics.js`. The
 dashboard has top-level Home, Equities, Indices, FX, Commodities, Crypto, Bonds and Metrics sections; equity subroutes retain
 their existing tables, thresholds, and tracking layout.
 
@@ -43,7 +43,13 @@ behavior. Keep provider data escaped before inserting names or symbols into HTML
 
 ## Dashboard, FX and commodities
 
-The home page uses seven simple linked section cards. The five history dashboards retain the same content
+Home uses a numerical market-pulse strip followed by six compact summary panels.
+Each panel header links to its full section. Selected latest levels, daily changes,
+units and observation dates provide the overview; there are no homepage charts.
+Match and tracking counts remain distinct. Metric deltas use absolute units, and
+delayed/unavailable labels remain visible. Panels use three desktop columns, two
+at intermediate widths and one on phones; the pulse strip wraps its five metrics.
+The five history dashboards retain the same content
 width, white surfaces, restrained typography, and compact footer. Accent colors distinguish the closing rate, two moving averages and channel
 boundaries; filter entries/exits also use different marker shapes.
 
@@ -54,7 +60,9 @@ Settings apply within each section; Indices, FX, Commodities, Crypto and Bonds s
 available coverage. No earlier observations are synthesized.
 The renderer and technical calculations are shared. Chart cards use two columns on desktop and
 one on mobile. Charts scale to each panel with no fixed minimum width or horizontal chart scrolling.
-Phone layouts use narrower SVG coordinates, compact axis values and month/day labels;
+Phone layouts use a landscape SVG (height about 62% of width), a 42-unit left axis
+margin and 8-unit right margin, compact axis values and month/day labels. Panel
+horizontal padding is 12 px. Desktop chart geometry remains 480 × 255;
 full dates and exact values remain in daily tables. Tables retain horizontal scrolling. Native details expose exact daily rates, indicator values and signals;
 keyboard and touch access do not depend on hovering. Chart paths retain every
 observation; only invisible hover targets are sampled for longer ranges.

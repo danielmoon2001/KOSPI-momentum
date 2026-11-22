@@ -45,14 +45,17 @@ class HistoryDashboard {
     const pad = (high - low || Math.abs(high) * 0.01 || 1) * 0.12;
     low -= pad; high += pad;
     const first = Date.parse(history[0].date), last = Date.parse(history.at(-1).date);
-    // A narrower coordinate system keeps labels readable as the SVG fits a phone.
-    const width = Math.max(240, Math.min(480, (window.innerWidth || 570) - 90));
-    const right = width - 30;
-    const x = date => 70 + (Date.parse(date) - first) / (last - first || 1) * (right - 70);
-    const y = value => 20 + (high - value * units) / (high - low) * 200;
+    // Phones need a landscape plot, not the desktop height squeezed into a narrow SVG.
+    const mobile = (window.innerWidth || 1024) <= 760;
+    const width = mobile ? Math.max(240, Math.min(600, window.innerWidth - 72)) : 480;
+    const height = mobile ? Math.round(width * 0.62) : 255;
+    const left = mobile ? 42 : 70, right = width - (mobile ? 8 : 30);
+    const top = mobile ? 10 : 20, bottom = height - (mobile ? 24 : 35);
+    const x = date => left + (Date.parse(date) - first) / (last - first || 1) * (right - left);
+    const y = value => top + (high - value * units) / (high - low) * (bottom - top);
     const ticks = [0,1,2,3,4].map(i => {
       const value = low + (high - low) * i / 4, position = y(value / units);
-      return `<line x1="70" y1="${position}" x2="${right}" y2="${position}" class="fx-gridline"/><text x="60" y="${position + 4}" text-anchor="end">${width < 340 ? new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(value) : number(value)}</text>`;
+      return `<line x1="${left}" y1="${position}" x2="${right}" y2="${position}" class="fx-gridline"/><text x="${left - 6}" y="${position + 4}" text-anchor="end">${mobile ? new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(value) : number(value)}</text>`;
     }).join('');
     const lines = series.map(line => `<polyline fill="none" stroke="${line.color}" stroke-width="${line.key === 'close' ? 2 : 1.4}" ${line.dash ? 'stroke-dasharray="4 3"' : ''} points="${history.filter(p => p[line.key] !== null).map(p => `${x(p.date)},${y(p[line.key])}`).join(' ')}"/>`).join('');
     const step = Math.max(1, Math.ceil(history.length / 150));
@@ -68,7 +71,7 @@ class HistoryDashboard {
       return result;
     }).join('');
     const endpoint = history.at(-1);
-    return `<div class="fx-chart-scroll"><svg class="fx-chart" viewBox="0 0 ${width} 255" role="img" aria-label="Daily ${view.valueLabel ? 'observations' : 'closes'} (${escapeHTML(unitLabel)}). Exact values in the daily table.">${ticks}${lines}${hover}${markers}<circle cx="${x(endpoint.date)}" cy="${y(endpoint.close)}" r="2.5" fill="#245db1"/><text x="70" y="247">${width < 340 ? history[0].date.slice(5) : history[0].date}</text><text x="${right}" y="247" text-anchor="end">${width < 340 ? endpoint.date.slice(5) : endpoint.date}</text></svg></div>
+    return `<div class="fx-chart-scroll"><svg class="fx-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Daily ${view.valueLabel ? 'observations' : 'closes'} (${escapeHTML(unitLabel)}). Exact values in the daily table.">${ticks}${lines}${hover}${markers}<circle cx="${x(endpoint.date)}" cy="${y(endpoint.close)}" r="2.5" fill="#245db1"/><text x="${left}" y="${height - 6}">${mobile ? history[0].date.slice(5) : history[0].date}</text><text x="${right}" y="${height - 6}" text-anchor="end">${mobile ? endpoint.date.slice(5) : endpoint.date}</text></svg></div>
       <div class="fx-chart-key">${series.map(line => `<span><i style="background:${line.color}"></i>${line.label}</span>`).join('')}${this.settings.filter ? '<span>▲ Long · ▼ Short · ◆ Exit</span>' : ''}${this.settings.bands ? '<span>○ Channel breakout</span>' : ''}</div>`;
   }
 

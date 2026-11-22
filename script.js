@@ -277,6 +277,7 @@ function syncView(scroll = false) {
   $("#home-metrics-status").textContent = metricData
     ? `${metricData.metrics.filter(p => p.status === 'current').length}/5 refreshed · Observation dates vary`
     : metricsDashboard.state.loading ? 'Loading metrics…' : 'Metrics unavailable';
+  if (home) renderHomeSummary();
   if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 

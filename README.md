@@ -9,7 +9,7 @@ backend and Windows task live outside this repository; a clone cannot fetch upda
 
 | Route | Content |
 | --- | --- |
-| #home (default) | Seven dashboard sections |
+| #home (default) | Numerical executive summary and links to all seven sections |
 | #overview / #equities | Equity introduction and market links |
 | #KOSPImatches / #matches | KOSPI 200 screen; second route is a legacy alias |
 | #USmatches | Nasdaq-100 ∪ S&P 500 screen |
@@ -65,6 +65,7 @@ or a measured trading strategy. Source details: [commodities](docs/COMMODITIES.m
 | Files | Purpose |
 | --- | --- |
 | index.html, style.css, script.js | Routes, layout and equity/tracking renderer |
+| home.js | Selected latest observations and daily changes across all sections |
 | history-dashboard.js, fx-analysis.js | Shared charts, controls and calculations |
 | fx.js, commodities.js, crypto-bonds.js, indices.js, metrics.js | Section adapters and validation |
 | hero_image.png, .nojekyll | Static illustration and Pages configuration |
@@ -105,3 +106,16 @@ Metrics uses absolute changes and displays OAS in basis points. Source failures
 are labeled per card and do not block the other updates. See [Metrics methodology](docs/METRICS.md).
 Charts fit the full mobile width without sideways scrolling; exact data tables may
 still scroll. Phone rotation recalculates chart geometry and preserves range selections.
+
+Home has no charts. Its market-pulse strip shows all five metrics; compact panels
+show four-market match counts and active/final-day tracking counts, KOSPI/S&P 500/
+Nikkei/Hang Seng, USD/EUR/100 JPY against KRW, gold/WTI/copper, BTC/ETH, and Korean
+3Y/10Y plus US 1–3Y/3–10Y bond indices. Quotes use each series' latest observation
+and date, independently of chart selections. Daily changes compare the latest two
+observations; metrics use absolute changes (OAS in bps), other series percentage
+changes where both observations are positive. Loading/unavailable data never becomes
+a zero; delayed metrics stay labeled. Section headers link to the complete pages.
+
+On phones, chart plot margins are 42 coordinate units left and 8 right, and SVG
+height is about 62% of its width. This uses the available width and avoids the tall,
+narrow plot produced by retaining a fixed desktop height. Desktop geometry is unchanged.

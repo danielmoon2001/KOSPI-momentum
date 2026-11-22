@@ -208,3 +208,14 @@ See [Metrics contract and timing](METRICS.md). Five ordered source records use
 current/stale/unavailable states. OAS is stored in percent, displayed as basis
 points. The shared history field `close` contains a metric observation, not a
 tradable price. This eleventh file shares the same snapshot cutoff and daily publication.
+
+## Home summaries
+
+Home reads the same independently loaded payloads, with no extra provider requests
+or stored summary file. Values use the final observation and its date; changes
+compare the final two observations, regardless of chart range/indicator settings.
+JPY applies displayUnits=100; OAS converts source percent to bps. Nonpositive
+price observations have no percentage change. Metrics use absolute changes.
+Match counts come from stocks.length. Tracking counts use active episodes and
+the same visible final-day episode predicate as the tracking tab, excluding archived
+completed episodes. Missing/failed data is unavailable, never a synthetic zero.

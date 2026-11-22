@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
-const source = ['fx-analysis.js', 'history-dashboard.js', 'fx.js', 'commodities.js', 'crypto-bonds.js', 'indices.js', 'metrics.js', 'script.js'].map(file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8')).join('\n');
+const source = ['fx-analysis.js', 'history-dashboard.js', 'fx.js', 'commodities.js', 'crypto-bonds.js', 'indices.js', 'metrics.js', 'home.js', 'script.js'].map(file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8')).join('\n');
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
 function metricsPayload() {
@@ -17,6 +17,72 @@ function metricsPayload() {
   });
   return {schemaVersion:1,assetClass:'metrics',snapshotAt:'2026-11-21T21:00:00+09:00',generatedAt:'2026-11-21T21:05:00+09:00',asOf:'2026-11-19',metrics};
 }
+
+test('home summarizes every section with latest numbers, correct units and visible tracking counts',async()=>{
+  const p=page('#home'), indices=indicesPayload(), crypto=assetPayload('crypto');
+  indices.indices[0].history.at(-2).close=100;
+  indices.indices[0].history.at(-1).close=125;
+  crypto.assets[0].history.at(-2).close=100;
+  crypto.assets[0].history.at(-1).close=110;
+  for(const [file,data] of [
+    ['results.json',payload('KR','KRW')],['results-us.json',{...payload('US'),stocks:[]}],
+    ['results-japan.json',payload('JP','JPY')],['results-hk.json',payload('HK','HKD')],
+    ['tracking.json',trackingPayload()],['indices.json',indices],['fx.json',fxPayload()],
+    ['commodities.json',commoditiesPayload()],['crypto.json',crypto],
+    ['bonds.json',assetPayload('bonds')],['metrics.json',metricsPayload()]]) respond(p,`data/${file}`,data);
+  await settle();
+  assert.match(p.node('#home-equities-summary').innerHTML,/href="#KOSPImatches"/);
+  assert.match(p.node('#home-equities-summary').innerHTML,/<strong>0<\/strong>/);
+  assert.equal((p.node('#home-tracking-summary').innerHTML.match(/<strong>1<\/strong>/g)||[]).length,2);
+  assert.match(p.node('#home-indices-summary').innerHTML,/125\.00/);
+  assert.match(p.node('#home-indices-summary').innerHTML,/\+25\.00%/);
+  assert.match(p.node('#home-fx-summary').innerHTML,/₩4,000\.00/);
+  assert.match(p.node('#home-fx-summary').innerHTML,/₩ per 100 JPY/);
+  assert.match(p.node('#home-crypto-summary').innerHTML,/\$110\.00/);
+  assert.match(p.node('#home-crypto-summary').innerHTML,/\+10\.00%/);
+  assert.match(p.node('#home-bonds-summary').innerHTML,/TR index/);
+  assert.match(p.node('#home-metrics-summary').innerHTML,/352 bps/);
+  assert.match(p.node('#home-metrics-summary').innerHTML,/\+1 bps/);
+  for(const section of ['equities','indices','fx','commodities','crypto','bonds','metrics']) {
+    assert.match(p.node(`#home-${section}-summary`).innerHTML,/<strong>/);
+    assert.doesNotMatch(p.node(`#home-${section}-summary`).innerHTML,/<svg|NaN|undefined/);
+  }
+  const original=p.node('#home-fx-summary').innerHTML;
+  p.evaluate('fxDashboard.selections.set("USD",{range:"dates",start:"2026-10-20",end:"2026-10-21"});renderHomeSummary()');
+  assert.equal(p.node('#home-fx-summary').innerHTML,original);
+});
+
+test('home retains source dates and delayed labels while unavailable sources never become zero',async()=>{
+  const p=page('#home'),data=metricsPayload();
+  data.metrics[0].status='stale';
+  data.metrics[1]={...data.metrics[1],status:'unavailable',asOf:null,fetchedAt:null,history:[]};
+  data.metrics[4].history.at(-1).close=0;
+  respond(p,'data/metrics.json',data);
+  p.pending['data/fx.json'].reject(new Error('offline'));
+  await settle();
+  assert.match(p.node('#home-metrics-summary').innerHTML,/2026-11-20 · Delayed/);
+  assert.match(p.node('#home-metrics-summary').innerHTML,/MOVE<small>Unavailable<\/small><\/span>\s*<strong>—<\/strong>/);
+  assert.match(p.node('#home-metrics-summary').innerHTML,/<strong>0\.0<\/strong>/);
+  assert.match(p.node('#home-fx-summary').innerHTML,/Unavailable/);
+  p.go('#USmatches');respond(p,'data/results-us.json',payload('USA'));await settle();
+  assert.equal(p.node('#view-home').style.display,'none');
+  assert.match(p.node('#rows').innerHTML,/USA/);
+});
+
+test('phone charts use a landscape aspect and reclaim plot width; desktop geometry is preserved',async()=>{
+  const p=page('#metrics');respond(p,'data/metrics.json',metricsPayload());await settle();
+  for(const viewport of [320,360,390,600,760]) {
+    p.evaluate(`window.innerWidth=${viewport};metricsDashboard.render()`);
+    const html=p.node('#metrics-content').innerHTML;
+    const [,w,h]=html.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/).map(Number);
+    assert.ok(h/w<=0.63);
+    const [,left,right]=html.match(/<line x1="([\d.]+)" y1="[\d.]+" x2="([\d.]+)"/).map(Number);
+    assert.ok((right-left)/w>0.75);
+    assert.ok(right<w);
+  }
+  p.evaluate('window.innerWidth=1200;metricsDashboard.render()');
+  assert.match(p.node('#metrics-content').innerHTML,/viewBox="0 0 480 255"/);
+});
 
 test('metrics renders five independent reference series, basis points and explicit degraded states', async()=>{
   const p=page('#metrics'),data=metricsPayload();
@@ -55,9 +121,9 @@ test('mobile chart coordinates narrow with the viewport and retain both endpoint
   const p=page('#metrics');p.evaluate('window.innerWidth=320');
   respond(p,'data/metrics.json',metricsPayload());await settle();
   const html=p.node('#metrics-content').innerHTML;
-  assert.match(html,/viewBox="0 0 240 255"/);
-  assert.match(html,/<text x="210" y="247" text-anchor="end">11-20<\/text>/);
-  assert.match(html,/<circle cx="210"/);
+  assert.match(html,/viewBox="0 0 248 154"/);
+  assert.match(html,/<text x="240" y="148" text-anchor="end">11-20<\/text>/);
+  assert.match(html,/<circle cx="240"/);
   assert.equal(p.evaluate('metricsDashboard.range'),'1M');
 });
 

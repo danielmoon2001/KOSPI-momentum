@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Moon Quixote · Asset Dashboard</title>
-  <link rel="stylesheet" href="style.css?v=20261122-metrics">
-  <script src="fx-analysis.js?v=20261122-metrics" defer></script>
-  <script src="history-dashboard.js?v=20261122-metrics" defer></script>
-  <script src="fx.js?v=20261122-metrics" defer></script>
-  <script src="commodities.js?v=20261122-metrics" defer></script>
-  <script src="crypto-bonds.js?v=20261122-metrics" defer></script>
-  <script src="indices.js?v=20261122-metrics" defer></script>
-  <script src="metrics.js?v=20261122-metrics" defer></script>
-  <script src="script.js?v=20261122-metrics" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261122-summary">
+  <script src="fx-analysis.js?v=20261122-summary" defer></script>
+  <script src="history-dashboard.js?v=20261122-summary" defer></script>
+  <script src="fx.js?v=20261122-summary" defer></script>
+  <script src="commodities.js?v=20261122-summary" defer></script>
+  <script src="crypto-bonds.js?v=20261122-summary" defer></script>
+  <script src="indices.js?v=20261122-summary" defer></script>
+  <script src="metrics.js?v=20261122-summary" defer></script>
+  <script src="home.js?v=20261122-summary" defer></script>
+  <script src="script.js?v=20261122-summary" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
@@ -51,19 +52,48 @@
   <main id="view-home" class="page-view">
     <section class="tile tile-light dashboard-intro"><div class="content-bound">
       <p class="eyebrow">PERSONAL ASSET DASHBOARD</p>
-      <h1 class="tile-title">Markets, in perspective.</h1>
-      <p class="dashboard-description">Equities. Indices. Currencies. Commodities. Crypto. Bonds. Sentiment.</p>
+      <h1 class="tile-title">Markets at a glance.</h1>
+      <p class="dashboard-description">Latest observations. Daily changes. One view.</p>
+      <p class="home-reading-note">1D vs previous observation · Metrics: absolute changes · Dates shown per series</p>
       <div class="dashboard-sections">
-        <a href="#overview" class="dashboard-card"><span class="eyebrow">01 / EQUITIES</span><h2>Momentum</h2><p>Four markets. One momentum screen.</p><span id="home-equities-status" class="dashboard-status">Loading equity snapshots…</span></a>
-        <a href="#indices" class="dashboard-card"><span class="eyebrow">02 / EQUITY INDICES</span><h2>The wider market</h2><p>Korea, US, Japan and Hong Kong.</p><span id="home-indices-status" class="dashboard-status">Loading index snapshot…</span></a>
-        <a href="#fx" class="dashboard-card"><span class="eyebrow">03 / FOREIGN EXCHANGE</span><h2>The won &amp; the world</h2><p>Eight currencies against KRW.</p><span id="home-fx-status" class="dashboard-status">Loading FX snapshot…</span></a>
-        <a href="#commodities" class="dashboard-card"><span class="eyebrow">04 / COMMODITIES</span><h2>Metals, energy &amp; grains</h2><p>Metals, energy and agriculture.</p><span id="home-commodities-status" class="dashboard-status">Loading commodities snapshot…</span></a>
-        <a href="#crypto" class="dashboard-card"><span class="eyebrow">05 / CRYPTO</span><h2>Bitcoin &amp; Ethereum</h2><p>Two coins. Daily USD closes.</p><span id="home-crypto-status" class="dashboard-status">Loading crypto snapshot…</span></a>
-        <a href="#bonds" class="dashboard-card"><span class="eyebrow">06 / GOVERNMENT BONDS</span><h2>Across the curve</h2><p>Korean and US government-bond indices.</p><span id="home-bonds-status" class="dashboard-status">Loading bond snapshot…</span></a>
-        <a href="#metrics" class="dashboard-card"><span class="eyebrow">07 / METRICS</span><h2>Market pulse</h2><p>Volatility, credit &amp; sentiment.</p><span id="home-metrics-status" class="dashboard-status">Loading metrics…</span></a>
+        <article class="dashboard-card home-metrics-strip">
+          <a href="#metrics" class="home-section-link"><h2>Market pulse</h2><span>View</span></a>
+          <ul id="home-metrics-summary" class="home-quotes" aria-label="Market pulse summary"><li class="home-empty">Loading…</li></ul>
+          <p id="home-metrics-status" class="dashboard-status"></p>
+        </article>
+        <article class="dashboard-card">
+          <a href="#overview" class="home-section-link"><h2>Equity signals</h2><span>View</span></a>
+          <ul id="home-equities-summary" class="home-quotes" aria-label="Equity signals summary"><li class="home-empty">Loading…</li></ul><ul id="home-tracking-summary" class="home-quotes home-tracking" aria-label="Tracking summary"></ul>
+          <p id="home-equities-status" class="dashboard-status"></p>
+        </article>
+        <article class="dashboard-card">
+          <a href="#indices" class="home-section-link"><h2>Equity indices</h2><span>View</span></a>
+          <ul id="home-indices-summary" class="home-quotes" aria-label="Equity indices summary"><li class="home-empty">Loading…</li></ul>
+          <p id="home-indices-status" class="dashboard-status"></p>
+        </article>
+        <article class="dashboard-card">
+          <a href="#fx" class="home-section-link"><h2>FX · KRW</h2><span>View</span></a>
+          <ul id="home-fx-summary" class="home-quotes" aria-label="FX · KRW summary"><li class="home-empty">Loading…</li></ul>
+          <p id="home-fx-status" class="dashboard-status"></p>
+        </article>
+        <article class="dashboard-card">
+          <a href="#commodities" class="home-section-link"><h2>Commodities</h2><span>View</span></a>
+          <ul id="home-commodities-summary" class="home-quotes" aria-label="Commodities summary"><li class="home-empty">Loading…</li></ul>
+          <p id="home-commodities-status" class="dashboard-status"></p>
+        </article>
+        <article class="dashboard-card">
+          <a href="#crypto" class="home-section-link"><h2>Crypto</h2><span>View</span></a>
+          <ul id="home-crypto-summary" class="home-quotes" aria-label="Crypto summary"><li class="home-empty">Loading…</li></ul>
+          <p id="home-crypto-status" class="dashboard-status"></p>
+        </article>
+        <article class="dashboard-card">
+          <a href="#bonds" class="home-section-link"><h2>Government bonds</h2><span>View</span></a>
+          <ul id="home-bonds-summary" class="home-quotes" aria-label="Government bonds summary"><li class="home-empty">Loading…</li></ul>
+          <p id="home-bonds-status" class="dashboard-status"></p>
+        </article>
       </div>
     </div></section>
-    <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p>Designed by Moon Quixote.</p><p>Daily snapshots · 9 PM KST cutoff.</p><p>Each section shows its own observation dates.</p></div></footer>
+    <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p>Designed by Moon Quixote.</p><p>Daily snapshots · 9 PM KST cutoff.</p><p>Selected highlights · Full coverage in each section.</p></div></footer>
   </main>
 
   <main id="view-metrics" class="page-view" style="display:none">
