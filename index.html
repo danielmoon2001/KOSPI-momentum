@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Moon Quixote · Asset Dashboard</title>
-  <link rel="stylesheet" href="style.css?v=20261120-audit">
-  <script src="fx-analysis.js?v=20261120-audit" defer></script>
-  <script src="history-dashboard.js?v=20261120-audit" defer></script>
-  <script src="fx.js?v=20261120-audit" defer></script>
-  <script src="commodities.js?v=20261120-audit" defer></script>
-  <script src="crypto-bonds.js?v=20261120-audit" defer></script>
-  <script src="indices.js?v=20261120-audit" defer></script>
-  <script src="script.js?v=20261120-audit" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261122-metrics">
+  <script src="fx-analysis.js?v=20261122-metrics" defer></script>
+  <script src="history-dashboard.js?v=20261122-metrics" defer></script>
+  <script src="fx.js?v=20261122-metrics" defer></script>
+  <script src="commodities.js?v=20261122-metrics" defer></script>
+  <script src="crypto-bonds.js?v=20261122-metrics" defer></script>
+  <script src="indices.js?v=20261122-metrics" defer></script>
+  <script src="metrics.js?v=20261122-metrics" defer></script>
+  <script src="script.js?v=20261122-metrics" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
@@ -27,6 +28,7 @@
           <a href="#commodities" id="nav-commodities">Commodities</a>
           <a href="#crypto" id="nav-crypto">Crypto</a>
           <a href="#bonds" id="nav-bonds">Bonds</a>
+          <a href="#metrics" id="nav-metrics">Metrics</a>
         </div>
       </div>
       <p id="asof">Loading…</p>
@@ -50,7 +52,7 @@
     <section class="tile tile-light dashboard-intro"><div class="content-bound">
       <p class="eyebrow">PERSONAL ASSET DASHBOARD</p>
       <h1 class="tile-title">Markets, in perspective.</h1>
-      <p class="dashboard-description">Equities. Indices. Currencies. Commodities. Crypto. Bonds.</p>
+      <p class="dashboard-description">Equities. Indices. Currencies. Commodities. Crypto. Bonds. Sentiment.</p>
       <div class="dashboard-sections">
         <a href="#overview" class="dashboard-card"><span class="eyebrow">01 / EQUITIES</span><h2>Momentum</h2><p>Four markets. One momentum screen.</p><span id="home-equities-status" class="dashboard-status">Loading equity snapshots…</span></a>
         <a href="#indices" class="dashboard-card"><span class="eyebrow">02 / EQUITY INDICES</span><h2>The wider market</h2><p>Korea, US, Japan and Hong Kong.</p><span id="home-indices-status" class="dashboard-status">Loading index snapshot…</span></a>
@@ -58,9 +60,20 @@
         <a href="#commodities" class="dashboard-card"><span class="eyebrow">04 / COMMODITIES</span><h2>Metals, energy &amp; grains</h2><p>Metals, energy and agriculture.</p><span id="home-commodities-status" class="dashboard-status">Loading commodities snapshot…</span></a>
         <a href="#crypto" class="dashboard-card"><span class="eyebrow">05 / CRYPTO</span><h2>Bitcoin &amp; Ethereum</h2><p>Two coins. Daily USD closes.</p><span id="home-crypto-status" class="dashboard-status">Loading crypto snapshot…</span></a>
         <a href="#bonds" class="dashboard-card"><span class="eyebrow">06 / GOVERNMENT BONDS</span><h2>Across the curve</h2><p>Korean and US government-bond indices.</p><span id="home-bonds-status" class="dashboard-status">Loading bond snapshot…</span></a>
+        <a href="#metrics" class="dashboard-card"><span class="eyebrow">07 / METRICS</span><h2>Market pulse</h2><p>Volatility, credit &amp; sentiment.</p><span id="home-metrics-status" class="dashboard-status">Loading metrics…</span></a>
       </div>
     </div></section>
     <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p>Designed by Moon Quixote.</p><p>Daily snapshots · 9 PM KST cutoff.</p><p>Each section shows its own observation dates.</p></div></footer>
+  </main>
+
+  <main id="view-metrics" class="page-view" style="display:none">
+    <section class="tile tile-light fx-section"><div class="content-bound">
+      <p class="eyebrow">MARKET METRICS</p><h1 class="tile-title">Market pulse.</h1>
+      <p class="dashboard-description">Volatility, credit &amp; sentiment.</p>
+      <form id="metrics-controls" class="fx-controls"><p id="metrics-coverage" class="fx-muted"></p></form>
+      <div id="metrics-content" aria-live="polite"><p class="empty-state">Loading market metrics…</p></div>
+    </div></section>
+    <footer class="tile tile-parchment footer-tile"><div class="content-bound"><p id="metrics-updated"></p><p>Daily observations · Publication dates vary.</p><p><a href="docs/METRICS.md">Sources &amp; methodology</a></p></div></footer>
   </main>
 
   <main id="view-fx" class="page-view" style="display:none">

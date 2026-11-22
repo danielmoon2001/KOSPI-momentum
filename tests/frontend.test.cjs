@@ -3,8 +3,63 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
-const source = ['fx-analysis.js', 'history-dashboard.js', 'fx.js', 'commodities.js', 'crypto-bonds.js', 'indices.js', 'script.js'].map(file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8')).join('\n');
+const source = ['fx-analysis.js', 'history-dashboard.js', 'fx.js', 'commodities.js', 'crypto-bonds.js', 'indices.js', 'metrics.js', 'script.js'].map(file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8')).join('\n');
 const settle = () => new Promise(resolve => setImmediate(resolve));
+
+function metricsPayload() {
+  const specs=[['vix','VIX','Index points',1],['move','MOVE','Index points',1],
+    ['putcall','Cboe put/call ratio','Put/call ratio',1],['hy_oas','ICE BofA US High Yield OAS','Percent',2],
+    ['feargreed','CNN Fear & Greed','Score (0–100)',1]];
+  const metrics=specs.map(([code,name,unit,lagDays])=>{
+    const end=Date.parse('2026-11-21')-lagDays*86400000;
+    const history=Array.from({length:41},(_,i)=>({date:new Date(end-(40-i)*86400000).toISOString().slice(0,10),close:code==='hy_oas' ? 3.12+i/100 : 20+i/10}));
+    return {code,name,unit,lagDays,source:'Provider',status:'current',fetchedAt:'2026-11-21T21:05:00+09:00',asOf:history.at(-1).date,history};
+  });
+  return {schemaVersion:1,assetClass:'metrics',snapshotAt:'2026-11-21T21:00:00+09:00',generatedAt:'2026-11-21T21:05:00+09:00',asOf:'2026-11-19',metrics};
+}
+
+test('metrics renders five independent reference series, basis points and explicit degraded states', async()=>{
+  const p=page('#metrics'),data=metricsPayload();
+  data.metrics[0].status='stale';
+  data.metrics[4]={...data.metrics[4],status:'unavailable',history:[],asOf:null,fetchedAt:null};
+  respond(p,'data/metrics.json',data);await settle();
+  const html=p.node('#metrics-content').innerHTML;
+  assert.equal(p.node('#view-metrics').style.display,'block');
+  assert.equal(p.node('#view-matches').style.display,'none');
+  assert.equal(p.node('#nav-metrics')['aria-current'],'page');
+  assert.equal((html.match(/<article /g)||[]).length,5);
+  assert.match(html,/352 bps/);assert.match(html,/Retained \/ delayed data/);
+  assert.match(html,/Source unavailable/);assert.match(html,/Total daily options volume/);
+  assert.match(html,/<option value="1M" selected>/);
+  assert.doesNotMatch(html,/SMA 20|Filter rule|&amp; signals/);
+  p.go('#home');assert.match(p.node('#home-metrics-status').textContent,/3\/5 refreshed/);
+});
+
+test('invalid metrics and late responses cannot disable or replace an equity route', async()=>{
+  for(const kind of ['future','oas-lag','score','units','missing','status']) {
+    const p=page('#metrics'),data=metricsPayload();
+    if(kind==='future')data.metrics[0].history.at(-1).date='2026-11-21';
+    if(kind==='oas-lag')data.metrics[3].history.at(-1).date='2026-11-20';
+    if(kind==='score')data.metrics[4].history.at(-1).close=101;
+    if(kind==='units')data.metrics[3].unit='Basis points';
+    if(kind==='missing')data.metrics.pop();
+    if(kind==='status')data.metrics[0].status='fresh';
+    respond(p,'data/metrics.json',data);await settle();
+    assert.match(p.node('#metrics-content').innerHTML,/data is unavailable/);
+    p.go('#USmatches');respond(p,'data/results-us.json',payload('USA'));await settle();
+    assert.match(p.node('#rows').innerHTML,/USA/);
+  }
+});
+
+test('mobile chart coordinates narrow with the viewport and retain both endpoints',async()=>{
+  const p=page('#metrics');p.evaluate('window.innerWidth=320');
+  respond(p,'data/metrics.json',metricsPayload());await settle();
+  const html=p.node('#metrics-content').innerHTML;
+  assert.match(html,/viewBox="0 0 240 255"/);
+  assert.match(html,/<text x="210" y="247" text-anchor="end">11-20<\/text>/);
+  assert.match(html,/<circle cx="210"/);
+  assert.equal(p.evaluate('metricsDashboard.range'),'1M');
+});
 
 function indicesPayload() {
   const data=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/indices.json'),'utf8'));

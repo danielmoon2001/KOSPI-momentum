@@ -9,7 +9,7 @@ backend and Windows task live outside this repository; a clone cannot fetch upda
 
 | Route | Content |
 | --- | --- |
-| #home (default) | Six dashboard sections |
+| #home (default) | Seven dashboard sections |
 | #overview / #equities | Equity introduction and market links |
 | #KOSPImatches / #matches | KOSPI 200 screen; second route is a legacy alias |
 | #USmatches | Nasdaq-100 ∪ S&P 500 screen |
@@ -20,6 +20,7 @@ backend and Windows task live outside this repository; a clone cannot fetch upda
 | #fx | Eight major currencies against KRW; JPY per 100 yen |
 | #commodities | Nine futures series in their quoted USD/US-cent units |
 | #crypto | Bitcoin and Ethereum in USD |
+| #metrics | VIX, MOVE, Cboe total put/call, high-yield OAS and CNN Fear & Greed |
 | #bonds | Four Korean KAP and five US Solactive government-bond total-return indices |
 
 History charts start at 1M (30 calendar days). Each chart has presets, custom day
@@ -44,7 +45,7 @@ Tracking began November 15, 2026; older discoveries are not reconstructed.
 
 ## Data and display
 
-One local Windows task publishes ten datasets using the most recent 21:00 KST.
+One local Windows task publishes eleven datasets using the most recent 21:00 KST.
 Asian equities may use that day's completed session; US equities use a prior date.
 Provider observation dates and cutoff timestamps are separate. See [data contract](docs/DATA.md).
 The laptop must be available, signed in and online. This is not a cloud data job.
@@ -65,11 +66,12 @@ or a measured trading strategy. Source details: [commodities](docs/COMMODITIES.m
 | --- | --- |
 | index.html, style.css, script.js | Routes, layout and equity/tracking renderer |
 | history-dashboard.js, fx-analysis.js | Shared charts, controls and calculations |
-| fx.js, commodities.js, crypto-bonds.js, indices.js | Section adapters and validation |
+| fx.js, commodities.js, crypto-bonds.js, indices.js, metrics.js | Section adapters and validation |
 | hero_image.png, .nojekyll | Static illustration and Pages configuration |
 | data/results*.json | Four equity result files |
 | data/tracking.json | Persistent episodes and histories |
 | data/fx.json, commodities.json, crypto.json, bonds.json, indices.json | Five history datasets |
+| data/metrics.json | Five independently dated risk/sentiment series |
 | tests/frontend.test.cjs, tools/check.cjs | Self-contained offline verification |
 | .github/workflows/checks.yml | Public regression CI |
 | docs/ | Contracts, design and methodology |
@@ -98,3 +100,8 @@ GitHub Pages serves main's root. Website checks runs separately on pushes and pu
 requests; it does not gate the existing branch-based Pages deployment. After a
 push verify both workflows and the live page. Backend setup/recovery belongs to
 the private project's onboarding and operations guides.
+
+Metrics uses absolute changes and displays OAS in basis points. Source failures
+are labeled per card and do not block the other updates. See [Metrics methodology](docs/METRICS.md).
+Charts fit the full mobile width without sideways scrolling; exact data tables may
+still scroll. Phone rotation recalculates chart geometry and preserves range selections.

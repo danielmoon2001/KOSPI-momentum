@@ -37,7 +37,7 @@ class HistoryDashboard {
   chart(history, view) {
     const {scale: units, prefix, decimals, unitLabel} = view;
     const number = value => historyNumber(value, decimals);
-    const series = [{label:'Close',key:'close',color:'#245db1'}];
+    const series = [{label:view.valueLabel || 'Close',key:'close',color:'#245db1'}];
     if (this.settings.averages) series.push({label:`SMA ${this.settings.fast}`,key:'fast',color:'#ad5135'}, {label:`SMA ${this.settings.slow}`,key:'slow',color:'#6a4da2'});
     if (this.settings.bands) series.push({label:'Support',key:'support',color:'#24765c',dash:true}, {label:'Resistance',key:'resistance',color:'#a53e70',dash:true});
     const values = series.flatMap(line => history.filter(p => p[line.key] !== null).map(p => p[line.key] * units));
@@ -45,11 +45,14 @@ class HistoryDashboard {
     const pad = (high - low || Math.abs(high) * 0.01 || 1) * 0.12;
     low -= pad; high += pad;
     const first = Date.parse(history[0].date), last = Date.parse(history.at(-1).date);
-    const x = date => 70 + (Date.parse(date) - first) / (last - first || 1) * 380;
+    // A narrower coordinate system keeps labels readable as the SVG fits a phone.
+    const width = Math.max(240, Math.min(480, (window.innerWidth || 570) - 90));
+    const right = width - 30;
+    const x = date => 70 + (Date.parse(date) - first) / (last - first || 1) * (right - 70);
     const y = value => 20 + (high - value * units) / (high - low) * 200;
     const ticks = [0,1,2,3,4].map(i => {
       const value = low + (high - low) * i / 4, position = y(value / units);
-      return `<line x1="70" y1="${position}" x2="450" y2="${position}" class="fx-gridline"/><text x="60" y="${position + 4}" text-anchor="end">${number(value)}</text>`;
+      return `<line x1="70" y1="${position}" x2="${right}" y2="${position}" class="fx-gridline"/><text x="60" y="${position + 4}" text-anchor="end">${width < 340 ? new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(value) : number(value)}</text>`;
     }).join('');
     const lines = series.map(line => `<polyline fill="none" stroke="${line.color}" stroke-width="${line.key === 'close' ? 2 : 1.4}" ${line.dash ? 'stroke-dasharray="4 3"' : ''} points="${history.filter(p => p[line.key] !== null).map(p => `${x(p.date)},${y(p[line.key])}`).join(' ')}"/>`).join('');
     const step = Math.max(1, Math.ceil(history.length / 150));
@@ -65,13 +68,14 @@ class HistoryDashboard {
       return result;
     }).join('');
     const endpoint = history.at(-1);
-    return `<div class="fx-chart-scroll"><svg class="fx-chart" viewBox="0 0 480 255" role="img" aria-label="Daily closes (${escapeHTML(unitLabel)}) and selected technical indicators. Exact values and signals in the daily table.">${ticks}${lines}${hover}${markers}<circle cx="${x(endpoint.date)}" cy="${y(endpoint.close)}" r="2.5" fill="#245db1"/><text x="70" y="247">${history[0].date}</text><text x="450" y="247" text-anchor="end">${endpoint.date}</text></svg></div>
+    return `<div class="fx-chart-scroll"><svg class="fx-chart" viewBox="0 0 ${width} 255" role="img" aria-label="Daily ${view.valueLabel ? 'observations' : 'closes'} (${escapeHTML(unitLabel)}). Exact values in the daily table.">${ticks}${lines}${hover}${markers}<circle cx="${x(endpoint.date)}" cy="${y(endpoint.close)}" r="2.5" fill="#245db1"/><text x="70" y="247">${width < 340 ? history[0].date.slice(5) : history[0].date}</text><text x="${right}" y="247" text-anchor="end">${width < 340 ? endpoint.date.slice(5) : endpoint.date}</text></svg></div>
       <div class="fx-chart-key">${series.map(line => `<span><i style="background:${line.color}"></i>${line.label}</span>`).join('')}${this.settings.filter ? '<span>▲ Long · ▼ Short · ◆ Exit</span>' : ''}${this.settings.bands ? '<span>○ Channel breakout</span>' : ''}</div>`;
   }
 
   table(history, view) {
     const amount = value => value == null ? '—' : historyNumber(value * view.scale, view.decimals);
-    const columns = [{label:view.prefix ? `Close (${view.prefix})` : 'Index level', key:'close',format:amount}, {label:'Change',key:'change',format:historyPercent}];
+    const columns = [{label:view.valueLabel || (view.prefix ? `Close (${view.prefix})` : 'Index level'), key:'close',format:amount}];
+    if (!this.config.absoluteChanges) columns.push({label:'Change',key:'change',format:historyPercent});
     if (this.settings.averages) columns.push({label:`SMA ${this.settings.fast}`,key:'fast',format:amount},{label:`SMA ${this.settings.slow}`,key:'slow',format:amount});
     if (this.settings.bands) columns.push({label:'Support',key:'support',format:amount},{label:'Resistance',key:'resistance',format:amount},{label:'Channel',key:'breakout',format:escapeHTML});
     if (this.settings.filter) columns.push({label:'FR state',key:'state',format:escapeHTML},{label:'FR signal',key:'signal',format:v=>escapeHTML(v || '—')},{label:'FR upper',key:'upper',format:amount},{label:'FR lower',key:'lower',format:amount});
@@ -101,13 +105,17 @@ class HistoryDashboard {
     const history = this.window(analyzed, selection.range, selection), last = history.at(-1);
     this.rendered.set(item.code, {history,view});
     if (!last) return '<p class="fx-muted">No observations in this range.</p>';
-    const amount = value => value === null ? '—' : `${view.prefix}${historyNumber(value * view.scale, view.decimals)}`;
+    const amount = value => value === null ? '—' : `${view.prefix}${historyNumber(value * view.scale, view.decimals)}${view.suffix || ''}`;
     const selectedChange = history.every(p => p.close > 0) ? (last.close / history[0].close - 1) * 100 : null;
+    const fullIndex = analyzed.findIndex(p => p.date === last.date);
+    const delta = value => value == null ? '—' : `${value >= 0 ? '+' : ''}${historyNumber(value * view.scale,view.decimals)}${view.deltaSuffix || ''}`;
+    const dailyChange = this.config.absoluteChanges ? delta(fullIndex > 0 ? last.close - analyzed[fullIndex - 1].close : null) : historyPercent(last.change);
+    const rangeChange = this.config.absoluteChanges ? delta(last.close - history[0].close) : historyPercent(selectedChange);
     return `<div class="history-latest"><strong>${amount(last.close)}</strong><span>${last.date}${selection.range === 'dates' ? ' · selected end' : ''}</span></div>
-      <div class="fx-stats"><span>1D <strong>${historyPercent(last.change)}</strong></span>${selection.range === '1D' ? '' : `<span>Range <strong>${historyPercent(selectedChange)}</strong></span>`}<span>${history.length} observations</span></div>
+      <div class="fx-stats"><span>1D <strong>${dailyChange}</strong></span>${selection.range === '1D' ? '' : `<span>Range <strong>${rangeChange}</strong></span>`}<span>${history.length} observations</span></div>
       ${this.chart(history,view)}
       <div class="fx-signals">${this.settings.filter ? `<div><span>Filter rule</span><strong>${last.state}</strong><small>${last.since ? `Since ${last.since}` : 'Awaiting entry'}</small></div>` : ''}${this.settings.bands ? `<div><span>Channel · ${this.settings.channel}</span><strong>${last.breakout === 'Inside' ? 'Inside channel' : last.breakout === 'Warming up' ? 'Warming up' : `${last.breakout} breakout`}</strong><small>${amount(last.support)} – ${amount(last.resistance)}</small></div>` : ''}${this.settings.averages ? `<div><span>SMA ${this.settings.fast} / ${this.settings.slow}</span><strong>${amount(last.fast)} / ${amount(last.slow)}</strong></div>` : ''}</div>
-      <details class="fx-details" data-history="${item.code}"><summary>Daily ${this.config.tableNoun} &amp; signals · ${history.length} observations</summary><div class="history-table"></div></details>`;
+      <details class="fx-details" data-history="${item.code}"><summary>Daily ${this.config.tableNoun}${this.config.technical === false ? '' : ' &amp; signals'} · ${history.length} observations</summary><div class="history-table"></div></details>`;
   }
 
   render() {
@@ -120,13 +128,15 @@ class HistoryDashboard {
     const data = this.state.data, items = this.config.items(data);
     $('#asof').textContent = `Updated ${formatUpdated(data.generatedAt,true)}`;
     this.node('updated').textContent = `${formatSnapshot(data.snapshotAt)} · ${data.source || 'Yahoo Finance'}`;
-    const earliest = items.map(p => p.history[0].date).sort()[0], latest = items.map(p => p.asOf).sort().at(-1);
-    this.node('coverage').textContent = `${earliest} — ${latest}`;
+    const available = items.filter(p => p.history.length);
+    const earliest = available.map(p => p.history[0].date).sort()[0], latest = available.map(p => p.asOf).sort().at(-1);
+    this.node('coverage').textContent = available.length ? `${earliest} — ${latest}` : 'Sources currently unavailable.';
     const groups = this.config.groups ? this.config.groups(items) : [{label:null,items}];
     container.innerHTML = groups.map(group => `${group.label ? `<h2 class="history-group-title">${escapeHTML(group.label)}</h2>` : ''}<div class="fx-pairs">${group.items.map(item => {
       const view = this.config.describe(item);
       return `<article class="fx-panel fx-pair" id="${this.config.id}-card-${item.code}"><div class="fx-pair-heading"><div><h2>${escapeHTML(view.title)}</h2><p class="fx-muted">${escapeHTML(view.subtitle)}</p></div></div>
-        ${this.rangeControls(item)}<div class="history-body">${this.cardBody(item)}</div></article>`;
+        ${this.config.note ? `<p class="fx-muted metric-note">${escapeHTML(this.config.note(item))}</p>` : ''}
+        ${item.history.length ? `${this.rangeControls(item)}<div class="history-body">${this.cardBody(item)}</div>` : '<p class="empty-state">Source unavailable. No value substituted.</p>'}</article>`;
     }).join('')}</div>`).join('');
   }
 
@@ -159,8 +169,10 @@ class HistoryDashboard {
       this.settings = candidate;
       this.render();
     };
-    form.addEventListener('change',updateSettings);
-    form.addEventListener('input',updateSettings);
+    if (this.config.technical !== false) {
+      form.addEventListener('change',updateSettings);
+      form.addEventListener('input',updateSettings);
+    }
     const content = this.node('content');
     const updateRange = event => {
       const controls = event.target.closest('.chart-range');

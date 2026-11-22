@@ -167,7 +167,7 @@ metadata is inferred from the generic Yahoo symbol.
 See [COMMODITIES.md](COMMODITIES.md) for exact ticker/unit mappings, validation,
 cutoff, display precision and nonpositive-price handling. The browser loads this
 file independently of FX, equity matches and tracking. The daily runner stages
-and publishes all ten JSON outputs through the existing single-task cycle.
+and publishes all eleven JSON outputs through the existing single-task cycle.
 
 ## Crypto and bond histories (`data/crypto.json`, `data/bonds.json`)
 
@@ -200,4 +200,11 @@ use market keys `japan` and `hk`; existing Korean/US episodes are preserved.
 
 Nine daily price indices across the four equity markets use `priceBasis: "price-index"`
 and `assetClass: "equity-indices"`. See [the complete contract and symbols](INDICES.md).
-All ten JSON files participate in the existing snapshot publication cycle.
+All eleven JSON files participate in the existing snapshot publication cycle.
+
+## Market metrics (`data/metrics.json`)
+
+See [Metrics contract and timing](METRICS.md). Five ordered source records use
+current/stale/unavailable states. OAS is stored in percent, displayed as basis
+points. The shared history field `close` contains a metric observation, not a
+tradable price. This eleventh file shares the same snapshot cutoff and daily publication.

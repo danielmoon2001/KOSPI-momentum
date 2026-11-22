@@ -485,8 +485,8 @@ tr:last-child td {
 .fx-stats { display: flex; gap: 24px; margin: 20px 0 6px; font-size: 12px; color: var(--ink-muted); }
 .fx-stats strong { color: var(--ink); font-weight: 500; margin-left: 6px; }
 .fx-chart { width: 100%; display: block; margin: 20px 0 12px; overflow: visible; }
-.fx-chart-scroll { overflow-x: auto; }
-.fx-chart { min-width: 360px; }
+.fx-chart-scroll { width: 100%; min-width: 0; }
+.fx-chart { min-width: 0; max-width: 100%; height: auto; }
 .fx-chart text { fill: #70757c; font-size: 12px; letter-spacing: 0; }
 .fx-gridline { stroke: #eceef1; stroke-width: 1; }
 .fx-point { opacity: 0; }

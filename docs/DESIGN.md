@@ -1,7 +1,7 @@
 # Current frontend conventions
 
-The source of truth is `index.html`, `style.css`, `script.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, `crypto-bonds.js`, and `indices.js`. The
-dashboard has top-level Home, Equities, Indices, FX, Commodities, Crypto and Bonds sections; equity subroutes retain
+The source of truth is `index.html`, `style.css`, `script.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, `crypto-bonds.js`, `indices.js`, and `metrics.js`. The
+dashboard has top-level Home, Equities, Indices, FX, Commodities, Crypto, Bonds and Metrics sections; equity subroutes retain
 their existing tables, thresholds, and tracking layout.
 
 - Monochrome palette: white, parchment `#f5f5f7`, dark surface `#272729`, and ink
@@ -43,7 +43,7 @@ behavior. Keep provider data escaped before inserting names or symbols into HTML
 
 ## Dashboard, FX and commodities
 
-The home page uses six simple linked section cards. The five history dashboards retain the same content
+The home page uses seven simple linked section cards. The five history dashboards retain the same content
 width, white surfaces, restrained typography, and compact footer. Accent colors distinguish the closing rate, two moving averages and channel
 boundaries; filter entries/exits also use different marker shapes.
 
@@ -53,11 +53,15 @@ off, and apply valid changes immediately.
 Settings apply within each section; Indices, FX, Commodities, Crypto and Bonds settings are independent. Bond cards are grouped into Korea and United States, with maturity labels and total-return index points. Date controls use each instrument’s
 available coverage. No earlier observations are synthesized.
 The renderer and technical calculations are shared. Chart cards use two columns on desktop and
-one on mobile. Charts retain readable minimum widths and scroll inside their
-panels. Native details expose exact daily rates, indicator values and signals;
+one on mobile. Charts scale to each panel with no fixed minimum width or horizontal chart scrolling.
+Phone layouts use narrower SVG coordinates, compact axis values and month/day labels;
+full dates and exact values remain in daily tables. Tables retain horizontal scrolling. Native details expose exact daily rates, indicator values and signals;
 keyboard and touch access do not depend on hovering. Chart paths retain every
 observation; only invisible hover targets are sampled for longer ranges.
 There is no external chart library, browser API key or automatic order execution.
 
 Equity indices use the shared history cards, grouped by country. Every history
 chart starts at 1M (30 calendar days), independently adjustable.
+
+Metrics shares the chart cards and range controls, with no trading-indicator form.
+It shows absolute changes, per-source observation dates and explicit delayed/unavailable states.

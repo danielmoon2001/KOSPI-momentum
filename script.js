@@ -221,7 +221,8 @@ function syncView(scroll = false) {
   const crypto = window.location.hash === "#crypto";
   const bonds = window.location.hash === "#bonds";
   const indices = window.location.hash === "#indices";
-  const home = !equities && !fx && !commodities && !crypto && !bonds && !indices;
+  const metrics = window.location.hash === "#metrics";
+  const home = !metrics && !equities && !fx && !commodities && !crypto && !bonds && !indices;
   const current = tracking ? "tracking" : key || "overview";
   for (const page of ["overview", ...Object.keys(markets), "tracking"]) {
     $(`#nav-${page}`).setAttribute("aria-current", page === current ? "page" : "false");
@@ -233,6 +234,8 @@ function syncView(scroll = false) {
   $("#nav-crypto").setAttribute("aria-current", crypto ? "page" : "false");
   $("#nav-bonds").setAttribute("aria-current", bonds ? "page" : "false");
   $("#nav-indices").setAttribute("aria-current", indices ? "page" : "false");
+  $("#nav-metrics").setAttribute("aria-current", metrics ? "page" : "false");
+  $("#view-metrics").style.display = metrics ? "block" : "none";
   $("#view-indices").style.display = indices ? "block" : "none";
   $("#view-crypto").style.display = crypto ? "block" : "none";
   $("#view-bonds").style.display = bonds ? "block" : "none";
@@ -248,10 +251,11 @@ function syncView(scroll = false) {
   else if (crypto) cryptoDashboard.render();
   else if (bonds) bondsDashboard.render();
   else if (indices) indicesDashboard.render();
+  else if (metrics) metricsDashboard.render();
   else if (tracking) renderTracking();
   else if (key) renderMarket(key);
   else {
-    const entries = [...Object.values(state), ...(home ? [fxDashboard.state, commoditiesDashboard.state, cryptoDashboard.state, bondsDashboard.state, indicesDashboard.state] : [])];
+    const entries = [...Object.values(state), ...(home ? [fxDashboard.state, commoditiesDashboard.state, cryptoDashboard.state, bondsDashboard.state, indicesDashboard.state, metricsDashboard.state] : [])];
     const latest = entries.map((entry) => entry.data?.generatedAt).filter(Boolean).sort().at(-1);
     $("#asof").textContent = latest ? `Updated ${formatUpdated(latest, true)}`
       : entries.some((entry) => entry.loading) ? "Loading…" : "Update unavailable";
@@ -269,6 +273,10 @@ function syncView(scroll = false) {
   $("#home-crypto-status").textContent = cryptoDashboard.state.data ? `2 cryptocurrencies · Through ${formatDate(cryptoDashboard.state.data.asOf)}` : cryptoDashboard.state.loading ? "Loading crypto snapshot…" : "Crypto snapshot unavailable";
   $("#home-bonds-status").textContent = bondsDashboard.state.data ? `9 indices · Through ${formatDate(bondsDashboard.state.data.asOf)}` : bondsDashboard.state.loading ? "Loading bond snapshot…" : "Bond snapshot unavailable";
   $("#home-indices-status").textContent = indicesDashboard.state.data ? `9 indices · Four markets · Through ${formatDate(indicesDashboard.state.data.asOf)}` : indicesDashboard.state.loading ? "Loading index snapshot…" : "Index snapshot unavailable";
+  const metricData = metricsDashboard.state.data;
+  $("#home-metrics-status").textContent = metricData
+    ? `${metricData.metrics.filter(p => p.status === 'current').length}/5 refreshed · Observation dates vary`
+    : metricsDashboard.state.loading ? 'Loading metrics…' : 'Metrics unavailable';
   if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -301,3 +309,11 @@ commoditiesDashboard.init();
 cryptoDashboard.init();
 bondsDashboard.init();
 indicesDashboard.init();
+
+metricsDashboard.init();
+// Recompute SVG coordinates when a phone rotates; per-chart selections survive.
+window.addEventListener('resize', () => {
+  const dashboard = [fxDashboard,commoditiesDashboard,cryptoDashboard,bondsDashboard,indicesDashboard,metricsDashboard]
+    .find(d => `#${d.config.id}` === window.location.hash);
+  if (dashboard?.state.data) dashboard.render();
+});
