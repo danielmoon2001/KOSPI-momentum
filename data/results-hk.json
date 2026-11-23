@@ -2,8 +2,8 @@
   "market": "Hong Kong",
   "currency": "HKD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-22T10:45:15+09:00",
-  "snapshotAt": "2026-11-21T21:00:00+09:00",
+  "generatedAt": "2026-11-23T11:44:30+09:00",
+  "snapshotAt": "2026-11-22T21:00:00+09:00",
   "asOf": "2026-11-20",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
@@ -26,6 +26,6 @@
     "sources": [
       "https://www.hsi.com.hk/api/wsit-hsi-ddoc-ea-public-website-proxy/v1/product-data/pub/constituent/metadata/v2"
     ],
-    "membershipAsOf": "2026-11-20"
+    "membershipAsOf": "2026-11-22"
   }
 }
