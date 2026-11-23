@@ -2,21 +2,21 @@
   "market": "Hong Kong",
   "currency": "HKD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-23T11:44:30+09:00",
-  "snapshotAt": "2026-11-22T21:00:00+09:00",
-  "asOf": "2026-11-20",
+  "generatedAt": "2026-11-23T21:02:51+09:00",
+  "snapshotAt": "2026-11-23T21:00:00+09:00",
+  "asOf": "2026-11-23",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
   "baseCalendarDays": 5,
   "evalTradingDays": 3,
   "dates": [
-    "2026-11-13",
     "2026-11-16",
     "2026-11-17",
     "2026-11-18",
     "2026-11-19",
-    "2026-11-20"
+    "2026-11-20",
+    "2026-11-23"
   ],
   "stocks": [],
   "universe": {
@@ -26,6 +26,6 @@
     "sources": [
       "https://www.hsi.com.hk/api/wsit-hsi-ddoc-ea-public-website-proxy/v1/product-data/pub/constituent/metadata/v2"
     ],
-    "membershipAsOf": "2026-11-22"
+    "membershipAsOf": "2026-11-23"
   }
 }

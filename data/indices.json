@@ -3,8 +3,8 @@
   "assetClass": "equity-indices",
   "priceBasis": "price-index",
   "source": "Yahoo Finance",
-  "snapshotAt": "2026-11-22T21:00:00+09:00",
-  "generatedAt": "2026-11-23T11:45:52+09:00",
+  "snapshotAt": "2026-11-23T21:00:00+09:00",
+  "generatedAt": "2026-11-23T21:05:06+09:00",
   "asOf": "2026-11-20",
   "indices": [
     {
@@ -16,7 +16,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-20",
+      "asOf": "2026-11-23",
       "history": [
         {
           "date": "2000-01-04",
@@ -26497,6 +26497,10 @@
         {
           "date": "2026-11-20",
           "close": 4869.959961
+        },
+        {
+          "date": "2026-11-23",
+          "close": 4708.540039
         }
       ]
     },
@@ -26509,7 +26513,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-20",
+      "asOf": "2026-11-23",
       "history": [
         {
           "date": "2000-10-16",
@@ -52234,6 +52238,10 @@
         {
           "date": "2026-11-20",
           "close": 645.679993
+        },
+        {
+          "date": "2026-11-23",
+          "close": 635.450012
         }
       ]
     },
@@ -186855,7 +186863,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-20",
+      "asOf": "2026-11-23",
       "history": [
         {
           "date": "2000-01-03",
@@ -213356,6 +213364,10 @@
         {
           "date": "2026-11-20",
           "close": 22410.800781
+        },
+        {
+          "date": "2026-11-23",
+          "close": 22383.740234
         }
       ]
     },
@@ -213368,7 +213380,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-20",
+      "asOf": "2026-11-23",
       "history": [
         {
           "date": "2000-01-03",
@@ -239869,6 +239881,10 @@
         {
           "date": "2026-11-20",
           "close": 7554.370117
+        },
+        {
+          "date": "2026-11-23",
+          "close": 7527.97998
         }
       ]
     }

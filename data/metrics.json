@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "assetClass": "metrics",
   "source": "Cboe · Yahoo Finance · FRED · CNN",
-  "snapshotAt": "2026-11-22T21:00:00+09:00",
-  "generatedAt": "2026-11-23T11:45:58+09:00",
+  "snapshotAt": "2026-11-23T21:00:00+09:00",
+  "generatedAt": "2026-11-23T21:05:12+09:00",
   "asOf": "2026-11-19",
   "metrics": [
     {
@@ -37301,7 +37301,7 @@
       ],
       "asOf": "2026-11-20",
       "status": "current",
-      "fetchedAt": "2026-11-23T11:45:58+09:00"
+      "fetchedAt": "2026-11-23T21:05:12+09:00"
     },
     {
       "code": "move",
@@ -61078,7 +61078,7 @@
       ],
       "asOf": "2026-11-20",
       "status": "current",
-      "fetchedAt": "2026-11-23T11:45:58+09:00"
+      "fetchedAt": "2026-11-23T21:05:12+09:00"
     },
     {
       "code": "putcall",
@@ -61347,7 +61347,7 @@
       ],
       "asOf": "2026-11-20",
       "status": "current",
-      "fetchedAt": "2026-11-23T11:45:58+09:00"
+      "fetchedAt": "2026-11-23T21:05:12+09:00"
     },
     {
       "code": "hy_oas",
@@ -64504,7 +64504,7 @@
       ],
       "asOf": "2026-11-19",
       "status": "current",
-      "fetchedAt": "2026-11-23T11:45:58+09:00"
+      "fetchedAt": "2026-11-23T21:05:12+09:00"
     },
     {
       "code": "feargreed",
@@ -70348,12 +70348,12 @@
         },
         {
           "date": "2026-11-20",
-          "close": 9.673684
+          "close": 10.598887
         }
       ],
       "asOf": "2026-11-20",
       "status": "current",
-      "fetchedAt": "2026-11-23T11:45:58+09:00"
+      "fetchedAt": "2026-11-23T21:05:12+09:00"
     }
   ]
 }
