@@ -3,9 +3,9 @@
   "assetClass": "equity-indices",
   "priceBasis": "price-index",
   "source": "Yahoo Finance / official KRX, Nikkei and Hang Seng gap repairs",
-  "snapshotAt": "2026-11-25T21:00:00+09:00",
-  "generatedAt": "2026-11-26T10:59:08+09:00",
-  "asOf": "2026-11-24",
+  "snapshotAt": "2026-11-26T07:00:00+09:00",
+  "generatedAt": "2026-11-26T18:42:21+09:00",
+  "asOf": "2026-11-25",
   "indices": [
     {
       "code": "kospi",
@@ -52282,7 +52282,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-24",
+      "asOf": "2026-11-25",
       "history": [
         {
           "date": "2000-01-03",
@@ -79343,6 +79343,10 @@
         {
           "date": "2026-11-24",
           "close": 7201.089844
+        },
+        {
+          "date": "2026-11-25",
+          "close": 7182.779785
         }
       ]
     },
@@ -79355,7 +79359,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-24",
+      "asOf": "2026-11-25",
       "history": [
         {
           "date": "2000-01-03",
@@ -106416,6 +106420,10 @@
         {
           "date": "2026-11-24",
           "close": 26214.169922
+        },
+        {
+          "date": "2026-11-25",
+          "close": 26046.900391
         }
       ]
     },
@@ -106428,7 +106436,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-24",
+      "asOf": "2026-11-25",
       "history": [
         {
           "date": "2000-01-03",
@@ -133489,6 +133497,10 @@
         {
           "date": "2026-11-24",
           "close": 23733.539062
+        },
+        {
+          "date": "2026-11-25",
+          "close": 23585.800781
         }
       ]
     },
@@ -133501,7 +133513,7 @@
       "unit": "Index points",
       "pricePrefix": "",
       "decimals": 2,
-      "asOf": "2026-11-24",
+      "asOf": "2026-11-25",
       "history": [
         {
           "date": "2000-01-03",
@@ -160562,6 +160574,10 @@
         {
           "date": "2026-11-24",
           "close": 50018.699219
+        },
+        {
+          "date": "2026-11-25",
+          "close": 50182.949219
         }
       ]
     },

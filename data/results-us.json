@@ -2,47 +2,23 @@
   "market": "US",
   "currency": "USD",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-26T10:57:28+09:00",
-  "asOf": "2026-11-24",
-  "snapshotAt": "2026-11-25T21:00:00+09:00",
+  "generatedAt": "2026-11-26T18:42:15+09:00",
+  "asOf": "2026-11-25",
+  "snapshotAt": "2026-11-26T07:00:00+09:00",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
   "baseCalendarDays": 5,
   "evalTradingDays": 3,
   "dates": [
-    "2026-11-16",
-    "2026-11-17",
     "2026-11-18",
     "2026-11-19",
     "2026-11-20",
     "2026-11-23",
-    "2026-11-24"
+    "2026-11-24",
+    "2026-11-25"
   ],
-  "stocks": [
-    {
-      "ticker": "DLTR",
-      "name": "Dollar Tree, Inc.",
-      "indices": [
-        "S&P 500"
-      ],
-      "marketCap": 29017024595,
-      "marketCapAsOf": "2026-11-24",
-      "marketCapMethod": "estimated",
-      "sharesAsOf": "2026-08-28",
-      "volumeRatio": 2.12,
-      "priceRatio": 1.1,
-      "closes": [
-        138.7,
-        139.71,
-        142.44,
-        140.24,
-        137.96,
-        139.1,
-        154.65
-      ]
-    }
-  ],
+  "stocks": [],
   "universe": {
     "name": "Nasdaq-100 ∪ S&P 500",
     "count": 518,
@@ -52,6 +28,7 @@
       "https://en.wikipedia.org/w/index.php?oldid=1381716526",
       "https://en.wikipedia.org/w/index.php?oldid=1384572480"
     ],
-    "retrievedAt": "2026-11-26T10:57:28+09:00"
-  }
+    "retrievedAt": "2026-11-26T18:42:15+09:00"
+  },
+  "morningSession": "2026-11-25"
 }

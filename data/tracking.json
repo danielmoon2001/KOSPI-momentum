@@ -6,7 +6,8 @@
       "asOf": "2026-11-25"
     },
     "us": {
-      "asOf": "2026-11-24"
+      "asOf": "2026-11-25",
+      "snapshotAt": "2026-11-26T07:00:00+09:00"
     },
     "japan": {
       "asOf": "2026-11-25"
@@ -220,14 +221,20 @@
       "ticker": "DLTR",
       "name": "Dollar Tree, Inc.",
       "foundDate": "2026-11-24",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-24",
           "close": 154.65
+        },
+        {
+          "date": "2026-11-25",
+          "close": 152.21
         }
-      ]
+      ],
+      "endedDate": "2026-11-25",
+      "completedAsOf": "2026-11-25"
     },
     {
       "id": "japan:7733.T:2026-11-25",
@@ -245,6 +252,6 @@
       ]
     }
   ],
-  "snapshotAt": "2026-11-25T21:00:00+09:00",
-  "generatedAt": "2026-11-26T10:58:13+09:00"
+  "snapshotAt": "2026-11-26T07:00:00+09:00",
+  "generatedAt": "2026-11-26T18:42:17+09:00"
 }
