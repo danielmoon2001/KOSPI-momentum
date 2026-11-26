@@ -27,6 +27,13 @@ earlier. Cards display actual provider dates; weekends and holidays are not fill
 Daily data is retained from the dates above, with no synthetic long-term points.
 Provider revisions can change earlier observations.
 
+Missing Yahoo observations for KOSPI/KOSDAQ can be filled from official KRX
+index 1001/2001 closes; Nikkei 225 can use its publisher's daily history. Only
+exact-date official observations are accepted, and valid Yahoo values are kept.
+There is no forward-fill or inferred close. Unresolved invalid values still
+reject publication. Repaired entries carry optional `officialRepairs` metadata
+(`source` and `dates`), and the payload source identifies mixed-source histories.
+
 Each chart starts at **1M** (30 calendar days), with independent presets through
 20Y/MAX, custom day counts and exact dates. Indicators start off and valid
 settings apply immediately. Enabled indicators calculate on full history before
@@ -44,3 +51,5 @@ levels, duplicate dates, truncated coverage, interior gaps over 21 calendar days
 or end-date lag over seven days reject the batch.
 
 Source: [Yahoo Finance world indices](https://finance.yahoo.com/markets/world-indices/).
+Official gap-repair sources: [KRX](https://data.krx.co.kr/) and
+[Nikkei 225 daily history](https://indexes.nikkei.co.jp/en/nkave/archives/data).
