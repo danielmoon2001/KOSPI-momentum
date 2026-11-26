@@ -137,8 +137,9 @@ class HistoryDashboard {
     const groups = this.config.groups ? this.config.groups(items) : [{label:null,items}];
     container.innerHTML = groups.map(group => `${group.label ? `<h2 class="history-group-title">${escapeHTML(group.label)}</h2>` : ''}<div class="fx-pairs">${group.items.map(item => {
       const view = this.config.describe(item);
+      const note = this.config.note ? this.config.note(item) : '';
       return `<article class="fx-panel fx-pair" id="${this.config.id}-card-${item.code}"><div class="fx-pair-heading"><div><h2>${escapeHTML(view.title)}</h2><p class="fx-muted">${escapeHTML(view.subtitle)}</p></div></div>
-        ${this.config.note ? `<p class="fx-muted metric-note">${escapeHTML(this.config.note(item))}</p>` : ''}
+        ${note ? `<p class="fx-muted metric-note">${escapeHTML(note)}</p>` : ''}
         ${item.history.length ? `${this.rangeControls(item)}<div class="history-body">${this.cardBody(item)}</div>` : '<p class="empty-state">Source unavailable. No value substituted.</p>'}</article>`;
     }).join('')}</div>`).join('');
   }

@@ -28,7 +28,7 @@ function formatUpdated(value, dateOnly = false) {
 }
 
 function formatSnapshot(value) {
-  return `${formatDate(value.slice(0, 10))} · 9 PM KST`;
+  return `${formatDate(value.slice(0, 10))} · ${value.slice(11,13) === '07' ? '7 AM' : '9 PM'} KST`;
 }
 
 function formatPrice(value, market) {
@@ -94,8 +94,7 @@ function renderMarket(key) {
     return;
   }
   $("#asof").textContent = `Updated ${formatUpdated(data.generatedAt, true)}`;
-  const snapshotNote = !data.snapshotAt ? "" : data.snapshotAt.slice(0, 10) === data.asOf
-    ? " · 9 PM KST snapshot" : ` · Snapshot: ${formatSnapshot(data.snapshotAt)}`;
+  const snapshotNote = !data.snapshotAt ? "" : ` · Snapshot: ${formatSnapshot(data.snapshotAt)}`;
   $("#matches-updated").textContent = `Prices & caps: ${formatDate(data.asOf)}${snapshotNote}.`;
   if (!tradingEvaluation) $("#matches-updated").textContent += " Earlier snapshot: 5-calendar-day evaluation.";
   if (data.stocks.length === 0) {
@@ -263,7 +262,7 @@ function syncView(scroll = false) {
   const snapshots = Object.values(state).map((entry) => entry.data?.snapshotAt);
   $("#snapshot-status").textContent = snapshots.every(Boolean) && snapshots.every(stamp => stamp === snapshots[0])
     ? `Snapshot: ${formatSnapshot(snapshots[0])}.`
-    : "Daily 9 PM KST snapshots; see each market for its cutoff.";
+    : "US: 7 AM KST · Evening: 9 PM KST · Dates shown per market.";
   $("#home-equities-status").textContent = Object.entries(state).map(([key, value]) => value.data
     ? `${markets[key].name}: ${formatDate(value.data.asOf)}` : `${markets[key].name}: ${value.loading ? "loading" : "unavailable"}`).join(" · ");
   $("#home-fx-status").textContent = fxDashboard.state.data ? `8 currencies · Coverage through ${formatDate(fxDashboard.state.data.asOf)}`

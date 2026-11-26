@@ -12,6 +12,10 @@ function homeHistoryRows(dashboard, selections) {
   const items = dashboard.config.items(data);
   return selections.map(([code,label,unit]) => {
     const item = items.find(p => p.code === code);
+    if (dashboard.config.id === 'fx' && code === 'USD' && data.morningQuote) {
+      const quote = data.morningQuote;
+      return homeRow(label,quote.value == null ? '—' : `₩${historyNumber(quote.value,2)}`,'',morningFXText(quote));
+    }
     if (!item || item.status === 'unavailable' || !item.history.length) return homeRow(label,'—','', 'Unavailable');
     const view = dashboard.config.describe(item), last = item.history.at(-1), previous = item.history.at(-2);
     const value = `${view.prefix}${historyNumber(last.close * view.scale,view.decimals)}${view.suffix || ''}`;
@@ -30,8 +34,8 @@ function homeHistoryRows(dashboard, selections) {
 function renderHomeSummary() {
   const equitySnapshots = Object.values(state).map(entry => entry.data?.snapshotAt).filter(Boolean);
   $('#home-equities-status').textContent = equitySnapshots.length === 4 && equitySnapshots.every(stamp => stamp === equitySnapshots[0])
-    ? `Snapshot ${equitySnapshots[0].slice(0,10)} · 21:00 KST`
-    : `${equitySnapshots.length}/4 markets loaded · Dates shown per market`;
+    ? `Snapshot ${formatSnapshot(equitySnapshots[0])}`
+    : 'US: 7 AM KST · Asia: 9 PM KST · Dates shown per market';
   $('#home-equities-summary').innerHTML = Object.entries(markets).map(([key,market]) => {
     const entry = state[key];
     return homeRow(market.name,entry.data ? String(entry.data.stocks.length) : '—','',

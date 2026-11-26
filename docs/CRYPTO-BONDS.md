@@ -32,7 +32,7 @@ February 5, 2020; the other four launched October 9, 2017.
 
 ## Dates and coverage
 
-All sections use the latest 21:00 Asia/Seoul snapshot. Korean index observations
+Crypto and bond sections retain the latest 21:00 Asia/Seoul snapshot. Korean index observations
 on that date are eligible; US indices use dates before it. Provider publication
 may lag the eligible session. Each card shows its actual last observation date.
 No synthetic annual points, interpolation, or ETF fallback is used.

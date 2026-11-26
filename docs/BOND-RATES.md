@@ -27,7 +27,7 @@ overnight rate. Target bounds are displayed together only when their dates match
 
 ## Snapshot and availability
 
-Rates use the same latest 21:00 KST snapshot and daily task as every other section.
+Rates retain the latest 21:00 KST evening snapshot. The morning US cycle does not refresh bond rates.
 The BOK base series permits the cutoff date. Korean Treasury yields conservatively
 use dates before the cutoff, allowing for ECOS publication; US target/ Treasury
 series also use dates before the cutoff. Effective fed funds uses two calendar

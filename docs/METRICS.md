@@ -15,7 +15,9 @@ no percentage-return or long/short strategy is implied.
 
 ## Snapshot and publication
 
-The existing most-recent-21:00-KST cycle fetches metrics daily. VIX, MOVE, put/call
+The 21:00 KST cycle fetches all metrics daily; 07:00 additionally refreshes VIX
+without changing the other four records. Morning VIX must reach the expected
+US session or is explicitly delayed, independently of US screening publication. VIX, MOVE, put/call
 and CNN exclude the cutoff calendar date, avoiding the ongoing US session. CNN
 also excludes timestamps after the cutoff and resolves duplicate daily updates.
 OAS uses a conservative two-calendar-day lag because FRED's next-day morning US

@@ -21,9 +21,10 @@ chart universe is broader than the stock-screening universes: KOSDAQ, for exampl
 appears here without changing the Korean screener's KOSPI 200 restriction.
 TOPIX is not supplied by the selected Yahoo feed and is not replaced with an ETF.
 
-All histories use the same latest 21:00 KST snapshot. Korean, Japanese and Hong
-Kong observations on that calendar date are eligible. US observations must be
-earlier. Cards display actual provider dates; weekends and holidays are not filled.
+The evening cycle updates all nine histories at 21:00 KST. Korean, Japanese and
+Hong Kong observations on that date are eligible; US dates must be earlier.
+At 07:00, the four US indices refresh to the latest completed US session while
+Asian histories are preserved. No morning Asian intraday bar is admitted. Cards display actual provider dates; weekends and holidays are not filled.
 Daily data is retained from the dates above, with no synthetic long-term points.
 Provider revisions can change earlier observations.
 

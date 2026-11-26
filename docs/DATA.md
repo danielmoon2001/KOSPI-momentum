@@ -6,15 +6,15 @@ their meaning are unchanged.
 
 The frontend reads `data/results.json` (Korea), `data/results-us.json` (US),
 `data/results-japan.json` (Japan), and `data/results-hk.json` (Hong Kong).
-All amounts and ratios are JSON numbers, not formatted strings. All four payloads
-describe the same daily cutoff, with potentially different trading anchors.
+All amounts and ratios are JSON numbers, not formatted strings. Payload cutoffs may differ: US updates at 07:00 and Asian screens at 21:00 KST.
+Trading anchors remain independent. See [timing](TIMING.md).
 
 ## Common payload
 
 | Field | Meaning |
 | --- | --- |
 | `generatedAt` | Fetch/write timestamp, ISO 8601 with Korea-time offset in current outputs |
-| `snapshotAt` | Most recent eligible 21:00 KST cutoff, ISO 8601 |
+| `snapshotAt` | Eligible 07:00 or 21:00 KST cutoff, ISO 8601 |
 | `asOf` | Final evaluation trading date, `YYYY-MM-DD` |
 | `volumeMultiplier` | Strict volume-ratio threshold; default 1.5 |
 | `priceMultiplier` | Strict price-ratio threshold; default 1.1 |
@@ -71,7 +71,7 @@ they do not make vendor data an immutable historical archive.
   US prices keep cents and Korean prices use whole won.
 - The frontend normalizes each stock to its first available close = 100.
 - The top-right update date comes from `generatedAt`, converted to Korea time.
-- Footers distinguish close/cap dates from the 21:00 cutoff without duplicating
+- Footers distinguish close/cap dates from the per-market cutoff without duplicating
   the cap date. Estimate/unavailable notes appear only when relevant.
 - The frontend tolerates older files without `snapshotAt`, and older Korean
   `generatedAt` values without an offset (interpreted as Korea time).
@@ -87,9 +87,11 @@ failure is a separate UI state.
 
 This file is both a public dashboard payload and the next run's persistent
 state. Preserve it when deploying or restoring the project; never replace it
-with an empty sample. `schemaVersion` is 1. `snapshotAt` is the shared cutoff,
+with an empty sample. `schemaVersion` is 1. `snapshotAt` is the latest tracking update cutoff,
 `generatedAt` is the write time, and `startedAt` is the feature's initialization
-time. `markets.<market>.asOf` records each of the four independent session dates.
+time. `markets.<market>.asOf` records each independent session date; optional
+`markets.<market>.snapshotAt` records its source result cutoff. A repeated session
+at another cutoff does not count twice or hide a final-day episode.
 
 Each entry in `episodes` contains:
 
@@ -118,6 +120,10 @@ payloads remain independent and are not altered to hide tracked stocks.
 
 ## FX history (`data/fx.json`)
 
+Optional `morningQuote` is a separate timestamped 07:00 USD/KRW reference. Its
+schema, stale handling and Home display are defined in [Timing](TIMING.md).
+Top-level snapshotAt/generatedAt and pairs still describe evening daily history.
+
 The `#fx` section loads this independently of equity results and tracking.
 Top-level fields are `schemaVersion: 1`, `quoteCurrency: "KRW"`, `source`,
 `snapshotAt`, `generatedAt`, `asOf`, and `pairs`. `asOf` is the earliest of the
@@ -134,7 +140,7 @@ USD, matched by date. Source symbols are `KRW=X` and `CNY=X` for that cross.
 Cross-rate daily observations need not be synchronized executable quotes.
 Yahoo's direct CNY/KRW history was unavailable when this feature was initialized.
 
-The local fetcher uses the shared 21:00 KST cutoff and excludes the entire
+The daily-history fetcher uses the evening 21:00 KST cutoff and excludes the entire
 cutoff-date FX bar. Dates are Yahoo daily observation labels, not intraday
 prices or guaranteed Korean closing times. Weekends/missing observations are
 not filled. Provider revisions may change historical values. A valid batch
@@ -171,7 +177,7 @@ metadata is inferred from the generic Yahoo symbol.
 See [COMMODITIES.md](COMMODITIES.md) for exact ticker/unit mappings, validation,
 cutoff, display precision and nonpositive-price handling. The browser loads this
 file independently of FX, equity matches and tracking. The daily runner stages
-and publishes all eleven JSON outputs through the existing single-task cycle.
+and publishes all eleven JSON outputs through the evening cycle of the same task.
 
 ## Crypto and bond histories (`data/crypto.json`, `data/bonds.json`)
 
@@ -204,14 +210,16 @@ use market keys `japan` and `hk`; existing Korean/US episodes are preserved.
 
 Nine daily price indices across the four equity markets use `priceBasis: "price-index"`
 and `assetClass: "equity-indices"`. See [the complete contract and symbols](INDICES.md).
-All eleven JSON files participate in the existing snapshot publication cycle.
+The morning cycle refreshes US indices while preserving Asian histories; the
+evening cycle refreshes all nine. All source observation dates remain visible.
 
 ## Market metrics (`data/metrics.json`)
 
 See [Metrics contract and timing](METRICS.md). Five ordered source records use
 current/stale/unavailable states. OAS is stored in percent, displayed as basis
 points. The shared history field `close` contains a metric observation, not a
-tradable price. This eleventh file shares the same snapshot cutoff and daily publication.
+tradable price. The evening cycle refreshes all five metrics; morning refreshes only VIX.
+Other records retain their values and original fetchedAt. See [timing](TIMING.md).
 
 ## Home summaries
 
@@ -223,3 +231,7 @@ price observations have no percentage change. Metrics use absolute changes.
 Match counts come from stocks.length. Tracking counts use active episodes and
 the same visible final-day episode predicate as the tracking tab, excluding archived
 completed episodes. Missing/failed data is unavailable, never a synthetic zero.
+
+When morningQuote is present, the USD/KRW Home row uses its value and actual
+observation timestamp, without comparing it to a daily close. Other FX rows and
+all daily chart/indicator histories are unchanged.

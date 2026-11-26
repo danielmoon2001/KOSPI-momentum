@@ -45,8 +45,9 @@ Tracking began November 15, 2026; older discoveries are not reconstructed.
 
 ## Data and display
 
-One local Windows task publishes eleven datasets using the most recent 21:00 KST.
-Asian equities may use that day's completed session; US equities use a prior date.
+One local Windows task updates US screening/tracking/indices, VIX and a USD/KRW
+reference at 07:00 KST; the full dashboard updates at 21:00. Successful morning US
+results are preserved that evening. [Timing and readiness](docs/TIMING.md).
 Provider observation dates and cutoff timestamps are separate. See [data contract](docs/DATA.md).
 The laptop must be available, signed in and online. This is not a cloud data job.
 
@@ -112,7 +113,8 @@ show four-market match counts and active/final-day tracking counts, KOSPI/S&P 50
 Nikkei/Hang Seng, USD/EUR/100 JPY against KRW, gold/WTI/copper, BTC/ETH, and Korean
 3Y/10Y plus US 1–3Y/3–10Y bond indices. Quotes use each series' latest observation
 and date, independently of chart selections. Daily changes compare the latest two
-observations; metrics use absolute changes (OAS in bps), other series percentage
+observations; the separately timestamped morning USD/KRW reference has no daily
+percentage comparison. Metrics use absolute changes (OAS in bps), other series percentage
 changes where both observations are positive. Loading/unavailable data never becomes
 a zero; delayed metrics stay labeled. Section headers link to the complete pages.
 

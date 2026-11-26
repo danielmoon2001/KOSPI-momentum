@@ -18,6 +18,36 @@ function metricsPayload() {
   return {schemaVersion:1,assetClass:'metrics',snapshotAt:'2026-11-21T21:00:00+09:00',generatedAt:'2026-11-21T21:05:00+09:00',asOf:'2026-11-19',metrics};
 }
 
+function morningQuote(status='current') {
+  return {ticker:'KRW=X',baseCurrency:'USD',quoteCurrency:'KRW',interval:'5m',source:'Yahoo Finance',
+    snapshotAt:'2026-11-26T07:00:00+09:00',observedAt:'2026-11-26T07:00:00+09:00',
+    fetchedAt:'2026-11-26T10:00:00+09:00',value:1343.98,status};
+}
+
+test('morning Home uses a timestamped USD reference without changing daily FX history',async()=>{
+  const p=page('#home'),fx=fxPayload();fx.morningQuote=morningQuote();
+  const daily=JSON.stringify(fx.pairs[0].history);
+  respond(p,'data/fx.json',fx);
+  const us=payload('USA');us.snapshotAt='2026-11-26T07:00:00+09:00';
+  respond(p,'data/results-us.json',us);respond(p,'data/results.json',payload('KR','KRW'));
+  await settle();
+  assert.match(p.node('#home-fx-summary').innerHTML,/₩1,343\.98/);
+  assert.match(p.node('#home-fx-summary').innerHTML,/7 AM reference · 2026-11-26 07:00 KST/);
+  assert.match(p.node('#home-equities-status').textContent,/US: 7 AM KST/);
+  p.go('#fx');assert.match(p.node('#fx-content').innerHTML,/Daily chart below/);
+  assert.equal(p.evaluate('JSON.stringify(fxDashboard.state.data.pairs[0].history)'),daily);
+  p.go('#USmatches');assert.match(p.node('#matches-updated').textContent,/7 AM KST/);
+});
+
+test('morning reference rejects future prices and labels retained quotes',async()=>{
+  const p=page('#home'),fx=fxPayload();fx.morningQuote=morningQuote('stale');
+  fx.morningQuote.observedAt='2026-11-25T06:00:00+09:00';
+  respond(p,'data/fx.json',fx);await settle();
+  assert.match(p.node('#home-fx-summary').innerHTML,/Delayed/);
+  const bad=morningQuote();bad.observedAt='2026-11-26T07:05:00+09:00';
+  assert.throws(()=>p.evaluate(`validateMorningFX(${JSON.stringify(bad)})`),/Invalid morning FX quote/);
+});
+
 test('home summarizes every section with latest numbers, correct units and visible tracking counts',async()=>{
   const p=page('#home'), indices=indicesPayload(), crypto=assetPayload('crypto');
   indices.indices[0].history.at(-2).close=100;
