@@ -5,8 +5,12 @@
 | 07:00 | US equity matches and tracking, four US price indices, VIX, morning USD/KRW reference |
 | 21:00 | Existing full dashboard, preserving a successful same-day morning US screen |
 
-The laptop must be signed in, awake and online. Sign-in/resume catches up to the
-latest due cutoffs. The task does not wake a sleeping laptop. Separate completion
+The laptop must retain a signed-in session and have network access when updating.
+The task requests wake from sleep at both scheduled times; Windows returns an
+unattended wake to sleep after the update releases its temporary power request.
+Normal user-idle sleep settings are unchanged. Actual wake/network behavior depends
+on the laptop and power configuration; shutdown and sign-out still prevent runs.
+Sign-in/resume catches up to the latest due cutoffs. Separate completion
 records prevent duplicate cycles; one shared lock prevents overlapping publication.
 Missed cycles use currently available provider history, not immutable data vintages.
 

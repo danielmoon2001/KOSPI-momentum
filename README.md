@@ -49,7 +49,9 @@ One local Windows task updates US screening/tracking/indices, VIX and a USD/KRW
 reference at 07:00 KST; the full dashboard updates at 21:00. Successful morning US
 results are preserved that evening. [Timing and readiness](docs/TIMING.md).
 Provider observation dates and cutoff timestamps are separate. See [data contract](docs/DATA.md).
-The laptop must be available, signed in and online. This is not a cloud data job.
+The laptop must retain a signed-in session and reconnect to the network. Scheduled
+wake is configured for sleep; Windows can return an unattended wake to sleep after
+the update. Shutdown/sign-out still prevents this local job. This is not cloud hosting.
 
 Caps use compact units with at most one decimal place; approximate caps are marked
 and unavailable values remain missing. Raw History cells omit currency symbols;
