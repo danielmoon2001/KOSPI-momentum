@@ -28,7 +28,8 @@ Daily data is retained from the dates above, with no synthetic long-term points.
 Provider revisions can change earlier observations.
 
 Missing Yahoo observations for KOSPI/KOSDAQ can be filled from official KRX
-index 1001/2001 closes; Nikkei 225 can use its publisher's daily history. Only
+index 1001/2001 closes; Nikkei 225, Hang Seng and Hang Seng China Enterprises
+can use their publishers' daily histories. Only
 exact-date official observations are accepted, and valid Yahoo values are kept.
 There is no forward-fill or inferred close. Unresolved invalid values still
 reject publication. Repaired entries carry optional `officialRepairs` metadata
@@ -51,5 +52,7 @@ levels, duplicate dates, truncated coverage, interior gaps over 21 calendar days
 or end-date lag over seven days reject the batch.
 
 Source: [Yahoo Finance world indices](https://finance.yahoo.com/markets/world-indices/).
-Official gap-repair sources: [KRX](https://data.krx.co.kr/) and
-[Nikkei 225 daily history](https://indexes.nikkei.co.jp/en/nkave/archives/data).
+Official gap-repair sources: [KRX](https://data.krx.co.kr/),
+[Nikkei 225 daily history](https://indexes.nikkei.co.jp/en/nkave/archives/data),
+[Hang Seng](https://www.hsi.com.hk/eng/indexes/all-indexes/hsi) and
+[Hang Seng China Enterprises](https://www.hsi.com.hk/eng/indexes/all-indexes/hscei).
