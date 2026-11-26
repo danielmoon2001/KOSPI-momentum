@@ -190966,10 +190966,10 @@
     "quoteCurrency": "KRW",
     "source": "Yahoo Finance",
     "interval": "5m",
-    "snapshotAt": "2026-11-26T07:00:00+09:00",
+    "snapshotAt": "2026-11-27T07:00:00+09:00",
     "status": "current",
-    "value": 1343.97998,
-    "observedAt": "2026-11-26T07:00:00+09:00",
-    "fetchedAt": "2026-11-26T18:42:24+09:00"
+    "value": 1342.930054,
+    "observedAt": "2026-11-27T07:00:00+09:00",
+    "fetchedAt": "2026-11-27T07:00:11+09:00"
   }
 }

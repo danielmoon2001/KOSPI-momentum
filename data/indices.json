@@ -3,8 +3,8 @@
   "assetClass": "equity-indices",
   "priceBasis": "price-index",
   "source": "Yahoo Finance",
-  "snapshotAt": "2026-11-26T21:00:00+09:00",
-  "generatedAt": "2026-11-26T21:01:49+09:00",
+  "snapshotAt": "2026-11-27T07:00:00+09:00",
+  "generatedAt": "2026-11-27T07:00:10+09:00",
   "asOf": "2026-11-25",
   "indices": [
     {
