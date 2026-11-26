@@ -3,17 +3,20 @@
   "startedAt": "2026-11-15T10:04:55+09:00",
   "markets": {
     "kospi": {
-      "asOf": "2026-11-25"
+      "asOf": "2026-11-26",
+      "snapshotAt": "2026-11-26T21:00:00+09:00"
     },
     "us": {
       "asOf": "2026-11-25",
       "snapshotAt": "2026-11-26T07:00:00+09:00"
     },
     "japan": {
-      "asOf": "2026-11-25"
+      "asOf": "2026-11-26",
+      "snapshotAt": "2026-11-26T21:00:00+09:00"
     },
     "hk": {
-      "asOf": "2026-11-25"
+      "asOf": "2026-11-26",
+      "snapshotAt": "2026-11-26T21:00:00+09:00"
     }
   },
   "episodes": [
@@ -192,11 +195,15 @@
       "name": "에이피알",
       "foundDate": "2026-11-25",
       "status": "active",
-      "survivedSessions": 0,
+      "survivedSessions": 1,
       "history": [
         {
           "date": "2026-11-25",
           "close": 292000.0
+        },
+        {
+          "date": "2026-11-26",
+          "close": 298500.0
         }
       ]
     },
@@ -206,14 +213,20 @@
       "ticker": "307950",
       "name": "현대오토에버",
       "foundDate": "2026-11-25",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-25",
           "close": 364000.0
+        },
+        {
+          "date": "2026-11-26",
+          "close": 349000.0
         }
-      ]
+      ],
+      "endedDate": "2026-11-26",
+      "completedAsOf": "2026-11-26"
     },
     {
       "id": "us:DLTR:2026-11-24",
@@ -242,16 +255,52 @@
       "ticker": "7733.T",
       "name": "OLYMPUS CORP.",
       "foundDate": "2026-11-25",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-25",
           "close": 1995.0
+        },
+        {
+          "date": "2026-11-26",
+          "close": 1966.5
+        }
+      ],
+      "endedDate": "2026-11-26",
+      "completedAsOf": "2026-11-26"
+    },
+    {
+      "id": "kospi:192820:2026-11-26",
+      "market": "kospi",
+      "ticker": "192820",
+      "name": "코스맥스",
+      "foundDate": "2026-11-26",
+      "status": "active",
+      "survivedSessions": 0,
+      "history": [
+        {
+          "date": "2026-11-26",
+          "close": 336500.0
+        }
+      ]
+    },
+    {
+      "id": "kospi:079550:2026-11-26",
+      "market": "kospi",
+      "ticker": "079550",
+      "name": "LIG디펜스앤에어로스페이스",
+      "foundDate": "2026-11-26",
+      "status": "active",
+      "survivedSessions": 0,
+      "history": [
+        {
+          "date": "2026-11-26",
+          "close": 390000.0
         }
       ]
     }
   ],
-  "snapshotAt": "2026-11-26T07:00:00+09:00",
-  "generatedAt": "2026-11-26T18:42:17+09:00"
+  "snapshotAt": "2026-11-26T21:00:00+09:00",
+  "generatedAt": "2026-11-26T21:00:58+09:00"
 }

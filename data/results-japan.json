@@ -2,47 +2,22 @@
   "market": "Japan",
   "currency": "JPY",
   "source": "Yahoo Finance",
-  "generatedAt": "2026-11-26T10:57:56+09:00",
-  "snapshotAt": "2026-11-25T21:00:00+09:00",
-  "asOf": "2026-11-25",
+  "generatedAt": "2026-11-26T21:00:44+09:00",
+  "snapshotAt": "2026-11-26T21:00:00+09:00",
+  "asOf": "2026-11-26",
   "volumeMultiplier": 1.5,
   "priceMultiplier": 1.1,
   "windowDays": 5,
   "baseCalendarDays": 5,
   "evalTradingDays": 3,
   "dates": [
-    "2026-11-16",
-    "2026-11-17",
-    "2026-11-18",
     "2026-11-19",
     "2026-11-20",
     "2026-11-24",
-    "2026-11-25"
+    "2026-11-25",
+    "2026-11-26"
   ],
-  "stocks": [
-    {
-      "ticker": "7733.T",
-      "name": "OLYMPUS CORP.",
-      "indices": [
-        "Nikkei 225"
-      ],
-      "marketCap": 2120390555955,
-      "marketCapAsOf": "2026-11-25",
-      "marketCapMethod": "estimated",
-      "sharesAsOf": "2026-11-25",
-      "volumeRatio": 1.59,
-      "priceRatio": 1.1,
-      "closes": [
-        1792.0,
-        1792.0,
-        1798.0,
-        1848.5,
-        1833.0,
-        1904.0,
-        1995.0
-      ]
-    }
-  ],
+  "stocks": [],
   "universe": {
     "name": "Nikkei 225",
     "count": 225,
@@ -50,12 +25,7 @@
     "sources": [
       "https://indexes.nikkei.co.jp/en/nkave/index/component"
     ],
-    "membershipAsOf": "2026-11-25",
-    "referenceRepairs": {
-      "source": "Nikkei official daily CSV",
-      "dates": [
-        "2026-11-25"
-      ]
-    }
+    "membershipAsOf": "2026-11-26",
+    "referenceRepairs": null
   }
 }
