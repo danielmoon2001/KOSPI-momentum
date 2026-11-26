@@ -6,8 +6,11 @@
 | 21:00 | Existing full dashboard, preserving a successful same-day morning US screen |
 
 The laptop must retain a signed-in session and have network access when updating.
-The task requests wake from sleep at both scheduled times; Windows returns an
-unattended wake to sleep after the update releases its temporary power request.
+The task pre-wakes at 06:55/20:55 KST and holds the laptop awake through preparation
+and the entire update. Fetching begins no earlier than the 07:00/21:00 cutoff;
+on-the-hour triggers remain as fallbacks. Windows can return an unattended wake to
+sleep after the update releases its temporary power request. There is no fixed
+20/30-minute sleep deadline that could interrupt an active update.
 Normal user-idle sleep settings are unchanged. Actual wake/network behavior depends
 on the laptop and power configuration; shutdown and sign-out still prevent runs.
 Sign-in/resume catches up to the latest due cutoffs. Separate completion
