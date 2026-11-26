@@ -3,9 +3,9 @@
   "assetClass": "crypto",
   "priceBasis": "unadjusted-close",
   "source": "Yahoo Finance",
-  "snapshotAt": "2026-11-24T21:00:00+09:00",
-  "generatedAt": "2026-11-24T21:04:47+09:00",
-  "asOf": "2026-11-23",
+  "snapshotAt": "2026-11-25T21:00:00+09:00",
+  "generatedAt": "2026-11-26T10:58:31+09:00",
+  "asOf": "2026-11-24",
   "assets": [
     {
       "code": "bitcoin",
@@ -15,7 +15,7 @@
       "unit": "USD / BTC",
       "pricePrefix": "$",
       "decimals": 2,
-      "asOf": "2026-11-23",
+      "asOf": "2026-11-24",
       "history": [
         {
           "date": "2014-09-17",
@@ -17820,6 +17820,10 @@
         {
           "date": "2026-11-23",
           "close": 61210.984375
+        },
+        {
+          "date": "2026-11-24",
+          "close": 59747.765625
         }
       ]
     },
@@ -17831,7 +17835,7 @@
       "unit": "USD / ETH",
       "pricePrefix": "$",
       "decimals": 2,
-      "asOf": "2026-11-23",
+      "asOf": "2026-11-24",
       "history": [
         {
           "date": "2017-11-09",
@@ -31040,6 +31044,10 @@
         {
           "date": "2026-11-23",
           "close": 1708.851318
+        },
+        {
+          "date": "2026-11-24",
+          "close": 1677.694824
         }
       ]
     }

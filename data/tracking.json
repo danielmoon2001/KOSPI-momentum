@@ -3,16 +3,16 @@
   "startedAt": "2026-11-15T10:04:55+09:00",
   "markets": {
     "kospi": {
-      "asOf": "2026-11-24"
+      "asOf": "2026-11-25"
     },
     "us": {
-      "asOf": "2026-11-23"
+      "asOf": "2026-11-24"
     },
     "japan": {
-      "asOf": "2026-11-24"
+      "asOf": "2026-11-25"
     },
     "hk": {
-      "asOf": "2026-11-24"
+      "asOf": "2026-11-25"
     }
   },
   "episodes": [
@@ -169,16 +169,82 @@
       "ticker": "457190",
       "name": "이수스페셜티케미컬",
       "foundDate": "2026-11-24",
-      "status": "active",
+      "status": "ended",
       "survivedSessions": 0,
       "history": [
         {
           "date": "2026-11-24",
           "close": 82200.0
+        },
+        {
+          "date": "2026-11-25",
+          "close": 78500.0
+        }
+      ],
+      "endedDate": "2026-11-25",
+      "completedAsOf": "2026-11-25"
+    },
+    {
+      "id": "kospi:278470:2026-11-25",
+      "market": "kospi",
+      "ticker": "278470",
+      "name": "에이피알",
+      "foundDate": "2026-11-25",
+      "status": "active",
+      "survivedSessions": 0,
+      "history": [
+        {
+          "date": "2026-11-25",
+          "close": 292000.0
+        }
+      ]
+    },
+    {
+      "id": "kospi:307950:2026-11-25",
+      "market": "kospi",
+      "ticker": "307950",
+      "name": "현대오토에버",
+      "foundDate": "2026-11-25",
+      "status": "active",
+      "survivedSessions": 0,
+      "history": [
+        {
+          "date": "2026-11-25",
+          "close": 364000.0
+        }
+      ]
+    },
+    {
+      "id": "us:DLTR:2026-11-24",
+      "market": "us",
+      "ticker": "DLTR",
+      "name": "Dollar Tree, Inc.",
+      "foundDate": "2026-11-24",
+      "status": "active",
+      "survivedSessions": 0,
+      "history": [
+        {
+          "date": "2026-11-24",
+          "close": 154.65
+        }
+      ]
+    },
+    {
+      "id": "japan:7733.T:2026-11-25",
+      "market": "japan",
+      "ticker": "7733.T",
+      "name": "OLYMPUS CORP.",
+      "foundDate": "2026-11-25",
+      "status": "active",
+      "survivedSessions": 0,
+      "history": [
+        {
+          "date": "2026-11-25",
+          "close": 1995.0
         }
       ]
     }
   ],
-  "snapshotAt": "2026-11-24T21:00:00+09:00",
-  "generatedAt": "2026-11-24T21:03:44+09:00"
+  "snapshotAt": "2026-11-25T21:00:00+09:00",
+  "generatedAt": "2026-11-26T10:58:13+09:00"
 }
