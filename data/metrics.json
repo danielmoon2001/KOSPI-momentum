@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "assetClass": "metrics",
   "source": "Cboe · Yahoo Finance · FRED · CNN",
-  "snapshotAt": "2026-11-27T21:00:00+09:00",
-  "generatedAt": "2026-11-27T21:02:16+09:00",
+  "snapshotAt": "2026-11-28T07:00:00+09:00",
+  "generatedAt": "2026-11-28T07:01:11+09:00",
   "asOf": "2026-11-24",
   "metrics": [
     {
@@ -37316,8 +37316,8 @@
         }
       ],
       "asOf": "2026-11-26",
-      "status": "current",
-      "fetchedAt": "2026-11-27T21:02:16+09:00"
+      "status": "stale",
+      "fetchedAt": "2026-11-28T07:01:11+09:00"
     },
     {
       "code": "move",
@@ -70407,5 +70407,6 @@
       "status": "current",
       "fetchedAt": "2026-11-27T21:02:16+09:00"
     }
-  ]
+  ],
+  "morningSnapshotAt": "2026-11-28T07:00:00+09:00"
 }
