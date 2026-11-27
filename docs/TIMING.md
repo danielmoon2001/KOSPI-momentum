@@ -17,6 +17,23 @@ Sign-in/resume catches up to the latest due cutoffs. Separate completion
 records prevent duplicate cycles; one shared lock prevents overlapping publication.
 Missed cycles use currently available provider history, not immutable data vintages.
 
+## Verified unattended operation
+
+Both scheduled wake → update → publish → automatic sleep cycles were confirmed
+on the installed laptop: November 26 evening and November 27 morning, 2026.
+
+| KST | Update started | Published | Returned to sleep |
+| --- | --- | --- | --- |
+| November 26 evening | 21:00:01 | 21:02:05 | 21:02:06 |
+| November 27 morning | 07:00:08 | 07:00:25 | 07:00:26 |
+
+Both Pages deployments and data-health checks passed. The morning FX reference
+advanced to 07:00; US equity dates correctly remained November 25 because of
+Thanksgiving. That run reused the prior US session rather than screening a new one.
+The normal routine is to leave the laptop plugged in, signed in and within Wi-Fi
+range, then sleep/close the lid. This is scheduled local automation, not a cloud
+host or real-time feed. Future network/provider outages can still delay updates.
+
 ## US regular sessions and tracking
 
 07:00 KST follows the normal 16:00 Eastern close by one hour in US standard time,

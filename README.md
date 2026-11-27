@@ -54,6 +54,10 @@ at 06:55/20:55 holds it awake until the cutoff and throughout the update. Window
 can return an unattended wake to sleep afterward. Shutdown/sign-out still prevents
 this local job. This is not cloud hosting.
 
+Both unattended wake → update → publish → sleep cycles were verified in real use
+on November 26 evening and November 27 morning, 2026. See the
+[confirmed timings](docs/TIMING.md#verified-unattended-operation).
+
 Caps use compact units with at most one decimal place; approximate caps are marked
 and unavailable values remain missing. Raw History cells omit currency symbols;
 section labels and caps retain units. Normalized prices start at 100.
