@@ -115,7 +115,7 @@ class HistoryDashboard {
     const dailyChange = this.config.absoluteChanges ? delta(fullIndex > 0 ? last.close - analyzed[fullIndex - 1].close : null) : historyPercent(last.change);
     const rangeChange = this.config.absoluteChanges ? delta(last.close - history[0].close) : historyPercent(selectedChange);
     return `<div class="history-latest"><strong>${amount(last.close)}</strong><span>${last.date}${selection.range === 'dates' ? ' · selected end' : ''}</span></div>
-      <div class="fx-stats"><span>1D <strong>${dailyChange}</strong></span>${selection.range === '1D' ? '' : `<span>Range <strong>${rangeChange}</strong></span>`}<span>${history.length} observations</span></div>
+      <div class="fx-stats"><span>1D <strong>${dailyChange}</strong></span>${selection.range === '1D' ? '' : `<span>Range <strong>${rangeChange}</strong></span>`}<span class="observation-count">${history.length} observations</span></div>
       ${this.chart(history,view)}
       <div class="fx-signals">${this.settings.filter ? `<div><span>Filter rule</span><strong>${last.state}</strong><small>${last.since ? `Since ${last.since}` : 'Awaiting entry'}</small></div>` : ''}${this.settings.bands ? `<div><span>Channel · ${this.settings.channel}</span><strong>${last.breakout === 'Inside' ? 'Inside channel' : last.breakout === 'Warming up' ? 'Warming up' : `${last.breakout} breakout`}</strong><small>${amount(last.support)} – ${amount(last.resistance)}</small></div>` : ''}${this.settings.averages ? `<div><span>SMA ${this.settings.fast} / ${this.settings.slow}</span><strong>${amount(last.fast)} / ${amount(last.slow)}</strong></div>` : ''}</div>
       <details class="fx-details" data-history="${item.code}"><summary>Daily ${this.config.tableNoun}${this.config.technical === false ? '' : ' &amp; signals'} · ${history.length} observations</summary><div class="history-table"></div></details>`;
@@ -139,8 +139,9 @@ class HistoryDashboard {
       const view = this.config.describe(item);
       const note = this.config.note ? this.config.note(item) : '';
       return `<article class="fx-panel fx-pair" id="${this.config.id}-card-${item.code}"><div class="fx-pair-heading"><div><h2>${escapeHTML(view.title)}</h2><p class="fx-muted">${escapeHTML(view.subtitle)}</p></div></div>
-        ${note ? `<p class="fx-muted metric-note">${escapeHTML(note)}</p>` : ''}
-        ${item.history.length ? `${this.rangeControls(item)}<div class="history-body">${this.cardBody(item)}</div>` : '<p class="empty-state">Source unavailable. No value substituted.</p>'}</article>`;
+        ${note ? `<p class="fx-muted metric-note${item.status === 'stale' || item.status === 'unavailable' ? ' data-warning' : ''}">${escapeHTML(note)}</p>` : ''}
+        ${item.history.length ? `${this.rangeControls(item)}<div class="history-body">${this.cardBody(item)}</div>` : '<p class="empty-state">Source unavailable. No value substituted.</p>'}
+        ${this.config.guide ? `<details class="metric-guide" ${(window.innerWidth || 1024) > 760 ? 'open' : ''}><summary>How to read</summary><p>${escapeHTML(this.config.guide(item))}</p></details>` : ''}</article>`;
     }).join('')}</div>`).join('');
   }
 

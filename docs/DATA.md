@@ -73,6 +73,9 @@ they do not make vendor data an immutable historical archive.
 - The top-right update date comes from `generatedAt`, converted to Korea time.
 - Footers distinguish close/cap dates from the per-market cutoff without duplicating
   the cap date. Estimate/unavailable notes appear only when relevant.
+- Phones hide footer copy and use compact match cards with the latest close,
+  cap and screening ratios. The market's close date and currency remain visible;
+  estimated/missing caps retain their symbols. Desktop tables remain unchanged.
 - The frontend tolerates older files without `snapshotAt`, and older Korean
   `generatedAt` values without an offset (interpreted as Korea time).
 - Evaluation metrics use `evalTradingDays` when present; otherwise they use
@@ -112,6 +115,8 @@ laptop misses sessions, the updater checks all intervening closes and stops at
 the first decline; the completed record is displayed at least on that catch-up
 snapshot, then hidden on the next market session. Hidden episodes remain in the
 file as an archive. A later match can create a new episode for the same ticker.
+Visible episodes are grouped by market with separate session dates; grouping
+does not change the eligibility rule above. Phone price tables expand on tap.
 
 Tracking uses the same price providers as screening, with four-decimal storage
 precision to avoid false declines from binary floating-point noise. Missing or

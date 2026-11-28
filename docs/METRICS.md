@@ -13,6 +13,28 @@ no percentage-return or long/short strategy is implied.
 | ICE BofA US High Yield OAS | [FRED BAMLH0A0HYM2](https://fred.stlouisfed.org/series/BAMLH0A0HYM2) | Source percentages, displayed in basis points: 3.52% = 352 bps. FRED currently provides a rolling three years |
 | CNN Fear & Greed | [CNN](https://www.cnn.com/markets/fear-and-greed) | Score 0–100; source history begins February 2021 |
 
+## Reading the levels
+
+Each card includes **How to read**, expanded on desktop and collapsed on phones.
+Definitions explain the level without treating it as an automatic trading signal:
+
+- **VIX:** annualized option-implied S&P 500 volatility over the next 30 days.
+  Higher means larger expected swings, not an expected direction. [Cboe methodology](https://cdn.cboe.com/resources/vix/VIX_Methodology.pdf).
+- **MOVE:** option-implied US bond-yield volatility. Compare with its own history
+  for interest-rate uncertainty; it does not forecast yield direction. [ICE description](https://developer.ice.com/fixed-income-data-services/catalog/ice-data-indices-move-index).
+- **Total put/call:** puts traded divided by calls traded. Above 1 means more puts;
+  below 1 means more calls. Higher readings can reflect defensive hedging. This is
+  total options volume, including index options, rather than equity-only activity.
+- **High-yield OAS:** extra yield over Treasuries for below-investment-grade US
+  corporate bonds, adjusted for embedded options. 400 bps = 4 percentage points.
+  Widening signals higher credit-risk premiums; narrowing signals easing.
+- **Fear & Greed:** seven US market indicators combined into a 0–100 sentiment
+  score, from extreme fear to extreme greed. 50 is near neutral. Extremes do not
+  establish when prices will reverse.
+
+Shorter phone titles do not change series, scaling or units. Per-source dates and
+delayed/unavailable labels remain visible even when explanatory copy is collapsed.
+
 ## Snapshot and publication
 
 The 21:00 KST cycle fetches all metrics daily; 07:00 additionally refreshes VIX

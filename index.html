@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Moon Quixote · Asset Dashboard</title>
-  <link rel="stylesheet" href="style.css?v=20261126-cycles">
-  <script src="fx-analysis.js?v=20261126-cycles" defer></script>
-  <script src="history-dashboard.js?v=20261126-cycles" defer></script>
-  <script src="fx.js?v=20261126-cycles" defer></script>
-  <script src="commodities.js?v=20261126-cycles" defer></script>
-  <script src="bond-rates.js?v=20261126-cycles" defer></script>
-  <script src="crypto-bonds.js?v=20261126-cycles" defer></script>
-  <script src="indices.js?v=20261126-cycles" defer></script>
-  <script src="metrics.js?v=20261126-cycles" defer></script>
-  <script src="home.js?v=20261126-cycles" defer></script>
-  <script src="script.js?v=20261126-cycles" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261128-mobile">
+  <script src="fx-analysis.js?v=20261128-mobile" defer></script>
+  <script src="history-dashboard.js?v=20261128-mobile" defer></script>
+  <script src="fx.js?v=20261128-mobile" defer></script>
+  <script src="commodities.js?v=20261128-mobile" defer></script>
+  <script src="bond-rates.js?v=20261128-mobile" defer></script>
+  <script src="crypto-bonds.js?v=20261128-mobile" defer></script>
+  <script src="indices.js?v=20261128-mobile" defer></script>
+  <script src="metrics.js?v=20261128-mobile" defer></script>
+  <script src="home.js?v=20261128-mobile" defer></script>
+  <script src="script.js?v=20261128-mobile" defer></script>
 </head>
 <body>
   <!-- Shared navigation and last-fetch date -->
@@ -34,11 +34,22 @@
         </div>
       </div>
       <p id="asof">Loading…</p>
+      <select id="mobile-section" class="mobile-nav" aria-label="Dashboard section">
+        <option value="#home">Dashboard</option><option value="#overview">Equities</option>
+        <option value="#indices">Indices</option><option value="#fx">FX</option>
+        <option value="#commodities">Commodities</option><option value="#crypto">Crypto</option>
+        <option value="#bonds">Bonds</option><option value="#metrics">Metrics</option>
+      </select>
     </div>
   </nav>
   <nav id="equity-navigation" class="equity-navigation" aria-label="Equity pages" style="display:none">
     <div class="content-bound">
         <span class="section-label">Equities</span>
+        <select id="mobile-equity" class="mobile-nav" aria-label="Equity page">
+          <option value="#overview">Equity overview</option><option value="#KOSPImatches">KOSPI matches</option>
+          <option value="#USmatches">US matches</option><option value="#JapanMatches">Japan matches</option>
+          <option value="#HKmatches">Hong Kong matches</option><option value="#tracking">Tracking</option>
+        </select>
         <div class="nav-links">
           <a href="#overview" id="nav-overview">Overview</a>
           <a href="#KOSPImatches" id="nav-kospi">KOSPI Matches</a>
@@ -340,6 +351,7 @@
         <div class="matches-header">
           <h2 class="tile-title" id="matches-title">KOSPI Matches.</h2>
           <p class="tile-subtitle" id="matches-subtitle">KOSPI 200 stocks crossing the volume and price thresholds.</p>
+          <p class="mobile-only mobile-session" id="matches-session"></p>
         </div>
 
         <!-- Screening criteria; values come from the selected result payload. -->
@@ -376,6 +388,7 @@
             <tbody id="rows"></tbody>
           </table>
         </div>
+        <div id="mobile-match-cards" class="mobile-only"></div>
       </div>
     </section>
 
@@ -384,6 +397,7 @@
       <div class="content-bound">
         <h2 class="tile-title">Raw History.</h2>
         <p class="tile-subtitle" id="prices-subtitle">Daily closing prices (₩) over the base and evaluation windows.</p>
+        <p class="mobile-only mobile-session" id="prices-unit"></p>
         <div class="table-container">
           <table id="prices-table">
             <thead id="prices-head"></thead>

@@ -460,6 +460,17 @@ tr:last-child td {
 .tracking-card .table-container { margin-top: 24px; }
 .tracking-history caption { text-align: left; font-size: 12px; color: var(--body-muted); margin-bottom: 12px; }
 .tracking-history th, .tracking-history td { text-align: left; white-space: nowrap; }
+.tracking-market + .tracking-market { margin-top: 40px; }
+.tracking-market-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 18px; }
+.tracking-market-heading h2 { font-size: 24px; font-weight: 600; }
+.tracking-market-heading h2 span { font-size: 14px; margin-left: 8px; color: var(--body-muted); }
+.tracking-market-heading > span { font-size: 13px; color: var(--body-muted); }
+.tracking-prices > summary { display: none; }
+.metric-guide { border-top: 1px solid var(--hairline); margin-top: 20px; padding-top: 14px; }
+.metric-guide summary { cursor: pointer; font-size: 14px; font-weight: 500; }
+.metric-guide p { font-size: 14px; line-height: 1.65; color: var(--ink-muted); margin-top: 10px; }
+.metric-guide summary:focus-visible, .tracking-prices summary:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.mobile-only, .mobile-nav { display: none; }
 .history-marker { display: block; font-size: 11px; font-weight: 400; margin-top: 4px; }
 
 /* Dashboard sections share the existing content width and restrained palette. */
@@ -599,4 +610,78 @@ tr:last-child td {
   #view-home .dashboard-intro { padding-top: 32px; }
   #view-home .dashboard-card { padding: 16px; }
   .home-metrics-strip .home-quotes { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px 20px; }
+}
+
+/* Phone workspace: numbers first, native navigation, details on demand.
+   Dates, units, failure states and indicator controls remain available. */
+@media (max-width: 760px) {
+  .mobile-only { display: block; }
+  .sub-nav { padding: 0 16px 10px; }
+  .sub-nav .nav-links, .equity-navigation .nav-links { display: none; }
+  .nav-brand { padding: 10px 0; }
+  .brand-link { font-size: 17px; }
+  #asof { font-size: 11px; max-width: 52%; }
+  .mobile-nav { display: block; width: 100%; min-height: 44px; padding: 8px 12px;
+    font: inherit; font-size: 16px; color: var(--ink); background: var(--canvas);
+    border: 1px solid var(--hairline); border-radius: 8px; }
+  .mobile-nav:focus-visible { outline: 2px solid #245db1; outline-offset: 2px; }
+  .equity-navigation { padding: 10px 16px; }
+  .footer-tile, .eyebrow, .dashboard-description, .home-reading-note,
+  .hero-lead, .hero-desc, .hero-visual, .fx-rule-note, .fx-settings fieldset p,
+  .fx-controls > .fx-muted, .observation-count, #view-home .dashboard-status { display: none; }
+  .tile { padding: 28px 16px; }
+  .tile-title, #view-home .tile-title { font-size: 28px; margin-bottom: 12px; }
+  .fx-section, #view-home .dashboard-intro, #view-tracking > section { padding-top: 24px; }
+  .fx-controls { margin: 18px 0; }
+  #metrics-controls { display: none; }
+  .fx-pairs { gap: 16px; margin-top: 18px; }
+  .fx-panel { padding: 18px 12px 14px; }
+  .fx-panel h2 { font-size: 20px; line-height: 1.3; }
+  .history-latest strong { font-size: 30px; letter-spacing: -.03em; }
+  .history-latest { margin-bottom: 10px; flex-wrap: wrap; }
+  .history-latest span { font-size: 12px; }
+  .chart-range { margin: 14px 0; }
+  .chart-range select, .chart-range input { min-height: 40px; font-size: 16px; }
+  .fx-stats { margin: 10px 0 0; font-size: 13px; }
+  .fx-details { margin-top: 14px; padding-top: 12px; }
+  .fx-details > summary, .metric-guide > summary { min-height: 32px; line-height: 32px; font-size: 14px; }
+  #metrics-content .metric-note:not(.data-warning) { display: none; }
+  .data-warning { font-weight: 500; }
+  .metric-guide { margin-top: 10px; padding-top: 10px; }
+  .history-group-title { font-size: 21px; margin-top: 28px; }
+  #view-home .dashboard-sections { gap: 16px; margin-top: 18px; }
+  #view-home .dashboard-card { padding: 16px; }
+  .home-quote strong { font-size: 20px; }
+  .home-metrics-strip .home-quote strong { font-size: 27px; }
+  .home-quote { padding: 10px 0; }
+  .hero-title { font-size: 34px; margin-bottom: 0; }
+  .hero-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 24px; }
+  .hero-link { padding: 14px 0; min-width: 0; }
+  #view-matches .matches-header, #view-tracking .matches-header { margin-bottom: 24px; }
+  #matches-subtitle, #prices-subtitle, #view-tracking .tile-subtitle, .specs-strip,
+  #summary-section > .content-bound > .table-container { display: none; }
+  .mobile-session { color: var(--body-muted); font-size: 12px; margin: 8px 0 0; }
+  #prices-unit { color: var(--ink-muted); }
+  .mobile-stock-card { padding: 20px 0; border-top: 1px solid var(--hairline-dark); }
+  .mobile-stock-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .mobile-stock-heading h3 { font-size: 18px; line-height: 1.4; }
+  .mobile-stock-heading span { display: block; font-size: 12px; color: var(--body-muted); margin-top: 4px; }
+  .mobile-stock-heading > strong { font-size: 23px; white-space: nowrap; }
+  .mobile-stock-card dl { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 10px; margin-top: 18px; }
+  .mobile-stock-card dt { font-size: 11px; color: var(--body-muted); margin-bottom: 5px; }
+  .mobile-stock-card dd { font-size: 15px; margin: 0; }
+  #prices-section .table-container, #normalized-section .table-container { margin-top: 20px; }
+  #normalized-section .tile-subtitle { font-size: 12px; }
+  .tracking-market-heading { padding-bottom: 12px; }
+  .tracking-market-heading h2 { font-size: 22px; }
+  .tracking-card { padding: 20px 0 24px; }
+  .tracking-card-header { gap: 12px; }
+  .tracking-card h3 { font-size: 20px; }
+  .tracking-result { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+  .tracking-result .tracking-meta { margin-top: 0; }
+  .tracking-chart { height: auto; margin: 18px 0; }
+  .tracking-latest { display: flex; justify-content: space-between; align-items: baseline; margin: 18px 0; }
+  .tracking-latest strong { font-size: 26px; }
+  .tracking-latest span { font-size: 12px; color: var(--body-muted); }
+  .tracking-prices > summary { display: list-item; font-size: 14px; line-height: 40px; cursor: pointer; color: var(--body-muted); }
 }

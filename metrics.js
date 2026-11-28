@@ -4,6 +4,14 @@ const metricSpecs = [
   ['hy_oas','Percent',2], ['feargreed','Score (0–100)',1]
 ];
 
+const metricGuides = {
+  vix: {title:'VIX', text:'S&P 500 option-implied volatility for the next 30 days, quoted at an annualized rate. A reading of 20 means roughly 20% annualized volatility. Higher means larger expected swings, not a direction forecast.'},
+  move: {title:'MOVE', text:'Option-implied US bond-yield volatility. Higher values mean more interest-rate uncertainty; compare with its own history. It does not tell you whether yields will rise or fall.'},
+  putcall: {title:'Cboe total put/call', text:'Total daily put volume divided by call volume. Above 1 means more puts than calls; below 1 means more calls. Rising readings can reflect defensive hedging, not a standalone buy or sell signal.'},
+  hy_oas: {title:'High-yield spread', text:'Extra yield on below-investment-grade US corporate bonds over Treasuries, adjusted for embedded options. 400 bps means 4 percentage points. Widening signals higher credit-risk premiums; narrowing signals easing.'},
+  feargreed: {title:'Fear & Greed', text:'Seven US market indicators combined into a 0–100 sentiment score: 0 is extreme fear, 50 is near neutral, and 100 is extreme greed. Extremes describe sentiment, not reliable reversal timing.'}
+};
+
 function validateMetrics(data) {
   if (data.schemaVersion !== 1 || data.assetClass !== 'metrics' || !data.generatedAt
       || !Number.isFinite(Date.parse(data.snapshotAt)) || !Array.isArray(data.metrics)
@@ -36,7 +44,8 @@ const metricsDashboard = new HistoryDashboard({
   id:'metrics', label:'Metrics', file:'data/metrics.json', loadingText:'Loading market metrics…',
   tableNoun:'observations', technical:false, absoluteChanges:true,
   items:data => data.metrics, validate:validateMetrics,
-  describe:item => ({title:item.name,
+  guide:item => metricGuides[item.code].text,
+  describe:item => ({title:(window.innerWidth || 1024) <= 760 ? metricGuides[item.code].title : item.name,
     subtitle:item.code === 'putcall' ? 'Total daily options volume · Puts / calls'
       : item.code === 'hy_oas' ? 'Option-adjusted spread · Basis points'
       : item.code === 'feargreed' ? 'Sentiment · 0 fear / 100 greed' : 'Implied volatility · Index points',

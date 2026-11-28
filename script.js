@@ -62,6 +62,7 @@ function activeMarket() {
 
 function setMessage(message) {
   $("#rows").innerHTML = `<tr><td colspan="5" class="empty-state">${escapeHTML(message)}</td></tr>`;
+  $("#mobile-match-cards").innerHTML = `<p class="empty-state">${escapeHTML(message)}</p>`;
 }
 
 function renderMarket(key) {
@@ -77,6 +78,8 @@ function renderMarket(key) {
   $("#prices-subtitle").textContent = `Daily closing prices (${market.symbol}) over the base and evaluation windows.`;
   $("#matches-source").textContent = `${market.source}.`;
   $("#matches-updated").textContent = "";
+  $("#matches-session").textContent = "";
+  $("#prices-unit").textContent = `Closing prices · ${market.currency} (${market.symbol})`;
   $("#market-cap-note").textContent = "";
   for (const selector of ["#prices-head", "#prices-body", "#normalized-head", "#normalized-body"]) $(selector).replaceChildren();
   $("#prices-section").style.display = "none";
@@ -94,6 +97,7 @@ function renderMarket(key) {
     return;
   }
   $("#asof").textContent = `Updated ${formatUpdated(data.generatedAt, true)}`;
+  $("#matches-session").textContent = `Close ${formatDate(data.asOf)} · ${market.currency}`;
   const snapshotNote = !data.snapshotAt ? "" : ` · Snapshot: ${formatSnapshot(data.snapshotAt)}`;
   $("#matches-updated").textContent = `Prices & caps: ${formatDate(data.asOf)}${snapshotNote}.`;
   if (!tradingEvaluation) $("#matches-updated").textContent += " Earlier snapshot: 5-calendar-day evaluation.";
@@ -107,6 +111,12 @@ function renderMarket(key) {
   if (data.stocks.some((stock) => stock.marketCapMethod === "estimated")) capNotes.push("≈ Estimated cap (close × reported shares).");
   if (data.stocks.some((stock) => stock.marketCap == null)) capNotes.push("— Cap unavailable.");
   $("#market-cap-note").textContent = capNotes.join(" ");
+  $("#mobile-match-cards").innerHTML = data.stocks.map(stock => `<article class="mobile-stock-card">
+    <div class="mobile-stock-heading"><div><h3>${escapeHTML(stock.name)}</h3><span>${escapeHTML(stock.ticker)}</span></div>
+    <strong>${market.symbol}${formatPrice(stock.closes.at(-1), market)}</strong></div>
+    <dl><div><dt>Market cap</dt><dd>${formatCap(stock,market)}</dd></div>
+    <div><dt>Volume ratio</dt><dd>${stock.volumeRatio.toFixed(2)}×</dd></div>
+    <div><dt>Price ratio</dt><dd>${stock.priceRatio.toFixed(2)}×</dd></div></dl></article>`).join('');
   $("#rows").innerHTML = data.stocks.map((stock) => `<tr>
     <td class="highlight">${escapeHTML(stock.ticker)}</td>
     <td><strong>${escapeHTML(stock.name)}</strong></td>
@@ -163,7 +173,7 @@ function renderTracking() {
     $("#tracking-cards").innerHTML = '<p class="empty-state">No stocks are being tracked yet. New screener matches will appear here automatically.</p>';
     return;
   }
-  $("#tracking-cards").innerHTML = episodes.map((episode) => {
+  const card = (episode) => {
     const market = markets[episode.market];
     const count = episode.survivedSessions;
     const unit = count === 1 ? "session" : "sessions";
@@ -173,19 +183,28 @@ function renderTracking() {
     const change = (last.close / first.close - 1) * 100;
     return `<article class="tracking-card${ended ? " tracking-ended" : ""}">
       <div class="tracking-card-header">
-        <div><h3>${escapeHTML(episode.name)} <span class="tracking-ticker">${escapeHTML(episode.ticker)} · ${market.name}</span></h3>
+        <div><h3>${escapeHTML(episode.name)} <span class="tracking-ticker">${escapeHTML(episode.ticker)}</span></h3>
         <p class="tracking-meta">Found ${formatDate(episode.foundDate)}</p></div>
         <div class="tracking-result"><p class="tracking-status">${status}</p>
         <p class="tracking-meta">${change >= 0 ? "+" : ""}${change.toFixed(2)}% since discovery</p></div>
       </div>
       ${trackingChart(episode)}
-      <div class="table-container"><table class="tracking-history">
+      <div class="mobile-only tracking-latest"><strong>${market.symbol}${formatPrice(last.close, market)}</strong><span>${escapeHTML(last.date)}</span></div>
+      <details class="tracking-prices" ${(window.innerWidth || 1024) > 760 ? 'open' : ''}><summary>Price history</summary><div class="table-container"><table class="tracking-history">
         <caption>Close (${market.symbol})</caption>
         <thead><tr>${episode.history.map((point) => `<th scope="col">${escapeHTML(point.date)}${ended && point.date === episode.endedDate ? '<span class="history-marker">First drop</span>' : ""}</th>`).join("")}</tr></thead>
         <tbody><tr>${episode.history.map((point) => `<td>${formatPrice(point.close, market)}</td>`).join("")}</tr></tbody>
-      </table></div>
+      </table></div></details>
     </article>`;
-  }).join("");
+  };
+  $("#tracking-cards").innerHTML = Object.entries(markets).map(([key, market]) => {
+    const group = episodes.filter(episode => episode.market === key);
+    if (!group.length) return '';
+    const date = data.markets[key]?.asOf;
+    return `<section class="tracking-market" aria-labelledby="tracking-market-${key}">
+      <header class="tracking-market-heading"><h2 id="tracking-market-${key}">${market.name} <span>${group.length}</span></h2>
+      <span>${date ? formatDate(date) : ''}</span></header>${group.map(card).join('')}</section>`;
+  }).join('');
 }
 
 async function loadTracking() {
@@ -223,6 +242,8 @@ function syncView(scroll = false) {
   const metrics = window.location.hash === "#metrics";
   const home = !metrics && !equities && !fx && !commodities && !crypto && !bonds && !indices;
   const current = tracking ? "tracking" : key || "overview";
+  $("#mobile-section").value = equities ? '#overview' : home ? '#home' : window.location.hash;
+  $("#mobile-equity").value = tracking ? '#tracking' : key ? markets[key].route : '#overview';
   for (const page of ["overview", ...Object.keys(markets), "tracking"]) {
     $(`#nav-${page}`).setAttribute("aria-current", page === current ? "page" : "false");
   }
@@ -300,6 +321,9 @@ async function loadMarket(key) {
 }
 
 window.addEventListener("hashchange", () => syncView(true));
+for (const selector of ['#mobile-section', '#mobile-equity']) {
+  $(selector).addEventListener('change', event => { window.location.hash = event.target.value; });
+}
 syncView();
 Promise.allSettled(Object.keys(markets).map(loadMarket));
 loadTracking();
@@ -316,4 +340,5 @@ window.addEventListener('resize', () => {
   const dashboard = [fxDashboard,commoditiesDashboard,cryptoDashboard,bondsDashboard,indicesDashboard,metricsDashboard]
     .find(d => `#${d.config.id}` === window.location.hash);
   if (dashboard?.state.data) dashboard.render();
+  if (window.location.hash === '#tracking' && trackingState.data) renderTracking();
 });

@@ -2,14 +2,14 @@
 
 The source of truth is `index.html`, `style.css`, `script.js`, `home.js`, `history-dashboard.js`, `fx.js`, `commodities.js`, `crypto-bonds.js`, `bond-rates.js`, `indices.js`, and `metrics.js`. The
 dashboard has top-level Home, Equities, Indices, FX, Commodities, Crypto, Bonds and Metrics sections; equity subroutes retain
-their existing tables, thresholds, and tracking layout.
+their desktop tables and thresholds. Tracking records are grouped by market.
 
 - Monochrome palette: white, parchment `#f5f5f7`, dark surface `#272729`, and ink
   `#1d1d1f`.
 - Content is bounded to 1068 px, with a 52 px sticky grey navigation bar.
   Top-level links sit beside Moon Quixote, with an underline and `aria-current`
   on the active route. Equity sublinks occupy a second row only in that section.
-  On narrow screens links wrap onto their own scrollable row.
+  On phones, native section and equity-page selectors replace the link rows.
 - The overview uses a two-column hero above 860 px and one column below it.
   Five lightweight links show the market/tracking label, arrow, and count.
 - The shared market view contains a dark summary, light raw history, parchment
@@ -31,10 +31,29 @@ their existing tables, thresholds, and tracking layout.
 - The overview introduces equity breakout screeners across four markets. The Korean
   universe remains explicitly identified as KOSPI 200 in its subtitle/footer.
 - The overview explains screening and subsequent tracking in two short paragraphs.
-- Tracking has a spacious title/subtitle and separated stock records. Compact
+- Tracking groups visible records in KOSPI, US, Japan, Hong Kong order, omitting
+  empty groups. Each group shows its count and market observation date. Compact
   headers show the found date, status/session count, and change since discovery.
   The history table contains every close and marks the first drop; the drop date
   and latest price are not repeated in the header. A chart appears after two closes.
+
+## Phone interface (760 px and below)
+
+Phones prioritize levels, changes, dates and controls. Introductory paragraphs,
+hero artwork, criteria strip and footer disclaimers are hidden; the desktop copy
+remains unchanged. Units, observation dates, errors and delayed/unavailable labels
+remain visible. Home retains its numerical summaries with tighter spacing.
+
+Equity matches use compact stock cards with latest close, cap and both screening
+ratios instead of the desktop summary table. Raw and normalized history remain
+available below, with currency and normalization labels. Tracking shows the latest
+close beside its date; full price history is a collapsed native disclosure. Desktop
+tracking history stays expanded. Grouping does not alter episode visibility or counts.
+
+Metric explanations are collapsed under **How to read** on phones and expanded by
+default on desktop. Range controls and technical settings remain functional and
+retain their existing defaults. Resizing rerenders chart/tracking disclosures for
+the new breakpoint; chart selections and indicator settings are preserved.
 
 Preserve these conventions during maintenance unless a design change is
 requested. DOM IDs are shared hooks for the renderer and frontend checks.
@@ -78,3 +97,4 @@ chart starts at 1M (30 calendar days), independently adjustable.
 
 Metrics shares the chart cards and range controls, with no trading-indicator form.
 It shows absolute changes, per-source observation dates and explicit delayed/unavailable states.
+Each metric includes a short definition and interpretation, documented in [Metrics](METRICS.md).

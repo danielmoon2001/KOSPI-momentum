@@ -42,6 +42,7 @@ closes continue it. The first lower close ends it and remains visible through th
 market session, without counting as survived. Completed records remain in JSON.
 Repeat matches do not reset an active episode; later matches may begin new episodes.
 Tracking began November 15, 2026; older discoveries are not reconstructed.
+Visible records are grouped by market, with each group's count and session date.
 
 ## Data and display
 
@@ -61,6 +62,12 @@ on November 26 evening and November 27 morning, 2026. See the
 Caps use compact units with at most one decimal place; approximate caps are marked
 and unavailable values remain missing. Raw History cells omit currency symbols;
 section labels and caps retain units. Normalized prices start at 100.
+
+Phones use a numbers-first layout: section selectors, compact match cards, and
+tracking histories available on tap. Introductory copy and footer disclaimers are
+hidden, while units, observation dates and data availability remain explicit.
+Metrics includes concise **How to read** explanations, expanded on desktop and
+collapsed on phones. See [frontend conventions](docs/DESIGN.md).
 
 FX rates omit conversion spreads; futures can roll contracts; equity indices are
 price indices; bond indices include reinvested interest. Some bond history predates

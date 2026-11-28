@@ -147,6 +147,23 @@ test('invalid metrics and late responses cannot disable or replace an equity rou
   }
 });
 
+test('metric guides explain all five levels and remain optional on phones', async()=>{
+  const p=page('#metrics'),data=metricsPayload();
+  data.metrics[0].status='stale';
+  respond(p,'data/metrics.json',data);await settle();
+  const desktop=p.node('#metrics-content').innerHTML;
+  assert.equal((desktop.match(/class="metric-guide" open/g)||[]).length,5);
+  for(const explanation of ['30 days','interest-rate uncertainty','put volume divided by call volume',
+    '400 bps means 4 percentage points','Seven US market indicators']) assert.ok(desktop.includes(explanation));
+  p.evaluate('window.innerWidth=390;metricsDashboard.render()');
+  const mobile=p.node('#metrics-content').innerHTML;
+  assert.equal((mobile.match(/class="metric-guide"/g)||[]).length,5);
+  assert.doesNotMatch(mobile,/class="metric-guide" open/);
+  assert.match(mobile,/class="fx-muted metric-note data-warning"/);
+  assert.match(mobile,/Retained \/ delayed data/);
+  assert.match(mobile,/2026-11-20/);
+});
+
 test('mobile chart coordinates narrow with the viewport and retain both endpoints',async()=>{
   const p=page('#metrics');p.evaluate('window.innerWidth=320');
   respond(p,'data/metrics.json',metricsPayload());await settle();
@@ -277,6 +294,39 @@ test('empty market clears history instead of leaving the other market visible', 
   assert.equal(p.node('#normalized-body').innerHTML, '');
 });
 
+test('phone stock summaries keep currencies, dates and ratios and clear on empty or failed markets', async()=>{
+  const p=page('#USmatches');
+  respond(p,'data/results-us.json',payload('USA'));await settle();
+  const html=p.node('#mobile-match-cards').innerHTML;
+  assert.match(html,/Example &amp; Co/);
+  assert.match(html,/\$120\.75/);
+  assert.match(html,/\$0\.1bn/);
+  assert.match(html,/2\.00×/);assert.match(html,/1\.20×/);
+  assert.match(p.node('#matches-session').textContent,/Oct 30, 2026 · USD/);
+  respond(p,'data/results.json',{...payload('KR','KRW'),stocks:[]});await settle();
+  p.go('#KOSPImatches');
+  assert.match(p.node('#mobile-match-cards').innerHTML,/No KOSPI stocks matched/);
+  assert.doesNotMatch(p.node('#mobile-match-cards').innerHTML,/USA|120\.75/);
+  p.pending['data/results-japan.json'].reject(new Error('offline'));await settle();
+  p.go('#JapanMatches');
+  assert.match(p.node('#mobile-match-cards').innerHTML,/Couldn&#39;t load Japan/);
+  assert.equal(p.node('#matches-session').textContent,'');
+});
+
+test('phone selectors preserve deep links, aliases and two-level navigation',()=>{
+  const p=page('#USmatches');
+  assert.equal(p.node('#mobile-section').value,'#overview');
+  assert.equal(p.node('#mobile-equity').value,'#USmatches');
+  p.node('#mobile-section').handlers.change({target:{value:'#metrics'}});
+  assert.equal(p.evaluate('window.location.hash'),'#metrics');
+  p.go('#metrics');assert.equal(p.node('#mobile-section').value,'#metrics');
+  p.go('#matches');assert.equal(p.node('#mobile-equity').value,'#KOSPImatches');
+  p.node('#mobile-equity').handlers.change({target:{value:'#tracking'}});
+  assert.equal(p.evaluate('window.location.hash'),'#tracking');
+  p.go('#tracking');assert.equal(p.node('#mobile-equity').value,'#tracking');
+  p.go('#home');assert.equal(p.node('#mobile-section').value,'#home');
+});
+
 test('historical snapshots keep their original calendar-window labels', async () => {
   const p = page('#USmatches');
   const old = payload('USA');
@@ -328,6 +378,26 @@ test('tracking route shows active and final-day episodes with complete history a
   p.go('#KOSPImatches');
   assert.equal(p.node('#view-tracking').style.display, 'none');
   assert.match(p.node('#rows').innerHTML, /KOREA/);
+});
+
+test('tracking groups visible episodes by market without changing final-day visibility', async()=>{
+  const p=page('#tracking'),data=trackingPayload();
+  // Input ordering must not split a market or expose a completed prior session.
+  data.episodes.reverse();
+  respond(p,'data/tracking.json',data);await settle();
+  const desktop=p.node('#tracking-cards').innerHTML;
+  assert.equal((desktop.match(/class="tracking-market"/g)||[]).length,2);
+  assert.ok(desktop.indexOf('tracking-market-kospi')<desktop.indexOf('tracking-market-us'));
+  assert.match(desktop,/KOSPI <span>1<\/span>/);assert.match(desktop,/US <span>1<\/span>/);
+  assert.doesNotMatch(desktop,/tracking-market-japan|tracking-market-hk|OLD/);
+  assert.match(desktop,/Nov 12, 2026/);assert.match(desktop,/Nov 11, 2026/);
+  assert.equal((desktop.match(/class="tracking-prices" open/g)||[]).length,2);
+  p.evaluate('window.innerWidth=390;renderTracking()');
+  const mobile=p.node('#tracking-cards').innerHTML;
+  assert.doesNotMatch(mobile,/class="tracking-prices" open/);
+  assert.match(mobile,/\$105\.00/);assert.match(mobile,/₩110/);
+  assert.match(mobile,/First drop/);assert.match(mobile,/Fell after 1 session/);
+  assert.equal(p.evaluate('trackingState.data.episodes.length'),3);
 });
 
 test('tracking failure leaves screener routes available and empty tracking is explicit', async () => {
