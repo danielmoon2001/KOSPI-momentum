@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "assetClass": "metrics",
   "source": "Cboe · Yahoo Finance · FRED · CNN",
-  "snapshotAt": "2026-11-28T07:00:00+09:00",
-  "generatedAt": "2026-11-28T11:59:20+09:00",
-  "asOf": "2026-11-24",
+  "snapshotAt": "2026-11-28T21:00:00+09:00",
+  "generatedAt": "2026-11-29T00:21:11+09:00",
+  "asOf": "2026-11-26",
   "metrics": [
     {
       "code": "vix",
@@ -37321,7 +37321,7 @@
       ],
       "asOf": "2026-11-27",
       "status": "current",
-      "fetchedAt": "2026-11-28T11:59:20+09:00"
+      "fetchedAt": "2026-11-29T00:21:11+09:00"
     },
     {
       "code": "move",
@@ -61106,11 +61106,15 @@
         {
           "date": "2026-11-25",
           "close": 97.540001
+        },
+        {
+          "date": "2026-11-27",
+          "close": 95.300003
         }
       ],
-      "asOf": "2026-11-25",
+      "asOf": "2026-11-27",
       "status": "current",
-      "fetchedAt": "2026-11-27T21:02:16+09:00"
+      "fetchedAt": "2026-11-29T00:21:11+09:00"
     },
     {
       "code": "putcall",
@@ -61387,11 +61391,15 @@
         {
           "date": "2026-11-25",
           "close": 0.98
+        },
+        {
+          "date": "2026-11-27",
+          "close": 0.83
         }
       ],
-      "asOf": "2026-11-25",
+      "asOf": "2026-11-27",
       "status": "current",
-      "fetchedAt": "2026-11-27T21:02:16+09:00"
+      "fetchedAt": "2026-11-29T00:21:11+09:00"
     },
     {
       "code": "hy_oas",
@@ -61401,10 +61409,6 @@
       "sourceUrl": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
       "lagDays": 2,
       "history": [
-        {
-          "date": "2023-11-27",
-          "close": 3.89
-        },
         {
           "date": "2023-11-28",
           "close": 3.9
@@ -64540,11 +64544,19 @@
         {
           "date": "2026-11-24",
           "close": 3.72
+        },
+        {
+          "date": "2026-11-25",
+          "close": 3.77
+        },
+        {
+          "date": "2026-11-26",
+          "close": 3.77
         }
       ],
-      "asOf": "2026-11-24",
+      "asOf": "2026-11-26",
       "status": "current",
-      "fetchedAt": "2026-11-27T21:02:16+09:00"
+      "fetchedAt": "2026-11-29T00:21:11+09:00"
     },
     {
       "code": "feargreed",
@@ -70400,17 +70412,20 @@
         },
         {
           "date": "2026-11-25",
-          "close": 17.857143
+          "close": 20.914286
         },
         {
           "date": "2026-11-26",
-          "close": 17.857143
+          "close": 21.342857
+        },
+        {
+          "date": "2026-11-27",
+          "close": 24.885714
         }
       ],
-      "asOf": "2026-11-26",
+      "asOf": "2026-11-27",
       "status": "current",
-      "fetchedAt": "2026-11-27T21:02:16+09:00"
+      "fetchedAt": "2026-11-29T00:21:11+09:00"
     }
-  ],
-  "morningSnapshotAt": "2026-11-28T07:00:00+09:00"
+  ]
 }
